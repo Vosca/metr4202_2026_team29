@@ -2,16 +2,19 @@
 Collaboration space for Group 29 work on the Turtlebot for METR4202
 
 ## Task Breakdown:
+ - Creating measurable criteria
+ - Ensure ROS Gazebo environment is working
  - Finding frontiers of the map
  - Exploration strategy, which frontiers do we navigate to?
+ - Navigation algorithm
  - Identifying the markers location
  - Testing
 
 ## Team Responsibilities:
-  Michael - 
-  Robin - 
-  Mitch - 
-  Thomas - 
+  Michael - ArUco Markers
+  Robin - Testing
+  Mitch - Finding map frontiers
+  Thomas - Exploration and Navigation
 
 ### Useful existing solutions
 Frontier Detection: https://github.com/AniArka/Autonomous-Explorer-and-Mapper-ros2-nav2
