@@ -11,10 +11,10 @@ Collaboration space for Group 29 work on the Turtlebot for METR4202
  - Testing
 
 ## Team Responsibilities:
-  Michael - ArUco Markers
-  Robin - Testing
-  Mitch - Finding map frontiers
-  Thomas - Exploration and Navigation
+ - Michael - ArUco Markers
+ - Robin - Testing
+ - Mitch - Finding map frontiers
+ - Thomas - Exploration and Navigation
 
 ### Useful existing solutions
 Frontier Detection: https://github.com/AniArka/Autonomous-Explorer-and-Mapper-ros2-nav2
