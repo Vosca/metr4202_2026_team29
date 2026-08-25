@@ -12,3 +12,7 @@ Collaboration space for Group 29 work on the Turtlebot for METR4202
   Robin - 
   Mitch - 
   Thomas - 
+
+### Useful existing solutions
+Frontier Detection: https://github.com/AniArka/Autonomous-Explorer-and-Mapper-ros2-nav2
+ArUco Markers : https://github.com/JMU-ROBOTICS-VIVA/ros2_aruco/tree/main
