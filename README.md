@@ -2,9 +2,9 @@
 Collaboration space for Group 29 work on the Turtlebot for METR4202
 
 ## Task Breakdown:
- - Exploration of an unknown environment
- - Identifying markers
- - Navigation to markers
+ - Finding frontiers of the map
+ - Exploration strategy, which frontiers do we navigate to?
+ - Identifying the markers location
  - Testing
 
 ## Team Responsibilities:
