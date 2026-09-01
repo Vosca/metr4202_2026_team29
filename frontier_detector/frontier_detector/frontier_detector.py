@@ -1,6 +1,7 @@
 import rclpy
 from rclpy.node import Node
 from nav_msgs.msg import OccupancyGrid
+import numpy as np
 
 
 class FrontierDetector(Node):
@@ -16,14 +17,38 @@ class FrontierDetector(Node):
         )
 
     def map_callback(self, msg):
-        width = msg.info.width
-        height = msg.info.height
-        resolution = msg.info.resolution
 
-        self.get_logger().info(
-            f'Map received: {width} x {height}, '
-            f'resolution = {resolution:.3f} m'
-        )
+        # Convert list to 2D array
+        map_array = np.array(msg.data).reshape((msg.info.height, msg.info.width))
+
+        frontiers = self.find_frontiers(map_array)
+
+        self.get_logger().info(f'Found {len(frontiers)} frontier cells')
+
+        
+
+    def find_frontiers(self, map_array):
+
+        frontiers = []
+
+        # Get the dimensions of the map
+        rows, cols = map_array.shape
+
+        for row in range(1, rows - 1):
+            for col in range(1, cols - 1):
+
+                # If the cell is not free, skip it
+                if map_array[row, col] != 0:
+                    continue
+
+                # Get surrounding 3x3 cells
+                neighbours = map_array[row - 1:row + 2, col - 1:col + 2]
+
+                # If our cell is next to an unknown cell, it's a frontier
+                if np.any(neighbours == -1):
+                    frontiers.append((row, col))
+
+        return frontiers
 
 
 def main(args=None):
