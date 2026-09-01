@@ -24,6 +24,7 @@ setup(
     },
     entry_points={
         'console_scripts': [
+            'aruco_marker_detection = marker_detection.aruco_marker_detection:main'
         ],
     },
 )
