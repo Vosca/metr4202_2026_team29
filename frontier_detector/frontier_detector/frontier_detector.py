@@ -48,6 +48,7 @@ class FrontierDetector(Node):
         # Get the dimensions of the map
         rows, cols = map_array.shape
 
+        # Iterate through the map, skipping the border cells
         for row in range(1, rows - 1):
             for col in range(1, cols - 1):
 
@@ -58,8 +59,11 @@ class FrontierDetector(Node):
                 # Get surrounding 3x3 cells
                 neighbours = map_array[row - 1:row + 2, col - 1:col + 2]
 
-                # If our cell is next to an unknown cell, it's a frontier
-                if np.any(neighbours == -1):
+                # Count unknown neighbouring cells
+                unknown_count = np.sum(neighbours == -1)
+
+                # Only keep strong frontier cells
+                if unknown_count >= 3:
                     frontiers.append((row, col))
 
         return frontiers
