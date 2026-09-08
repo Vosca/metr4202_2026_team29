@@ -3,12 +3,14 @@
 <package format="3">
   <name>frontier_detector</name>
   <version>0.0.0</version>
-  <description>TODO: Package description</description>
+  <description>Detects frontier cells from a SLAM occupancy grid for autonomous exploration.</description>
   <maintainer email="m.tayles50@icloud.com">mitchell</maintainer>
   <license>TODO: License declaration</license>
 
   <depend>rclpy</depend>
   <depend>nav_msgs</depend>
+  <depend>visualization_msgs</depend>
+  <depend>geometry_msgs</depend>
 
   <test_depend>ament_copyright</test_depend>
   <test_depend>ament_flake8</test_depend>
