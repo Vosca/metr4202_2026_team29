@@ -13,6 +13,10 @@ class FrontierDetector(Node):
     def __init__(self):
         super().__init__('frontier_detector')
 
+        self.min_frontier_size = self.declare_parameter(
+            'min_frontier_size', 3
+        ).value
+
         # subcribe to the map topic
         self.map_subscription = self.create_subscription(
             OccupancyGrid,
@@ -34,12 +38,14 @@ class FrontierDetector(Node):
         map_array = np.array(msg.data).reshape((msg.info.height, msg.info.width))
 
         frontiers = self.find_frontiers(map_array)
+        raw_count = len(frontiers)
+        frontiers = self.filter_small_frontiers(frontiers, self.min_frontier_size)
 
-        self.get_logger().info(f'Found {len(frontiers)} frontier cells')
+        self.get_logger().info(
+            f'Found {raw_count} frontier cells, kept {len(frontiers)} after filtering'
+        )
 
         self.publish_frontiers(frontiers, msg)
-
-        
 
     def find_frontiers(self, map_array):
 
@@ -67,7 +73,38 @@ class FrontierDetector(Node):
                     frontiers.append((row, col))
 
         return frontiers
-    
+
+    def filter_small_frontiers(self, frontiers, min_size):
+
+        remaining = set(frontiers)
+        kept = set()
+
+        # Go through the remaining frontier cells
+        while remaining:
+            start = remaining.pop()
+            component = [start]
+            pending = [start]
+
+            while pending:
+                # get the cell coordinates
+                row, col = pending.pop()
+                for dr in (-1, 0, 1):
+                    for dc in (-1, 0, 1):
+                        if dr == 0 and dc == 0:
+                            continue
+                        # Check the neighbouring cells
+                        neighbour = (row + dr, col + dc)
+                        if neighbour in remaining:
+                            remaining.remove(neighbour)
+                            component.append(neighbour)
+                            pending.append(neighbour)
+
+            if len(component) >= min_size:
+                kept.update(component)
+
+        # Preserve the detection order for publishing.
+        return [cell for cell in frontiers if cell in kept]
+
     # Publish the frontiers as a Marker message
     def publish_frontiers(self, frontiers, msg):
 
