@@ -1,3 +1,5 @@
+import math
+
 import rclpy
 from rclpy.node import Node
 from nav_msgs.msg import OccupancyGrid
@@ -13,8 +15,20 @@ class FrontierDetector(Node):
     def __init__(self):
         super().__init__('frontier_detector')
 
+        # Set the frontier detection and filtering thresholds
+        self.min_unknown_neighbours = self.declare_parameter(
+            'min_unknown_neighbours', 3
+        ).value
         self.min_frontier_size = self.declare_parameter(
             'min_frontier_size', 3
+        ).value
+
+        # Set the representative distances in metres
+        self.scoring_radius = self.declare_parameter(
+            'scoring_radius', 0.25
+        ).value
+        self.min_goal_spacing = self.declare_parameter(
+            'min_goal_spacing', 0.5
         ).value
 
         # subcribe to the map topic
@@ -32,20 +46,32 @@ class FrontierDetector(Node):
             10
         )
 
+        # Publish the selected representatives as markers
+        self.representative_publisher = self.create_publisher(
+            Marker,
+            '/frontier_representatives',
+            10
+        )
+
     def map_callback(self, msg):
 
         # Convert list to 2D array
         map_array = np.array(msg.data).reshape((msg.info.height, msg.info.width))
 
-        frontiers = self.find_frontiers(map_array)
-        raw_count = len(frontiers)
-        frontiers = self.filter_small_frontiers(frontiers, self.min_frontier_size)
+        raw_frontiers = self.find_frontiers(map_array)
+
+        filtered_frontiers = self.filter_small_frontiers(raw_frontiers, self.min_frontier_size)
+
+        representatives = self.select_representatives(filtered_frontiers, msg.info.resolution)
 
         self.get_logger().info(
-            f'Found {raw_count} frontier cells, kept {len(frontiers)} after filtering'
+            f'Found {len(raw_frontiers)} frontier cells, '
+            f'kept {len(filtered_frontiers)} after filtering, '
+            f'selected {len(representatives)} representatives'
         )
 
-        self.publish_frontiers(frontiers, msg)
+        self.publish_frontiers(filtered_frontiers, msg)
+        self.publish_representatives(representatives, msg)
 
     def find_frontiers(self, map_array):
 
@@ -69,44 +95,125 @@ class FrontierDetector(Node):
                 unknown_count = np.sum(neighbours == -1)
 
                 # Only keep strong frontier cells
-                if unknown_count >= 3:
+                if unknown_count >= self.min_unknown_neighbours:
                     frontiers.append((row, col))
 
         return frontiers
 
     def filter_small_frontiers(self, frontiers, min_size):
 
-        remaining = set(frontiers)
+        unvisited_cells = set(frontiers)
         kept = set()
 
-        # Go through the remaining frontier cells
-        while remaining:
-            start = remaining.pop()
+        # Go through the unvisited frontier cells
+        while unvisited_cells:
+            start = unvisited_cells.pop()
             component = [start]
-            pending = [start]
+            cells_to_check = [start]
 
-            while pending:
+            while cells_to_check:
                 # get the cell coordinates
-                row, col = pending.pop()
+                row, col = cells_to_check.pop()
                 for dr in (-1, 0, 1):
                     for dc in (-1, 0, 1):
                         if dr == 0 and dc == 0:
                             continue
                         # Check the neighbouring cells
                         neighbour = (row + dr, col + dc)
-                        if neighbour in remaining:
-                            remaining.remove(neighbour)
+                        if neighbour in unvisited_cells:
+                            unvisited_cells.remove(neighbour)
                             component.append(neighbour)
-                            pending.append(neighbour)
+                            cells_to_check.append(neighbour)
 
             if len(component) >= min_size:
                 kept.update(component)
 
-        # Preserve the detection order for publishing.
-        return [cell for cell in frontiers if cell in kept]
+        # Keep the cells in their original order
+        result = []
+
+        for cell in frontiers:
+            if cell in kept:
+                result.append(cell)
+
+        return result
+
+
+    def select_representatives(self, frontiers, resolution):
+
+        # Stop if there are no frontier cells
+        if not frontiers:
+            return []
+
+        # Store the cell coordinates and scores
+        cells = np.array(frontiers, dtype=float)
+        scores = np.zeros(len(frontiers), dtype=int)
+
+        # Count nearby frontier cells for each candidate
+        for index in range(len(frontiers)):
+            row, col = frontiers[index]
+
+            # Convert the distances from grid cells to metres
+            row_distances = (cells[:, 0] - row) * resolution
+            col_distances = (cells[:, 1] - col) * resolution
+            distances = np.hypot(row_distances, col_distances)
+
+            is_close = distances <= self.scoring_radius
+            scores[index] = np.count_nonzero(is_close)
+
+        # Try the highest scores first, keeping the original order for ties
+        sorted_indices = np.argsort(-scores, kind='stable')
+        representatives = []
+
+        # Check each candidate against the selected points
+        for index in sorted_indices:
+            row, col = frontiers[index]
+            too_close = False
+
+            for selected_row, selected_col in representatives:
+                row_distance = (row - selected_row) * resolution
+                col_distance = (col - selected_col) * resolution
+                distance = math.hypot(row_distance, col_distance)
+
+                if distance < self.min_goal_spacing:
+                    too_close = True
+                    break
+
+            # Keep the candidate if there is enough space
+            if not too_close:
+                representatives.append(frontiers[index])
+
+        return representatives
 
     # Publish the frontiers as a Marker message
     def publish_frontiers(self, frontiers, msg):
+
+        marker = self.create_point_marker(frontiers, msg)
+
+        # Set the frontier namespace, size and colour
+        marker.ns = 'frontiers'
+        marker.scale.x = 0.05
+        marker.scale.y = 0.05
+        marker.color.r = 1.0
+        marker.color.g = 0.0
+        marker.color.b = 0.0
+
+        self.frontier_publisher.publish(marker)
+
+    def publish_representatives(self, representatives, msg):
+
+        marker = self.create_point_marker(representatives, msg)
+
+        # Set the representative namespace, size and colour
+        marker.ns = 'frontier_representatives'
+        marker.scale.x = 0.15
+        marker.scale.y = 0.15
+        marker.color.r = 0.0
+        marker.color.g = 1.0
+        marker.color.b = 0.0
+
+        self.representative_publisher.publish(marker)
+
+    def create_point_marker(self, cells, msg):
 
         marker = Marker()
 
@@ -114,26 +221,18 @@ class FrontierDetector(Node):
         marker.header.frame_id = 'map'
         marker.header.stamp = self.get_clock().now().to_msg()
 
-        # Set the namespace and id for the marker
-        marker.ns = 'frontiers'
+        # Set the marker id
         marker.id = 0
 
         # Set the type and action for the marker
         marker.type = Marker.POINTS
         marker.action = Marker.ADD
 
-        # Size of each point
-        marker.scale.x = 0.05
-        marker.scale.y = 0.05
-
-        # Colour: red
-        marker.color.r = 1.0
-        marker.color.g = 0.0
-        marker.color.b = 0.0
+        # Make the points fully visible
         marker.color.a = 1.0
 
-        # for every frontier cell, create a Point and add it to the marker
-        for row, col in frontiers:
+        # Create a point for each cell
+        for row, col in cells:
 
             point = Point()
 
@@ -154,8 +253,7 @@ class FrontierDetector(Node):
             # Add the point to the marker
             marker.points.append(point)
 
-        # Publish the marker
-        self.frontier_publisher.publish(marker)
+        return marker
 
 
 def main(args=None):
