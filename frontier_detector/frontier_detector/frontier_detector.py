@@ -80,16 +80,22 @@ class FrontierDetector(Node):
         # Get the dimensions of the map
         rows, cols = map_array.shape
 
-        # Iterate through the map, skipping the border cells
-        for row in range(1, rows - 1):
-            for col in range(1, cols - 1):
+        # Iterate through the map, including the border cells
+        for row in range(rows):
+            for col in range(cols):
 
                 # If the cell is not free, skip it
                 if map_array[row, col] != 0:
                     continue
 
-                # Get surrounding 3x3 cells
-                neighbours = map_array[row - 1:row + 2, col - 1:col + 2]
+                # Keep the neighbourhood within the map bounds
+                row_start = max(0, row - 1)
+                row_end = min(rows, row + 2)
+                col_start = max(0, col - 1)
+                col_end = min(cols, col + 2)
+
+                # Get surrounding 3x3 cells, clipped at the map edges
+                neighbours = map_array[row_start:row_end, col_start:col_end]
 
                 # Count unknown neighbouring cells
                 unknown_count = np.sum(neighbours == -1)
@@ -218,7 +224,7 @@ class FrontierDetector(Node):
         marker = Marker()
 
         # Set the header information
-        marker.header.frame_id = 'map'
+        marker.header.frame_id = msg.header.frame_id
         marker.header.stamp = self.get_clock().now().to_msg()
 
         # Set the marker id
@@ -231,20 +237,36 @@ class FrontierDetector(Node):
         # Make the points fully visible
         marker.color.a = 1.0
 
+        # Get the rotation of the map origin
+        orientation = msg.info.origin.orientation
+        yaw = math.atan2(
+            2.0 * (orientation.w * orientation.z + orientation.x * orientation.y),
+            1.0 - 2.0 * (orientation.y**2 + orientation.z**2)
+        )
+
+        cos_yaw = math.cos(yaw)
+        sin_yaw = math.sin(yaw)
+
         # Create a point for each cell
         for row, col in cells:
 
             point = Point()
 
+            # Get the cell centre relative to the map origin
+            local_x = (col + 0.5) * msg.info.resolution
+            local_y = (row + 0.5) * msg.info.resolution
+
             # Convert the row and column indices to world coordinates
             point.x = (
                 msg.info.origin.position.x
-                + (col + 0.5) * msg.info.resolution
+                + local_x * cos_yaw
+                - local_y * sin_yaw
             )
 
             point.y = (
                 msg.info.origin.position.y
-                + (row + 0.5) * msg.info.resolution
+                + local_x * sin_yaw
+                + local_y * cos_yaw
             )
 
             # Set a small z value to make the points visible above the map
