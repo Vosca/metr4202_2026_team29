@@ -54,6 +54,24 @@ class ExplorationManager(Node):
             0.5
         ).value
 
+        # Number of consecutive empty frontier updates
+        # required before exploration is considered complete
+        self.required_empty_updates = int(
+            self.declare_parameter(
+                'required_empty_updates',
+                3
+            ).value
+        )
+
+        # Make sure at least one empty update is required
+        self.required_empty_updates = max(
+            1,
+            self.required_empty_updates
+        )
+
+        # Count consecutive empty frontier updates
+        self.empty_frontier_update_count = 0
+
         # Store failed navigation goal locations
         self.failed_regions = []
 
@@ -126,11 +144,21 @@ class ExplorationManager(Node):
             f'frontier candidates'
         )
 
-        # After successful navigation, wait for a fresh
-        # frontier message before selecting another goal
+        # Once exploration has been declared complete,
+        # keep the state terminal
+        if self.state == 'EXPLORATION_COMPLETE':
+            return
+
+        # After successful navigation, wait for fresh
+        # frontier information before selecting another goal
         if self.state == 'WAITING_FOR_UPDATE':
 
+            # If new frontiers exist, exploration continues
             if self.frontier_candidates:
+
+                # A non-empty update breaks the sequence
+                # of consecutive empty updates
+                self.empty_frontier_update_count = 0
 
                 self.state = 'READY'
 
@@ -139,14 +167,37 @@ class ExplorationManager(Node):
                     'navigation. Exploration is ready.'
                 )
 
-            else:
+                return
+
+            # No frontiers were found in this update
+            self.empty_frontier_update_count += 1
+
+            self.get_logger().info(
+                f'Empty frontier update '
+                f'{self.empty_frontier_update_count}/'
+                f'{self.required_empty_updates}'
+            )
+
+            # Require several consecutive empty updates
+            # before declaring exploration complete
+            if (
+                self.empty_frontier_update_count
+                >= self.required_empty_updates
+            ):
+
+                self.state = 'EXPLORATION_COMPLETE'
 
                 self.get_logger().info(
-                    'New frontier update contains no '
-                    'candidates.'
+                    'Exploration complete: no frontier '
+                    'candidates remain.'
                 )
 
             return
+
+        # If frontiers exist during normal operation,
+        # reset any previous empty-update count
+        if self.frontier_candidates:
+            self.empty_frontier_update_count = 0
 
         # Check whether all required exploration data
         # has now been received
@@ -722,6 +773,10 @@ class ExplorationManager(Node):
             self.current_goal = None
             self.current_goal_handle = None
             self.navigation_result_future = None
+
+            # Begin a new empty-frontier sequence for
+            # the newly explored location
+            self.empty_frontier_update_count = 0
 
             # Do not immediately reuse an old frontier list.
             # Wait until the frontier detector publishes
