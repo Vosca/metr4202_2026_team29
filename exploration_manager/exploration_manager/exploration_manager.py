@@ -44,6 +44,16 @@ class ExplorationManager(Node):
             0.4
         ).value
 
+        # Radius around a failed goal that should
+        # temporarily be avoided
+        self.failed_region_radius = self.declare_parameter(
+            'failed_region_radius',
+            0.5
+        ).value
+
+        # Store failed navigation goal locations
+        self.failed_regions = []
+
         # Store the current exploration state
         self.state = 'WAITING_FOR_DATA'
 
@@ -309,6 +319,47 @@ class ExplorationManager(Node):
 
         return unknown_count
 
+    def is_failed_region(self, candidate):
+
+        # Compare this candidate with every previously
+        # failed navigation location
+        for failed_x, failed_y in self.failed_regions:
+
+            distance = math.hypot(
+                candidate.position.x - failed_x,
+                candidate.position.y - failed_y
+            )
+
+            # Treat nearby candidates as belonging to
+            # the same failed region
+            if distance < self.failed_region_radius:
+                return True
+
+        return False
+
+    def record_failed_goal(self, candidate):
+
+        # Do not store multiple almost-identical
+        # failed goal locations
+        if self.is_failed_region(candidate):
+            return
+
+        failed_x = candidate.position.x
+        failed_y = candidate.position.y
+
+        self.failed_regions.append(
+            (
+                failed_x,
+                failed_y
+            )
+        )
+
+        self.get_logger().warn(
+            f'Recorded failed frontier region: '
+            f'x={failed_x:.2f} m, '
+            f'y={failed_y:.2f} m'
+        )
+
     def normalise_values(self, values, equal_value):
 
         values = np.array(
@@ -340,6 +391,35 @@ class ExplorationManager(Node):
         if not self.frontier_candidates:
             return None
 
+        # Remove candidates that are close to previously
+        # failed navigation goals
+        valid_candidates = []
+
+        for candidate in self.frontier_candidates:
+
+            if self.is_failed_region(candidate):
+
+                self.get_logger().info(
+                    f'Skipping failed region: '
+                    f'x={candidate.position.x:.2f} m, '
+                    f'y={candidate.position.y:.2f} m'
+                )
+
+                continue
+
+            valid_candidates.append(candidate)
+
+        # Stop if all current candidates are within
+        # previously failed regions
+        if not valid_candidates:
+
+            self.get_logger().warn(
+                'No valid frontier candidates remain '
+                'after failed-region filtering'
+            )
+
+            return None
+
         robot_position = self.get_robot_position()
 
         # Cannot evaluate candidates until robot pose is known
@@ -351,9 +431,9 @@ class ExplorationManager(Node):
         distances = []
         information_gains = []
 
-        # First calculate the raw values for every
+        # Calculate raw values for every valid
         # frontier candidate
-        for candidate in self.frontier_candidates:
+        for candidate in valid_candidates:
 
             distance = self.calculate_distance(
                 candidate,
@@ -368,6 +448,7 @@ class ExplorationManager(Node):
             )
 
             distances.append(distance)
+
             information_gains.append(
                 information_gain
             )
@@ -391,9 +472,10 @@ class ExplorationManager(Node):
         best_distance = None
         best_information = None
 
-        # Calculate the utility score for every candidate
+        # Calculate the utility score for every
+        # valid candidate
         for index, candidate in enumerate(
-            self.frontier_candidates
+            valid_candidates
         ):
 
             score = (
