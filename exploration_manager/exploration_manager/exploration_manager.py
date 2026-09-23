@@ -1,10 +1,13 @@
 import math
 
+import numpy as np
 import rclpy
+
 from rclpy.node import Node
 from rclpy.time import Time
 
 from geometry_msgs.msg import PoseArray
+from nav_msgs.msg import OccupancyGrid
 from tf2_ros import Buffer, TransformListener
 
 
@@ -15,6 +18,10 @@ class ExplorationManager(Node):
 
         # Store the most recent frontier candidates
         self.frontier_candidates = []
+
+        # Store the latest occupancy grid map
+        self.map_array = None
+        self.map_msg = None
 
         # Store the current exploration state
         self.state = 'WAITING_FOR_DATA'
@@ -28,6 +35,14 @@ class ExplorationManager(Node):
             PoseArray,
             '/frontier_candidates',
             self.frontier_candidates_callback,
+            10
+        )
+
+        # Subscribe to the SLAM occupancy grid
+        self.map_subscription = self.create_subscription(
+            OccupancyGrid,
+            '/map',
+            self.map_callback,
             10
         )
 
@@ -62,16 +77,50 @@ class ExplorationManager(Node):
             f'frontier candidates'
         )
 
-        # Allow exploration to begin once frontier
-        # information has been received
+        # Check whether all required exploration data
+        # has now been received
+        self.update_ready_state()
+
+    def map_callback(self, msg):
+
+        # Store the complete map message because its
+        # resolution and origin will be needed later
+        self.map_msg = msg
+
+        # Convert the 1D OccupancyGrid data into
+        # a 2D NumPy array
+        self.map_array = np.array(
+            msg.data
+        ).reshape(
+            (
+                msg.info.height,
+                msg.info.width
+            )
+        )
+
+        self.get_logger().info(
+            f'Received map: '
+            f'{msg.info.width} x {msg.info.height} cells'
+        )
+
+        # Check whether all required exploration data
+        # has now been received
+        self.update_ready_state()
+
+    def update_ready_state(self):
+
+        # Exploration can begin only when both:
+        # 1. frontier candidates are available
+        # 2. an occupancy map has been received
         if (
             self.state == 'WAITING_FOR_DATA'
             and self.frontier_candidates
+            and self.map_array is not None
         ):
             self.state = 'READY'
 
             self.get_logger().info(
-                'Frontier data received. '
+                'Map and frontier data received. '
                 'Exploration manager is ready.'
             )
 
