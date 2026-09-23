@@ -3,11 +3,13 @@ import math
 import numpy as np
 import rclpy
 
+from rclpy.action import ActionClient
 from rclpy.node import Node
 from rclpy.time import Time
 
 from geometry_msgs.msg import PoseArray
 from nav_msgs.msg import OccupancyGrid
+from nav2_msgs.action import NavigateToPose
 from tf2_ros import Buffer, TransformListener
 
 
@@ -85,6 +87,14 @@ class ExplorationManager(Node):
         self.tf_listener = TransformListener(
             self.tf_buffer,
             self
+        )
+
+        # Action client used to send exploration goals
+        # to the Nav2 navigation system
+        self.navigation_client = ActionClient(
+            self,
+            NavigateToPose,
+            'navigate_to_pose'
         )
 
         # Run the exploration check once per second
@@ -510,6 +520,100 @@ class ExplorationManager(Node):
             best_information
         )
 
+    def send_navigation_goal(self, candidate):
+
+        # Check whether the Nav2 NavigateToPose
+        # action server is currently available
+        if not self.navigation_client.wait_for_server(
+            timeout_sec=1.0
+        ):
+
+            self.get_logger().warn(
+                'Nav2 NavigateToPose action server '
+                'is not available'
+            )
+
+            return False
+
+        # Create a new Nav2 navigation goal
+        goal_msg = NavigateToPose.Goal()
+
+        # The frontier coordinates are expressed
+        # relative to the SLAM map
+        goal_msg.pose.header.frame_id = 'map'
+
+        goal_msg.pose.header.stamp = (
+            self.get_clock().now().to_msg()
+        )
+
+        # Copy the selected frontier pose into
+        # the Nav2 goal
+        goal_msg.pose.pose = candidate
+
+        # Check that the goal orientation contains
+        # a valid quaternion
+        orientation = goal_msg.pose.pose.orientation
+
+        if (
+            orientation.x == 0.0
+            and orientation.y == 0.0
+            and orientation.z == 0.0
+            and orientation.w == 0.0
+        ):
+            # Identity quaternion represents zero rotation
+            orientation.w = 1.0
+
+        self.get_logger().info(
+            f'Sending navigation goal: '
+            f'x={candidate.position.x:.2f} m, '
+            f'y={candidate.position.y:.2f} m'
+        )
+
+        # Send the navigation request asynchronously
+        send_goal_future = (
+            self.navigation_client.send_goal_async(
+                goal_msg
+            )
+        )
+
+        # Run navigation_goal_response() when Nav2
+        # responds to the request
+        send_goal_future.add_done_callback(
+            self.navigation_goal_response
+        )
+
+        return True
+
+    def navigation_goal_response(self, future):
+
+        # Retrieve the Nav2 goal handle
+        goal_handle = future.result()
+
+        # Nav2 may reject a requested goal before
+        # navigation actually begins
+        if not goal_handle.accepted:
+
+            self.get_logger().warn(
+                'Navigation goal was rejected by Nav2'
+            )
+
+            # Allow frontier selection to occur again
+            self.state = 'READY'
+
+            return
+
+        self.get_logger().info(
+            'Navigation goal accepted by Nav2'
+        )
+
+        # The robot is now travelling toward
+        # the selected frontier
+        self.state = 'NAVIGATING'
+
+        self.get_logger().info(
+            'Exploration state changed to NAVIGATING'
+        )
+
     def exploration_callback(self):
 
         # Only select a new frontier when the exploration
@@ -542,12 +646,27 @@ class ExplorationManager(Node):
         )
 
         # Prevent another frontier from being selected
-        # while this goal is active
+        # while this goal is being sent to Nav2
         self.state = 'GOAL_SELECTED'
 
         self.get_logger().info(
             'Exploration state changed to GOAL_SELECTED'
         )
+
+        # Send the selected frontier to Nav2
+        goal_sent = self.send_navigation_goal(
+            self.current_goal
+        )
+
+        # If Nav2 is currently unavailable, return
+        # to READY so another attempt can be made later
+        if not goal_sent:
+
+            self.state = 'READY'
+
+            self.get_logger().info(
+                'Exploration state returned to READY'
+            )
 
 
 def main(args=None):
