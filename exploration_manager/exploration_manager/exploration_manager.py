@@ -3,6 +3,7 @@ import math
 import numpy as np
 import rclpy
 
+from action_msgs.msg import GoalStatus
 from rclpy.action import ActionClient
 from rclpy.node import Node
 from rclpy.time import Time
@@ -62,6 +63,13 @@ class ExplorationManager(Node):
         # Store the currently selected frontier goal
         self.current_goal = None
 
+        # Store the active Nav2 goal handle
+        self.current_goal_handle = None
+
+        # Store the future used to obtain the
+        # final Nav2 navigation result
+        self.navigation_result_future = None
+
         # Subscribe to the frontier candidates produced by
         # the frontier detector
         self.candidate_subscription = self.create_subscription(
@@ -118,6 +126,28 @@ class ExplorationManager(Node):
             f'frontier candidates'
         )
 
+        # After successful navigation, wait for a fresh
+        # frontier message before selecting another goal
+        if self.state == 'WAITING_FOR_UPDATE':
+
+            if self.frontier_candidates:
+
+                self.state = 'READY'
+
+                self.get_logger().info(
+                    'New frontier data received after '
+                    'navigation. Exploration is ready.'
+                )
+
+            else:
+
+                self.get_logger().info(
+                    'New frontier update contains no '
+                    'candidates.'
+                )
+
+            return
+
         # Check whether all required exploration data
         # has now been received
         self.update_ready_state()
@@ -150,7 +180,7 @@ class ExplorationManager(Node):
 
     def update_ready_state(self):
 
-        # Exploration can begin only when both:
+        # Initial exploration can begin only when both:
         # 1. frontier candidates are available
         # 2. an occupancy map has been received
         if (
@@ -586,8 +616,19 @@ class ExplorationManager(Node):
 
     def navigation_goal_response(self, future):
 
-        # Retrieve the Nav2 goal handle
-        goal_handle = future.result()
+        try:
+            # Retrieve the Nav2 goal handle
+            goal_handle = future.result()
+
+        except Exception as error:
+
+            self.get_logger().error(
+                f'Failed to send navigation goal: {error}'
+            )
+
+            self.state = 'READY'
+
+            return
 
         # Nav2 may reject a requested goal before
         # navigation actually begins
@@ -597,7 +638,18 @@ class ExplorationManager(Node):
                 'Navigation goal was rejected by Nav2'
             )
 
-            # Allow frontier selection to occur again
+            # A rejected goal is treated as an
+            # unusable frontier location
+            if self.current_goal is not None:
+
+                self.record_failed_goal(
+                    self.current_goal
+                )
+
+            self.current_goal = None
+            self.current_goal_handle = None
+
+            # Allow another frontier to be selected
             self.state = 'READY'
 
             return
@@ -606,12 +658,120 @@ class ExplorationManager(Node):
             'Navigation goal accepted by Nav2'
         )
 
+        # Store the goal handle so the active
+        # navigation request can be tracked
+        self.current_goal_handle = goal_handle
+
         # The robot is now travelling toward
         # the selected frontier
         self.state = 'NAVIGATING'
 
         self.get_logger().info(
             'Exploration state changed to NAVIGATING'
+        )
+
+        # Ask Nav2 for the final navigation result
+        self.navigation_result_future = (
+            goal_handle.get_result_async()
+        )
+
+        # Run navigation_result_callback() when
+        # navigation finishes
+        self.navigation_result_future.add_done_callback(
+            self.navigation_result_callback
+        )
+
+    def navigation_result_callback(self, future):
+
+        try:
+            result = future.result()
+
+        except Exception as error:
+
+            self.get_logger().error(
+                f'Failed to obtain navigation result: {error}'
+            )
+
+            # Treat an unknown result failure as a
+            # failed navigation attempt
+            if self.current_goal is not None:
+
+                self.record_failed_goal(
+                    self.current_goal
+                )
+
+            self.current_goal = None
+            self.current_goal_handle = None
+            self.navigation_result_future = None
+
+            self.state = 'READY'
+
+            return
+
+        status = result.status
+
+        # Nav2 reports STATUS_SUCCEEDED when the
+        # robot successfully reaches the goal
+        if status == GoalStatus.STATUS_SUCCEEDED:
+
+            self.get_logger().info(
+                'Navigation goal succeeded'
+            )
+
+            # Clear the completed goal
+            self.current_goal = None
+            self.current_goal_handle = None
+            self.navigation_result_future = None
+
+            # Do not immediately reuse an old frontier list.
+            # Wait until the frontier detector publishes
+            # another set based on the updated map.
+            self.state = 'WAITING_FOR_UPDATE'
+
+            self.get_logger().info(
+                'Waiting for updated frontier data'
+            )
+
+            return
+
+        # Any non-success result is treated as a failed
+        # navigation attempt for frontier selection
+        if status == GoalStatus.STATUS_CANCELED:
+
+            status_name = 'CANCELED'
+
+        elif status == GoalStatus.STATUS_ABORTED:
+
+            status_name = 'ABORTED'
+
+        else:
+
+            status_name = f'STATUS_{status}'
+
+        self.get_logger().warn(
+            f'Navigation goal failed: {status_name}'
+        )
+
+        # Store the failed region so the same physical
+        # area is not repeatedly selected
+        if self.current_goal is not None:
+
+            self.record_failed_goal(
+                self.current_goal
+            )
+
+        # Clear the completed navigation request
+        self.current_goal = None
+        self.current_goal_handle = None
+        self.navigation_result_future = None
+
+        # The current frontier list may already contain
+        # alternative candidates. Failed-region filtering
+        # will prevent the failed location being reused.
+        self.state = 'READY'
+
+        self.get_logger().info(
+            'Exploration state returned to READY'
         )
 
     def exploration_callback(self):
