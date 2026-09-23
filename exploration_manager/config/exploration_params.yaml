@@ -1,0 +1,9 @@
+exploration_manager:
+  ros__parameters:
+    information_radius: 1.0
+    information_weight: 0.6
+    distance_weight: 0.4
+    failed_region_radius: 0.5
+    required_empty_updates: 3
+    map_frame: map
+    robot_frame: base_link
