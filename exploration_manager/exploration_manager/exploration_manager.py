@@ -30,6 +30,20 @@ class ExplorationManager(Node):
             1.0
         ).value
 
+        # Weight given to information gain when
+        # scoring frontier candidates
+        self.information_weight = self.declare_parameter(
+            'information_weight',
+            0.6
+        ).value
+
+        # Weight given to travel distance when
+        # scoring frontier candidates
+        self.distance_weight = self.declare_parameter(
+            'distance_weight',
+            0.4
+        ).value
+
         # Store the current exploration state
         self.state = 'WAITING_FOR_DATA'
 
@@ -150,7 +164,12 @@ class ExplorationManager(Node):
             # TF may not yet be available
             return None
 
-    def calculate_distance(self, candidate, robot_x, robot_y):
+    def calculate_distance(
+        self,
+        candidate,
+        robot_x,
+        robot_y
+    ):
 
         # Calculate straight-line distance from the robot
         # to the frontier candidate
@@ -200,8 +219,17 @@ class ExplorationManager(Node):
         )
 
         # Convert metres into grid indices
-        col = int(math.floor(local_x / resolution))
-        row = int(math.floor(local_y / resolution))
+        col = int(
+            math.floor(
+                local_x / resolution
+            )
+        )
+
+        row = int(
+            math.floor(
+                local_y / resolution
+            )
+        )
 
         # Reject coordinates outside the map
         if (
@@ -281,7 +309,32 @@ class ExplorationManager(Node):
 
         return unknown_count
 
-    def select_nearest_candidate(self):
+    def normalise_values(self, values, equal_value):
+
+        values = np.array(
+            values,
+            dtype=float
+        )
+
+        minimum = np.min(values)
+        maximum = np.max(values)
+
+        # If every candidate has the same value,
+        # this quantity should not favour any candidate
+        if maximum == minimum:
+            return np.full(
+                len(values),
+                equal_value,
+                dtype=float
+            )
+
+        return (
+            values - minimum
+        ) / (
+            maximum - minimum
+        )
+
+    def select_best_candidate(self):
 
         # Cannot select anything if there are no frontiers
         if not self.frontier_candidates:
@@ -289,16 +342,17 @@ class ExplorationManager(Node):
 
         robot_position = self.get_robot_position()
 
-        # Cannot compare distances until the robot pose is known
+        # Cannot evaluate candidates until robot pose is known
         if robot_position is None:
             return None
 
         robot_x, robot_y = robot_position
 
-        nearest_candidate = None
-        nearest_distance = float('inf')
+        distances = []
+        information_gains = []
 
-        # Compare every current frontier candidate
+        # First calculate the raw values for every
+        # frontier candidate
         for candidate in self.frontier_candidates:
 
             distance = self.calculate_distance(
@@ -307,27 +361,72 @@ class ExplorationManager(Node):
                 robot_y
             )
 
-            # Calculate information gain for debugging
-            # and later frontier scoring
             information_gain = (
                 self.calculate_information_gain(
                     candidate
                 )
             )
 
+            distances.append(distance)
+            information_gains.append(
+                information_gain
+            )
+
+        # Normalise information gain to values
+        # between 0 and 1
+        normalised_information = self.normalise_values(
+            information_gains,
+            1.0
+        )
+
+        # Normalise distance to values
+        # between 0 and 1
+        normalised_distance = self.normalise_values(
+            distances,
+            0.0
+        )
+
+        best_candidate = None
+        best_score = -float('inf')
+        best_distance = None
+        best_information = None
+
+        # Calculate the utility score for every candidate
+        for index, candidate in enumerate(
+            self.frontier_candidates
+        ):
+
+            score = (
+                self.information_weight
+                * normalised_information[index]
+                -
+                self.distance_weight
+                * normalised_distance[index]
+            )
+
             self.get_logger().info(
                 f'Candidate: '
                 f'x={candidate.position.x:.2f} m, '
                 f'y={candidate.position.y:.2f} m, '
-                f'distance={distance:.2f} m, '
-                f'information={information_gain} unknown cells'
+                f'distance={distances[index]:.2f} m, '
+                f'information={information_gains[index]} cells, '
+                f'score={score:.3f}'
             )
 
-            if distance < nearest_distance:
-                nearest_distance = distance
-                nearest_candidate = candidate
+            # Keep the candidate with the highest score
+            if score > best_score:
 
-        return nearest_candidate, nearest_distance
+                best_score = score
+                best_candidate = candidate
+                best_distance = distances[index]
+                best_information = information_gains[index]
+
+        return (
+            best_candidate,
+            best_score,
+            best_distance,
+            best_information
+        )
 
     def exploration_callback(self):
 
@@ -336,21 +435,28 @@ class ExplorationManager(Node):
         if self.state != 'READY':
             return
 
-        result = self.select_nearest_candidate()
+        result = self.select_best_candidate()
 
         if result is None:
             return
 
-        nearest_candidate, nearest_distance = result
+        (
+            best_candidate,
+            best_score,
+            best_distance,
+            best_information
+        ) = result
 
         # Store the selected frontier as the current goal
-        self.current_goal = nearest_candidate
+        self.current_goal = best_candidate
 
         self.get_logger().info(
             f'Selected frontier: '
-            f'x={nearest_candidate.position.x:.2f} m, '
-            f'y={nearest_candidate.position.y:.2f} m, '
-            f'distance={nearest_distance:.2f} m'
+            f'x={best_candidate.position.x:.2f} m, '
+            f'y={best_candidate.position.y:.2f} m, '
+            f'distance={best_distance:.2f} m, '
+            f'information={best_information} cells, '
+            f'score={best_score:.3f}'
         )
 
         # Prevent another frontier from being selected
