@@ -1,0 +1,152 @@
+import math
+
+import rclpy
+from rclpy.node import Node
+from rclpy.time import Time
+
+from geometry_msgs.msg import PoseArray
+from tf2_ros import Buffer, TransformListener
+
+
+class ExplorationManager(Node):
+
+    def __init__(self):
+        super().__init__('exploration_manager')
+
+        # Store the most recent frontier candidates
+        self.frontier_candidates = []
+
+        # Subscribe to the frontier candidates produced by
+        # the frontier detector
+        self.candidate_subscription = self.create_subscription(
+            PoseArray,
+            '/frontier_candidates',
+            self.frontier_candidates_callback,
+            10
+        )
+
+        # TF buffer stores coordinate transforms
+        self.tf_buffer = Buffer()
+
+        # TF listener receives transforms and stores them
+        # in the TF buffer
+        self.tf_listener = TransformListener(
+            self.tf_buffer,
+            self
+        )
+
+        # Run the exploration check once per second
+        self.exploration_timer = self.create_timer(
+            1.0,
+            self.exploration_callback
+        )
+
+        self.get_logger().info(
+            'Exploration manager node started'
+        )
+
+    def frontier_candidates_callback(self, msg):
+
+        # Replace the previous frontier list with the
+        # newest set of frontier candidates
+        self.frontier_candidates = list(msg.poses)
+
+        self.get_logger().info(
+            f'Received {len(self.frontier_candidates)} '
+            f'frontier candidates'
+        )
+
+    def get_robot_position(self):
+
+        try:
+            # Find the robot position relative to the map frame
+            transform = self.tf_buffer.lookup_transform(
+                'map',
+                'base_link',
+                Time()
+            )
+
+            robot_x = transform.transform.translation.x
+            robot_y = transform.transform.translation.y
+
+            return robot_x, robot_y
+
+        except Exception:
+            # TF may not yet be available
+            return None
+
+    def calculate_distance(self, candidate, robot_x, robot_y):
+
+        # Calculate straight-line distance from the robot
+        # to the frontier candidate
+        distance = math.hypot(
+            candidate.position.x - robot_x,
+            candidate.position.y - robot_y
+        )
+
+        return distance
+
+    def select_nearest_candidate(self):
+
+        # Cannot select anything if there are no frontiers
+        if not self.frontier_candidates:
+            return None
+
+        robot_position = self.get_robot_position()
+
+        # Cannot compare distances until the robot pose is known
+        if robot_position is None:
+            return None
+
+        robot_x, robot_y = robot_position
+
+        nearest_candidate = None
+        nearest_distance = float('inf')
+
+        # Compare every current frontier candidate
+        for candidate in self.frontier_candidates:
+
+            distance = self.calculate_distance(
+                candidate,
+                robot_x,
+                robot_y
+            )
+
+            if distance < nearest_distance:
+                nearest_distance = distance
+                nearest_candidate = candidate
+
+        return nearest_candidate, nearest_distance
+
+    def exploration_callback(self):
+
+        result = self.select_nearest_candidate()
+
+        if result is None:
+            return
+
+        nearest_candidate, nearest_distance = result
+
+        self.get_logger().info(
+            f'Nearest frontier: '
+            f'x={nearest_candidate.position.x:.2f} m, '
+            f'y={nearest_candidate.position.y:.2f} m, '
+            f'distance={nearest_distance:.2f} m'
+        )
+
+
+def main(args=None):
+
+    rclpy.init(args=args)
+
+    node = ExplorationManager()
+
+    rclpy.spin(node)
+
+    node.destroy_node()
+
+    rclpy.shutdown()
+
+
+if __name__ == '__main__':
+    main()
