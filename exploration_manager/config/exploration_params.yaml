@@ -1,0 +1,34 @@
+frontier_detector:
+  ros__parameters:
+
+    # A known-free cell must border at least this many
+    # unknown cells to be considered a frontier.
+    min_unknown_neighbours: 3
+
+    # Minimum number of connected frontier cells
+    # required to keep a frontier cluster.
+    min_frontier_size: 3
+
+
+exploration_manager:
+  ros__parameters:
+
+    # Radius around a frontier candidate used to
+    # calculate information gain.
+    information_radius: 1.0
+
+    # Weight given to information gain in the
+    # frontier utility score.
+    information_weight: 0.6
+
+    # Weight given to travel distance in the
+    # frontier utility score.
+    distance_weight: 0.4
+
+    # Radius around a failed navigation goal
+    # within which future candidates are rejected.
+    failed_region_radius: 0.5
+
+    # Number of consecutive empty frontier updates
+    # required before exploration is declared complete.
+    required_empty_updates: 3
