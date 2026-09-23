@@ -23,6 +23,13 @@ class ExplorationManager(Node):
         self.map_array = None
         self.map_msg = None
 
+        # Radius around each frontier candidate used
+        # to estimate how much unknown space is nearby
+        self.information_radius = self.declare_parameter(
+            'information_radius',
+            1.0
+        ).value
+
         # Store the current exploration state
         self.state = 'WAITING_FOR_DATA'
 
@@ -84,7 +91,7 @@ class ExplorationManager(Node):
     def map_callback(self, msg):
 
         # Store the complete map message because its
-        # resolution and origin will be needed later
+        # resolution and origin are needed later
         self.map_msg = msg
 
         # Convert the 1D OccupancyGrid data into
@@ -154,6 +161,126 @@ class ExplorationManager(Node):
 
         return distance
 
+    def world_to_cell(self, world_x, world_y):
+
+        # Cannot perform the conversion without map metadata
+        if self.map_msg is None:
+            return None
+
+        origin = self.map_msg.info.origin
+        resolution = self.map_msg.info.resolution
+
+        # Get the yaw rotation of the map origin
+        orientation = origin.orientation
+
+        yaw = math.atan2(
+            2.0 * (
+                orientation.w * orientation.z
+                + orientation.x * orientation.y
+            ),
+            1.0 - 2.0 * (
+                orientation.y ** 2
+                + orientation.z ** 2
+            )
+        )
+
+        # Position relative to the map origin
+        delta_x = world_x - origin.position.x
+        delta_y = world_y - origin.position.y
+
+        # Rotate the world position into the map frame
+        local_x = (
+            delta_x * math.cos(yaw)
+            + delta_y * math.sin(yaw)
+        )
+
+        local_y = (
+            -delta_x * math.sin(yaw)
+            + delta_y * math.cos(yaw)
+        )
+
+        # Convert metres into grid indices
+        col = int(math.floor(local_x / resolution))
+        row = int(math.floor(local_y / resolution))
+
+        # Reject coordinates outside the map
+        if (
+            row < 0
+            or row >= self.map_msg.info.height
+            or col < 0
+            or col >= self.map_msg.info.width
+        ):
+            return None
+
+        return row, col
+
+    def calculate_information_gain(self, candidate):
+
+        # Convert candidate world coordinates back
+        # into occupancy-grid coordinates
+        cell = self.world_to_cell(
+            candidate.position.x,
+            candidate.position.y
+        )
+
+        if cell is None:
+            return 0
+
+        row, col = cell
+
+        resolution = self.map_msg.info.resolution
+
+        # Convert the information radius from metres
+        # into grid cells
+        radius_cells = int(
+            math.ceil(
+                self.information_radius / resolution
+            )
+        )
+
+        rows, cols = self.map_array.shape
+
+        unknown_count = 0
+
+        # Search cells around the frontier candidate
+        for check_row in range(
+            max(0, row - radius_cells),
+            min(rows, row + radius_cells + 1)
+        ):
+            for check_col in range(
+                max(0, col - radius_cells),
+                min(cols, col + radius_cells + 1)
+            ):
+
+                # Calculate physical distance from the
+                # candidate to this map cell
+                row_distance = (
+                    check_row - row
+                ) * resolution
+
+                col_distance = (
+                    check_col - col
+                ) * resolution
+
+                distance = math.hypot(
+                    row_distance,
+                    col_distance
+                )
+
+                # Only count cells inside the circular
+                # information radius
+                if distance > self.information_radius:
+                    continue
+
+                # Unknown occupancy-grid cells have value -1
+                if self.map_array[
+                    check_row,
+                    check_col
+                ] == -1:
+                    unknown_count += 1
+
+        return unknown_count
+
     def select_nearest_candidate(self):
 
         # Cannot select anything if there are no frontiers
@@ -178,6 +305,22 @@ class ExplorationManager(Node):
                 candidate,
                 robot_x,
                 robot_y
+            )
+
+            # Calculate information gain for debugging
+            # and later frontier scoring
+            information_gain = (
+                self.calculate_information_gain(
+                    candidate
+                )
+            )
+
+            self.get_logger().info(
+                f'Candidate: '
+                f'x={candidate.position.x:.2f} m, '
+                f'y={candidate.position.y:.2f} m, '
+                f'distance={distance:.2f} m, '
+                f'information={information_gain} unknown cells'
             )
 
             if distance < nearest_distance:
