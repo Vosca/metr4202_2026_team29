@@ -16,6 +16,12 @@ class ExplorationManager(Node):
         # Store the most recent frontier candidates
         self.frontier_candidates = []
 
+        # Store the current exploration state
+        self.state = 'WAITING_FOR_DATA'
+
+        # Store the currently selected frontier goal
+        self.current_goal = None
+
         # Subscribe to the frontier candidates produced by
         # the frontier detector
         self.candidate_subscription = self.create_subscription(
@@ -55,6 +61,19 @@ class ExplorationManager(Node):
             f'Received {len(self.frontier_candidates)} '
             f'frontier candidates'
         )
+
+        # Allow exploration to begin once frontier
+        # information has been received
+        if (
+            self.state == 'WAITING_FOR_DATA'
+            and self.frontier_candidates
+        ):
+            self.state = 'READY'
+
+            self.get_logger().info(
+                'Frontier data received. '
+                'Exploration manager is ready.'
+            )
 
     def get_robot_position(self):
 
@@ -120,6 +139,11 @@ class ExplorationManager(Node):
 
     def exploration_callback(self):
 
+        # Only select a new frontier when the exploration
+        # manager is ready for a new goal
+        if self.state != 'READY':
+            return
+
         result = self.select_nearest_candidate()
 
         if result is None:
@@ -127,11 +151,22 @@ class ExplorationManager(Node):
 
         nearest_candidate, nearest_distance = result
 
+        # Store the selected frontier as the current goal
+        self.current_goal = nearest_candidate
+
         self.get_logger().info(
-            f'Nearest frontier: '
+            f'Selected frontier: '
             f'x={nearest_candidate.position.x:.2f} m, '
             f'y={nearest_candidate.position.y:.2f} m, '
             f'distance={nearest_distance:.2f} m'
+        )
+
+        # Prevent another frontier from being selected
+        # while this goal is active
+        self.state = 'GOAL_SELECTED'
+
+        self.get_logger().info(
+            'Exploration state changed to GOAL_SELECTED'
         )
 
 
