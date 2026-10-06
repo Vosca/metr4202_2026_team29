@@ -7,7 +7,7 @@ import numpy as np
 
 # message imports
 from visualization_msgs.msg import Marker
-from geometry_msgs.msg import Point
+from geometry_msgs.msg import Point, Pose, PoseArray
 
 
 class FrontierDetector(Node):
@@ -50,6 +50,13 @@ class FrontierDetector(Node):
         self.representative_publisher = self.create_publisher(
             Marker,
             '/frontier_representatives',
+            10
+        )
+
+        # Send the same representatives to the exploration manager
+        self.candidate_publisher = self.create_publisher(
+            PoseArray,
+            '/frontier_candidates',
             10
         )
 
@@ -218,6 +225,19 @@ class FrontierDetector(Node):
         marker.color.b = 0.0
 
         self.representative_publisher.publish(marker)
+
+        candidates = PoseArray()
+        candidates.header = marker.header
+
+        for point in marker.points:
+            pose = Pose()
+            pose.position.x = point.x
+            pose.position.y = point.y
+            pose.orientation.w = 1.0
+            candidates.poses.append(pose)
+
+        # Publish empty updates too, so the manager can detect completion
+        self.candidate_publisher.publish(candidates)
 
     def create_point_marker(self, cells, msg):
 
