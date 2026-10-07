@@ -8,7 +8,7 @@ import rclpy
 from rclpy.node import Node
 
 import cv2
-from cv_bridge import CvBridge
+import ros2_numpy as rnp
 
 import tf_transformations
 
@@ -17,7 +17,13 @@ from geometry_msgs.msg import PoseArray, Pose, TransformStamped
 
 from tf2_ros import TransformBroadcaster
 
+def main(args=None):
+    rclpy.init(args=args)
+    detector = ArucoDetectorNode()
+    rclpy.spin(detector)
 
+if __name__ == '__main__':
+    main()
 
 class ArucoDetectorNode(Node):
     def __init__(self):
@@ -25,9 +31,9 @@ class ArucoDetectorNode(Node):
 
         # Set up the ArUco Detector uisng OpenCV
         self.marker_size = 0.1 # in metres
-        self.aruco_dict_id = "DICT_6X6_250"
-        self.aruco_dict = cv2.aruco.Dictionary_get(self.aruco_dict_id)
-        self.aruco_params = cv2.aruco.DetectorParameters_create()
+        self.aruco_dict_id = cv2.aruco.DICT_6X6_250
+        self.aruco_dict = cv2.aruco.getPredefinedDictionary(self.aruco_dict_id)
+        self.aruco_params = cv2.aruco.DetectorParameters()
 
         # Camera parameters - might need more later, will find out
         self.img_msg = None
@@ -35,8 +41,6 @@ class ArucoDetectorNode(Node):
         self.cam_matrix = None
         self.distorsion = None
 
-        # CvBridge converts ROS2 Image to CV2 image
-        self.bridge = CvBridge()
         
         # Subcriptions to the CameraInfo and Image topics
         self.camera_info_sub = self.create_subscription(
@@ -60,7 +64,7 @@ class ArucoDetectorNode(Node):
 
     def image_cb(self, image_msg):
         #Convert the image to the CV2 image
-        cv2_image = self.bridge.imgmsg_to_cv2(image_msg)
+        cv2_image = rnp.numpify(image_msg)
 
         #Detect any Aruco markers in the image
         corners, ids, rejected = cv2.aruco.detectMarkers(cv2_image, self.aruco_dict, parameters=self.aruco_params)
@@ -75,10 +79,9 @@ class ArucoDetectorNode(Node):
                 marker_transform.header = self.camera_header
 
                 # Child frame corresponds to this marker
-                marker_frame_id = f"marker_{id}"
+                marker_transform.child_frame_id = f"marker_{id}"
 
-                # Translation of the transform from tvecs
-                marker_transform.child_frame_id = marker_frame_id
+                # Translation of the transform from tvecss
                 marker_transform.transform.translation.x = tvecs[i][0][0]
                 marker_transform.transform.translation.y = tvecs[i][0][1]
                 marker_transform.transform.translation.z = tvecs[i][0][2]
