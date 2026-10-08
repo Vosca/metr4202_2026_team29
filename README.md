@@ -1,4 +1,4 @@
-# metr4202-g29
+# metr4202 2026 Team 29
 Collaboration space for Group 29 work on the Turtlebot for METR4202
 
 ## Setup
