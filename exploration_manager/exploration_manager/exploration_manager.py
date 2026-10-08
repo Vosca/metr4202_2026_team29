@@ -98,6 +98,17 @@ class ExplorationManager(Node):
             5.0
         ).value
 
+        # Skip a nearby target when translation stalls, even while turning.
+        self.near_goal_radius = self.declare_parameter(
+            'near_goal_radius', 0.30
+        ).value
+        self.near_goal_stall_distance = self.declare_parameter(
+            'near_goal_stall_distance', 0.10
+        ).value
+        self.near_goal_stall_timeout = self.declare_parameter(
+            'near_goal_stall_timeout', 10.0
+        ).value
+
         # Only one recovery attempt per frontier by default.
         self.max_recovery_attempts = self.declare_parameter(
             'max_recovery_attempts',
@@ -153,6 +164,9 @@ class ExplorationManager(Node):
         self.last_progress_pose = None
         self.last_progress_time = None
 
+        self.near_goal_anchor = None
+        self.near_goal_since = None
+
         # Number of recovery attempts made for the current frontier.
         self.recovery_attempts = 0
 
@@ -168,6 +182,7 @@ class ExplorationManager(Node):
         # READY
         # GOAL_SELECTED
         # NAVIGATING
+        # SKIPPING_FRONTIER
         # RECOVERING
         # WAITING_FOR_UPDATE
         # EXPLORATION_COMPLETE
@@ -742,6 +757,9 @@ class ExplorationManager(Node):
 
         self.state = 'NAVIGATING'
 
+        self.near_goal_anchor = None
+        self.near_goal_since = None
+
         # Start a new progress-monitoring window.
         self.last_progress_pose = None
         self.last_progress_time = None
@@ -756,7 +774,7 @@ class ExplorationManager(Node):
         )
 
         result_future.add_done_callback(
-            self.navigation_result_cb
+            lambda future: self.navigation_result_cb(future, goal_handle)
         )
 
     # ================================================================
@@ -765,8 +783,13 @@ class ExplorationManager(Node):
 
     def navigation_result_cb(
         self,
-        future
+        future,
+        goal_handle=None
     ):
+
+        # A result from an older goal must not affect the current target.
+        if goal_handle is not None and goal_handle is not self.navigation_goal_handle:
+            return
 
         try:
 
@@ -781,10 +804,23 @@ class ExplorationManager(Node):
                 f'{error}'
             )
 
+            # Do not start another action if termination cannot be confirmed.
+            if self.state == 'SKIPPING_FRONTIER':
+                return
+
             self.start_recovery(
                 cancel_navigation=False
             )
 
+            return
+
+        if self.state == 'SKIPPING_FRONTIER':
+            if status in (
+                GoalStatus.STATUS_CANCELED,
+                GoalStatus.STATUS_SUCCEEDED,
+                GoalStatus.STATUS_ABORTED,
+            ):
+                self.fail_current_frontier()
             return
 
         # A cancellation during recovery is intentional.
@@ -845,11 +881,17 @@ class ExplorationManager(Node):
         robot_pose = self.get_robot_pose()
 
         if robot_pose is None:
+            self.near_goal_anchor = None
+            self.near_goal_since = None
             return
 
         x, y, yaw = robot_pose
 
         now = self.get_clock().now()
+
+        # Check before the general watchdog: rotation must not reset this timer.
+        if self.check_near_goal_stall(x, y, now):
+            return
 
         # First measurement after starting/restarting navigation.
         if self.last_progress_pose is None:
@@ -932,6 +974,65 @@ class ExplorationManager(Node):
             self.start_recovery(
                 cancel_navigation=True
             )
+
+    def check_near_goal_stall(self, x, y, now):
+        """Skip a target after sustained lack of translation nearby."""
+        if self.current_goal is None or math.hypot(
+            x - self.current_goal.position.x,
+            y - self.current_goal.position.y,
+        ) > self.near_goal_radius:
+            self.near_goal_anchor = None
+            self.near_goal_since = None
+            return False
+
+        if self.near_goal_anchor is None or math.hypot(
+            x - self.near_goal_anchor[0], y - self.near_goal_anchor[1]
+        ) >= self.near_goal_stall_distance:
+            self.near_goal_anchor = (x, y)
+            self.near_goal_since = now
+            return False
+
+        elapsed = (now - self.near_goal_since).nanoseconds / 1e9
+        if elapsed < self.near_goal_stall_timeout:
+            return False
+
+        handle = self.navigation_goal_handle
+        if handle is None:
+            return False
+
+        self.get_logger().warn(
+            f'Stalled near frontier for {elapsed:.1f} s; '
+            'cancelling navigation and skipping this region'
+        )
+        self.state = 'SKIPPING_FRONTIER'
+
+        def cancellation_failed(reason):
+            if (
+                self.navigation_goal_handle is handle
+                and self.state == 'SKIPPING_FRONTIER'
+            ):
+                self.get_logger().warn(f'Could not cancel frontier: {reason}')
+                self.state = 'NAVIGATING'
+                self.near_goal_anchor = None
+                self.near_goal_since = None
+                self.last_progress_pose = None
+                self.last_progress_time = None
+
+        def cancelled(future):
+            try:
+                response = future.result()
+                if not response.goals_canceling:
+                    cancellation_failed('cancellation rejected')
+            except Exception as error:
+                cancellation_failed(str(error))
+            # Acceptance is not completion. The navigation result callback
+            # records the failed region only after the action has terminated.
+
+        try:
+            handle.cancel_goal_async().add_done_callback(cancelled)
+        except Exception as error:
+            cancellation_failed(str(error))
+        return True
 
     # ================================================================
     # RECOVERY

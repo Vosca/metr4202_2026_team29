@@ -4,6 +4,9 @@ exploration_manager:
     information_weight: 0.6
     distance_weight: 0.4
     failed_region_radius: 0.5
+    near_goal_radius: 0.30
+    near_goal_stall_distance: 0.10
+    near_goal_stall_timeout: 10.0
     required_empty_updates: 3
     map_frame: map
     robot_frame: base_link
