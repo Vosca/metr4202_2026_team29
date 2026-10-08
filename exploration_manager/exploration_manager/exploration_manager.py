@@ -2,14 +2,23 @@ import math
 
 import numpy as np
 import rclpy
+
 from rclpy.node import Node
 from rclpy.time import Time
 from rclpy.action import ActionClient
 
 from action_msgs.msg import GoalStatus
-from geometry_msgs.msg import PoseArray
+from builtin_interfaces.msg import Duration
+
+from geometry_msgs.msg import PoseArray, Point
 from nav_msgs.msg import OccupancyGrid
-from nav2_msgs.action import NavigateToPose
+from sensor_msgs.msg import LaserScan
+
+from nav2_msgs.action import (
+    NavigateToPose,
+    Spin,
+    DriveOnHeading,
+)
 
 from tf2_ros import Buffer, TransformListener
 
@@ -19,63 +28,163 @@ class ExplorationManager(Node):
     def __init__(self):
         super().__init__('exploration_manager')
 
-        # Set the frontier scoring parameters
+        # ============================================================
+        # EXPLORATION PARAMETERS
+        # ============================================================
+
+        # Radius around a frontier used to count nearby unknown cells.
         self.information_radius = self.declare_parameter(
-            'information_radius', 1.0
+            'information_radius',
+            1.0
         ).value
 
+        # Frontier scoring:
+        # score = information benefit - travel cost
         self.information_weight = self.declare_parameter(
-            'information_weight', 0.6
+            'information_weight',
+            0.6
         ).value
 
         self.distance_weight = self.declare_parameter(
-            'distance_weight', 0.4
+            'distance_weight',
+            0.4
         ).value
 
-        # Set the failed goal and completion parameters
+        # Prevent repeated selection of frontiers close to known failures.
         self.failed_region_radius = self.declare_parameter(
-            'failed_region_radius', 0.5
+            'failed_region_radius',
+            0.5
         ).value
 
+        # Require several empty frontier updates before declaring
+        # exploration complete.
         self.required_empty_updates = self.declare_parameter(
-            'required_empty_updates', 3
+            'required_empty_updates',
+            3
         ).value
 
-        # Set the coordinate frames
+        # Coordinate frames.
         self.map_frame = self.declare_parameter(
-            'map_frame', 'map'
+            'map_frame',
+            'map'
         ).value
 
         self.robot_frame = self.declare_parameter(
-            'robot_frame', 'base_link'
+            'robot_frame',
+            'base_link'
         ).value
 
-        # Store the latest frontier and map information
+        # ============================================================
+        # STUCK DETECTION PARAMETERS
+        # ============================================================
+
+        # Robot must either move this distance...
+        self.stuck_distance = self.declare_parameter(
+            'stuck_distance',
+            0.15
+        ).value
+
+        # ...or rotate this much for progress to count.
+        self.stuck_angle = math.radians(
+            self.declare_parameter(
+                'stuck_angle_degrees',
+                20.0
+            ).value
+        )
+
+        # If neither occurs for this period, recovery starts.
+        self.stuck_timeout = self.declare_parameter(
+            'stuck_timeout',
+            5.0
+        ).value
+
+        # Only one recovery attempt per frontier by default.
+        self.max_recovery_attempts = self.declare_parameter(
+            'max_recovery_attempts',
+            1
+        ).value
+
+        # ============================================================
+        # RECOVERY PARAMETERS
+        # ============================================================
+
+        # Short movement used to create space away from obstacles.
+        self.recovery_distance = self.declare_parameter(
+            'recovery_distance',
+            0.30
+        ).value
+
+        self.recovery_speed = self.declare_parameter(
+            'recovery_speed',
+            0.08
+        ).value
+
+        # If no LiDAR direction is this clear, recovery is abandoned.
+        self.recovery_min_clearance = self.declare_parameter(
+            'recovery_min_clearance',
+            0.50
+        ).value
+
+        # ============================================================
+        # STORED DATA
+        # ============================================================
+
         self.frontier_candidates = []
+
         self.map_msg = None
         self.map_array = None
 
-        # Store failed frontier locations
+        self.latest_scan = None
+
+        # Coordinates of frontiers that were attempted and failed.
         self.failed_regions = []
 
-        # Store the currently selected navigation goal
+        # Current selected frontier.
         self.current_goal = None
 
-        # Keep track of empty frontier updates
+        # Stored Nav2 goal handle allows active navigation to be cancelled.
+        self.navigation_goal_handle = None
+
+        # Used when determining whether exploration has finished.
         self.empty_frontier_update_count = 0
 
-        # Start by waiting for map and frontier data
+        # Stores robot pose when useful progress was last detected.
+        # Format: (x, y, yaw)
+        self.last_progress_pose = None
+        self.last_progress_time = None
+
+        # Number of recovery attempts made for the current frontier.
+        self.recovery_attempts = 0
+
+        # ============================================================
+        # STATE MACHINE
+        # ============================================================
+
         self.state = 'WAITING_FOR_DATA'
 
-        # Subscribe to the frontier candidates
+        # Possible states:
+        #
+        # WAITING_FOR_DATA
+        # READY
+        # GOAL_SELECTED
+        # NAVIGATING
+        # RECOVERING
+        # WAITING_FOR_UPDATE
+        # EXPLORATION_COMPLETE
+
+        # ============================================================
+        # ROS SUBSCRIPTIONS
+        # ============================================================
+
+        # Frontier detector output.
         self.frontier_subscription = self.create_subscription(
             PoseArray,
             '/frontier_candidates',
-            self.frontier_candidates_cb,
+            self.frontier_cb,
             10
         )
 
-        # Subscribe to the occupancy grid map
+        # Occupancy grid map.
         self.map_subscription = self.create_subscription(
             OccupancyGrid,
             '/map',
@@ -83,21 +192,52 @@ class ExplorationManager(Node):
             10
         )
 
-        # Set up the TF listener to find the robot position
+        # Latest LiDAR scan used only during recovery.
+        self.scan_subscription = self.create_subscription(
+            LaserScan,
+            '/scan',
+            self.scan_cb,
+            10
+        )
+
+        # ============================================================
+        # TF
+        # ============================================================
+
         self.tf_buffer = Buffer()
+
         self.tf_listener = TransformListener(
             self.tf_buffer,
             self
         )
 
-        # Set up the Nav2 action client
+        # ============================================================
+        # NAV2 ACTION CLIENTS
+        # ============================================================
+
         self.navigation_client = ActionClient(
             self,
             NavigateToPose,
             'navigate_to_pose'
         )
 
-        # Run the exploration manager once per second
+        self.spin_client = ActionClient(
+            self,
+            Spin,
+            'spin'
+        )
+
+        self.drive_client = ActionClient(
+            self,
+            DriveOnHeading,
+            'drive_on_heading'
+        )
+
+        # ============================================================
+        # MAIN TIMER
+        # ============================================================
+
+        # Runs exploration management once every second.
         self.exploration_timer = self.create_timer(
             1.0,
             self.exploration_cb
@@ -107,21 +247,24 @@ class ExplorationManager(Node):
             'Exploration manager started'
         )
 
+    # ================================================================
+    # FRONTIER CALLBACK
+    # ================================================================
 
-    def frontier_candidates_cb(self, msg):
+    def frontier_cb(self, msg):
 
-        # Store the newest set of frontier candidates
-        self.frontier_candidates = list(msg.poses)
+        self.frontier_candidates = list(
+            msg.poses
+        )
 
-        # Do nothing once exploration is complete
         if self.state == 'EXPLORATION_COMPLETE':
             return
 
-        # After reaching a frontier, wait for fresh frontier data
+        # After reaching a frontier, wait for the detector to update.
         if self.state == 'WAITING_FOR_UPDATE':
 
-            # Continue exploring if new frontiers are available
             if self.frontier_candidates:
+
                 self.empty_frontier_update_count = 0
                 self.state = 'READY'
 
@@ -129,43 +272,56 @@ class ExplorationManager(Node):
                     'New frontier data received'
                 )
 
-                return
+            else:
 
-            # Count consecutive empty frontier updates
-            self.empty_frontier_update_count += 1
-
-            self.get_logger().info(
-                f'Empty frontier update '
-                f'{self.empty_frontier_update_count}/'
-                f'{self.required_empty_updates}'
-            )
-
-            # Stop exploration after enough empty updates
-            if (
-                self.empty_frontier_update_count
-                >= self.required_empty_updates
-            ):
-                self.state = 'EXPLORATION_COMPLETE'
+                self.empty_frontier_update_count += 1
 
                 self.get_logger().info(
-                    'Exploration complete'
+                    f'Empty frontier update '
+                    f'{self.empty_frontier_update_count}/'
+                    f'{self.required_empty_updates}'
                 )
+
+                if (
+                    self.empty_frontier_update_count
+                    >= self.required_empty_updates
+                ):
+
+                    self.state = 'EXPLORATION_COMPLETE'
+
+                    self.get_logger().info(
+                        'Exploration complete'
+                    )
 
             return
 
-        # Reset the empty counter if frontiers are available
+        # Reset empty counter when frontiers exist.
         if self.frontier_candidates:
             self.empty_frontier_update_count = 0
 
-        self.check_ready_state()
+        # Exploration starts once map + frontiers both exist.
+        if (
+            self.state == 'WAITING_FOR_DATA'
+            and self.map_array is not None
+            and self.frontier_candidates
+        ):
 
+            self.state = 'READY'
+
+            self.get_logger().info(
+                'Exploration manager ready'
+            )
+
+    # ================================================================
+    # MAP CALLBACK
+    # ================================================================
 
     def map_cb(self, msg):
 
-        # Store the newest map message
         self.map_msg = msg
 
-        # Convert the OccupancyGrid list to a 2D array
+        # OccupancyGrid arrives as a flat list.
+        # Convert it into a 2D numpy array.
         self.map_array = np.array(
             msg.data
         ).reshape(
@@ -175,100 +331,108 @@ class ExplorationManager(Node):
             )
         )
 
-        self.check_ready_state()
-
-
-    def check_ready_state(self):
-
-        # Exploration can start once both the map and
-        # frontier candidates have been received
         if (
             self.state == 'WAITING_FOR_DATA'
-            and self.map_array is not None
             and self.frontier_candidates
         ):
+
             self.state = 'READY'
 
             self.get_logger().info(
                 'Exploration manager ready'
             )
 
+    # ================================================================
+    # LIDAR CALLBACK
+    # ================================================================
 
-    def get_robot_position(self):
+    def scan_cb(self, msg):
+
+        # Only the newest scan is needed.
+        self.latest_scan = msg
+
+    # ================================================================
+    # ROBOT POSE FROM TF
+    # ================================================================
+
+    def get_robot_pose(self):
 
         try:
-            # Find the robot position relative to the map
+
             transform = self.tf_buffer.lookup_transform(
                 self.map_frame,
                 self.robot_frame,
                 Time()
             )
 
-            robot_x = transform.transform.translation.x
-            robot_y = transform.transform.translation.y
+            x = transform.transform.translation.x
+            y = transform.transform.translation.y
 
-            return robot_x, robot_y
+            q = transform.transform.rotation
+
+            # Convert quaternion orientation to planar yaw angle.
+            yaw = math.atan2(
+                2.0 * (
+                    q.w * q.z
+                    + q.x * q.y
+                ),
+                1.0 - 2.0 * (
+                    q.y**2
+                    + q.z**2
+                )
+            )
+
+            return x, y, yaw
 
         except Exception:
             return None
 
+    # ================================================================
+    # INFORMATION GAIN
+    # ================================================================
 
-    def calculate_distance(
-        self,
-        candidate,
-        robot_x,
-        robot_y
-    ):
-
-        # Calculate the straight-line distance from the
-        # robot to the frontier candidate
-        distance = math.hypot(
-            candidate.position.x - robot_x,
-            candidate.position.y - robot_y
-        )
-
-        return distance
-
-
-    def world_to_cell(
-        self,
-        world_x,
-        world_y
-    ):
+    def information_gain(self, candidate):
 
         if self.map_msg is None:
-            return None
+            return 0
 
         resolution = self.map_msg.info.resolution
         origin = self.map_msg.info.origin
 
-        orientation = origin.orientation
+        q = origin.orientation
 
-        yaw = math.atan2(
+        # Orientation of occupancy-grid origin.
+        origin_yaw = math.atan2(
             2.0 * (
-                orientation.w * orientation.z
-                + orientation.x * orientation.y
+                q.w * q.z
+                + q.x * q.y
             ),
             1.0 - 2.0 * (
-                orientation.y**2
-                + orientation.z**2
+                q.y**2
+                + q.z**2
             )
         )
 
-        cos_yaw = math.cos(yaw)
-        sin_yaw = math.sin(yaw)
+        # Position relative to map origin.
+        dx = (
+            candidate.position.x
+            - origin.position.x
+        )
 
-        delta_x = world_x - origin.position.x
-        delta_y = world_y - origin.position.y
+        dy = (
+            candidate.position.y
+            - origin.position.y
+        )
 
+        # Convert world coordinates into map-local coordinates.
         local_x = (
-            delta_x * cos_yaw
-            + delta_y * sin_yaw
+            dx * math.cos(origin_yaw)
+            + dy * math.sin(origin_yaw)
         )
 
         local_y = (
-            -delta_x * sin_yaw
-            + delta_y * cos_yaw
+            -dx * math.sin(origin_yaw)
+            + dy * math.cos(origin_yaw)
         )
 
         col = math.floor(
@@ -279,299 +443,283 @@ class ExplorationManager(Node):
             local_y / resolution
         )
 
+        rows, cols = self.map_array.shape
+
         if (
             row < 0
-            or row >= self.map_msg.info.height
+            or row >= rows
             or col < 0
-            or col >= self.map_msg.info.width
+            or col >= cols
         ):
-            return None
-
-        return row, col
-
-
-    def calculate_information_gain(self, candidate):
-
-        cell = self.world_to_cell(
-            candidate.position.x,
-            candidate.position.y
-        )
-
-        if cell is None:
             return 0
 
-        row, col = cell
-        resolution = self.map_msg.info.resolution
-
         radius_cells = math.ceil(
-            self.information_radius / resolution
+            self.information_radius
+            / resolution
         )
 
-        rows, cols = self.map_array.shape
         unknown_count = 0
 
+        # Count unknown cells inside a circular region.
         for check_row in range(
-            max(0, row - radius_cells),
-            min(rows, row + radius_cells + 1)
+            max(
+                0,
+                row - radius_cells
+            ),
+            min(
+                rows,
+                row + radius_cells + 1
+            )
         ):
+
             for check_col in range(
-                max(0, col - radius_cells),
-                min(cols, col + radius_cells + 1)
+                max(
+                    0,
+                    col - radius_cells
+                ),
+                min(
+                    cols,
+                    col + radius_cells + 1
+                )
             ):
 
-                row_distance = (
-                    check_row - row
-                ) * resolution
-
-                col_distance = (
-                    check_col - col
-                ) * resolution
-
                 distance = math.hypot(
-                    row_distance,
-                    col_distance
+                    (
+                        check_row - row
+                    ) * resolution,
+                    (
+                        check_col - col
+                    ) * resolution
                 )
 
-                if distance > self.information_radius:
-                    continue
-
                 if (
+                    distance
+                    <= self.information_radius
+                    and
                     self.map_array[
                         check_row,
                         check_col
                     ] == -1
                 ):
+
                     unknown_count += 1
 
         return unknown_count
 
-
-    def is_failed_region(self, candidate):
-
-        for failed_x, failed_y in self.failed_regions:
-
-            distance = math.hypot(
-                candidate.position.x - failed_x,
-                candidate.position.y - failed_y
-            )
-
-            if distance < self.failed_region_radius:
-                return True
-
-        return False
-
-
-    def record_failed_goal(self, candidate):
-
-        if candidate is None:
-            return
-
-        if self.is_failed_region(candidate):
-            return
-
-        failed_position = (
-            candidate.position.x,
-            candidate.position.y
-        )
-
-        self.failed_regions.append(
-            failed_position
-        )
-
-        self.get_logger().warn(
-            f'Failed frontier recorded at '
-            f'x={failed_position[0]:.2f}, '
-            f'y={failed_position[1]:.2f}'
-        )
-
-
-    def normalise_values(
-        self,
-        values,
-        equal_value
-    ):
-
-        values = np.array(
-            values,
-            dtype=float
-        )
-
-        minimum = np.min(values)
-        maximum = np.max(values)
-
-        if maximum == minimum:
-            return np.full(
-                len(values),
-                equal_value
-            )
-
-        normalised = (
-            values - minimum
-        ) / (
-            maximum - minimum
-        )
-
-        return normalised
-
+    # ================================================================
+    # FRONTIER SELECTION
+    # ================================================================
 
     def select_best_candidate(self):
 
-        # Remove candidates near failed regions
+        robot_pose = self.get_robot_pose()
+
+        if robot_pose is None:
+            return None
+
+        robot_x, robot_y, _ = robot_pose
+
         valid_candidates = []
+        distances = []
+        information_values = []
 
         for candidate in self.frontier_candidates:
 
-            if self.is_failed_region(candidate):
+            # Ignore frontiers near previously failed regions.
+            failed = any(
+                math.hypot(
+                    candidate.position.x
+                    - failed_x,
+                    candidate.position.y
+                    - failed_y
+                )
+                < self.failed_region_radius
+
+                for failed_x, failed_y
+                in self.failed_regions
+            )
+
+            if failed:
                 continue
 
             valid_candidates.append(
                 candidate
             )
 
-        if not valid_candidates:
-            return None
-
-        robot_position = self.get_robot_position()
-
-        if robot_position is None:
-            return None
-
-        robot_x, robot_y = robot_position
-
-        distances = []
-        information_gains = []
-
-        for candidate in valid_candidates:
-
-            distance = self.calculate_distance(
-                candidate,
-                robot_x,
-                robot_y
+            distances.append(
+                math.hypot(
+                    candidate.position.x
+                    - robot_x,
+                    candidate.position.y
+                    - robot_y
+                )
             )
 
-            information_gain = (
-                self.calculate_information_gain(
+            information_values.append(
+                self.information_gain(
                     candidate
                 )
             )
 
-            distances.append(
-                distance
+        if not valid_candidates:
+            return None
+
+        # ------------------------------------------------------------
+        # Normalisation helper
+        # ------------------------------------------------------------
+
+        def normalise(
+            values,
+            equal_value
+        ):
+
+            values = np.array(
+                values,
+                dtype=float
             )
 
-            information_gains.append(
-                information_gain
+            minimum = np.min(
+                values
             )
 
-        normalised_information = self.normalise_values(
-            information_gains,
+            maximum = np.max(
+                values
+            )
+
+            if maximum == minimum:
+
+                return np.full(
+                    len(values),
+                    equal_value
+                )
+
+            return (
+                values - minimum
+            ) / (
+                maximum - minimum
+            )
+
+        information_norm = normalise(
+            information_values,
             1.0
         )
 
-        normalised_distance = self.normalise_values(
+        distance_norm = normalise(
             distances,
             0.0
         )
 
-        best_candidate = None
-        best_score = -float('inf')
-        best_distance = None
-        best_information = None
-
-        for index, candidate in enumerate(
-            valid_candidates
-        ):
-
-            score = (
-                self.information_weight
-                * normalised_information[index]
-                -
-                self.distance_weight
-                * normalised_distance[index]
-            )
-
-            self.get_logger().info(
-                f'Candidate '
-                f'x={candidate.position.x:.2f}, '
-                f'y={candidate.position.y:.2f}, '
-                f'distance={distances[index]:.2f}, '
-                f'information={information_gains[index]}, '
-                f'score={score:.3f}'
-            )
-
-            if score > best_score:
-                best_candidate = candidate
-                best_score = score
-                best_distance = distances[index]
-                best_information = information_gains[index]
-
-        return (
-            best_candidate,
-            best_score,
-            best_distance,
-            best_information
+        # Higher information is good.
+        # Greater distance is bad.
+        scores = (
+            self.information_weight
+            * information_norm
+            -
+            self.distance_weight
+            * distance_norm
         )
 
+        best_index = int(
+            np.argmax(scores)
+        )
 
-    def send_navigation_goal(self, candidate):
+        candidate = valid_candidates[
+            best_index
+        ]
+
+        self.get_logger().info(
+            f'Selected frontier '
+            f'x={candidate.position.x:.2f}, '
+            f'y={candidate.position.y:.2f}, '
+            f'distance={distances[best_index]:.2f}, '
+            f'information={information_values[best_index]}, '
+            f'score={scores[best_index]:.3f}'
+        )
+
+        return candidate
+
+    # ================================================================
+    # SEND CURRENT FRONTIER TO NAV2
+    # ================================================================
+
+    def send_navigation_goal(self):
+
+        if self.current_goal is None:
+            return False
 
         if not self.navigation_client.wait_for_server(
             timeout_sec=1.0
         ):
+
             self.get_logger().warn(
-                'Nav2 action server unavailable'
+                'NavigateToPose action server unavailable'
             )
 
             return False
 
-        goal_msg = NavigateToPose.Goal()
+        goal = NavigateToPose.Goal()
 
-        goal_msg.pose.header.frame_id = (
+        goal.pose.header.frame_id = (
             self.map_frame
         )
 
-        goal_msg.pose.header.stamp = (
-            self.get_clock().now().to_msg()
+        goal.pose.header.stamp = (
+            self.get_clock()
+            .now()
+            .to_msg()
         )
 
-        goal_msg.pose.pose = candidate
+        goal.pose.pose = (
+            self.current_goal
+        )
 
-        orientation = goal_msg.pose.pose.orientation
+        # Ensure the orientation quaternion is valid.
+        q = goal.pose.pose.orientation
 
         if (
-            orientation.x == 0.0
-            and orientation.y == 0.0
-            and orientation.z == 0.0
-            and orientation.w == 0.0
+            q.x == 0.0
+            and q.y == 0.0
+            and q.z == 0.0
+            and q.w == 0.0
         ):
-            orientation.w = 1.0
+            q.w = 1.0
 
-        send_goal_future = (
-            self.navigation_client.send_goal_async(
-                goal_msg
-            )
+        future = (
+            self.navigation_client
+            .send_goal_async(goal)
         )
 
-        send_goal_future.add_done_callback(
+        future.add_done_callback(
             self.navigation_goal_response
         )
 
         return True
 
+    # ================================================================
+    # NAVIGATION GOAL RESPONSE
+    # ================================================================
 
-    def navigation_goal_response(self, future):
+    def navigation_goal_response(
+        self,
+        future
+    ):
 
         try:
-            goal_handle = future.result()
+
+            goal_handle = (
+                future.result()
+            )
 
         except Exception as error:
 
             self.get_logger().error(
-                f'Could not send navigation goal: {error}'
+                f'Could not send navigation goal: '
+                f'{error}'
             )
 
-            self.current_goal = None
-            self.state = 'READY'
+            self.start_recovery(
+                cancel_navigation=False
+            )
 
             return
 
@@ -581,130 +729,815 @@ class ExplorationManager(Node):
                 'Navigation goal rejected'
             )
 
-            self.record_failed_goal(
-                self.current_goal
+            self.start_recovery(
+                cancel_navigation=False
             )
-
-            self.current_goal = None
-            self.state = 'READY'
 
             return
 
+        # Store active goal so it can be cancelled if stuck.
+        self.navigation_goal_handle = (
+            goal_handle
+        )
+
         self.state = 'NAVIGATING'
+
+        # Start a new progress-monitoring window.
+        self.last_progress_pose = None
+        self.last_progress_time = None
 
         self.get_logger().info(
             'Navigation goal accepted'
         )
 
         result_future = (
-            goal_handle.get_result_async()
+            goal_handle
+            .get_result_async()
         )
 
         result_future.add_done_callback(
             self.navigation_result_cb
         )
 
+    # ================================================================
+    # NAVIGATION RESULT
+    # ================================================================
 
-    def navigation_result_cb(self, future):
+    def navigation_result_cb(
+        self,
+        future
+    ):
 
         try:
-            status = future.result().status
+
+            status = (
+                future.result().status
+            )
 
         except Exception as error:
 
             self.get_logger().error(
-                f'Could not get navigation result: {error}'
+                f'Navigation result error: '
+                f'{error}'
             )
 
-            self.record_failed_goal(
-                self.current_goal
+            self.start_recovery(
+                cancel_navigation=False
             )
-
-            self.current_goal = None
-            self.state = 'READY'
 
             return
 
-        if status == GoalStatus.STATUS_SUCCEEDED:
+        # A cancellation during recovery is intentional.
+        if (
+            self.state == 'RECOVERING'
+            and
+            status == GoalStatus.STATUS_CANCELED
+        ):
+            return
+
+        # ------------------------------------------------------------
+        # SUCCESS
+        # ------------------------------------------------------------
+
+        if (
+            status
+            == GoalStatus.STATUS_SUCCEEDED
+        ):
 
             self.get_logger().info(
                 'Frontier reached successfully'
             )
 
             self.current_goal = None
+            self.navigation_goal_handle = None
+
+            self.last_progress_pose = None
+            self.last_progress_time = None
+
+            self.recovery_attempts = 0
+
             self.empty_frontier_update_count = 0
+
             self.state = 'WAITING_FOR_UPDATE'
 
             return
 
-        if status == GoalStatus.STATUS_ABORTED:
-            status_name = 'ABORTED'
-
-        elif status == GoalStatus.STATUS_CANCELED:
-            status_name = 'CANCELED'
-
-        else:
-            status_name = str(status)
+        # ------------------------------------------------------------
+        # FAILURE
+        # ------------------------------------------------------------
 
         self.get_logger().warn(
-            f'Navigation failed: {status_name}'
+            'Navigation failed - attempting recovery'
         )
 
-        self.record_failed_goal(
-            self.current_goal
+        # Do not immediately blacklist the frontier.
+        # Recovery gets one attempt first.
+        self.start_recovery(
+            cancel_navigation=False
         )
 
+    # ================================================================
+    # STUCK DETECTION
+    # ================================================================
+
+    def check_stuck(self):
+
+        robot_pose = self.get_robot_pose()
+
+        if robot_pose is None:
+            return
+
+        x, y, yaw = robot_pose
+
+        now = self.get_clock().now()
+
+        # First measurement after starting/restarting navigation.
+        if self.last_progress_pose is None:
+
+            self.last_progress_pose = (
+                x,
+                y,
+                yaw
+            )
+
+            self.last_progress_time = (
+                now
+            )
+
+            return
+
+        old_x, old_y, old_yaw = (
+            self.last_progress_pose
+        )
+
+        # Translational movement.
+        translation = math.hypot(
+            x - old_x,
+            y - old_y
+        )
+
+        # Wrapped angle difference.
+        heading_change = abs(
+            math.atan2(
+                math.sin(
+                    yaw - old_yaw
+                ),
+                math.cos(
+                    yaw - old_yaw
+                )
+            )
+        )
+
+        # Either translation OR meaningful turning counts as progress.
+        if (
+            translation
+            >= self.stuck_distance
+            or
+            heading_change
+            >= self.stuck_angle
+        ):
+
+            self.last_progress_pose = (
+                x,
+                y,
+                yaw
+            )
+
+            self.last_progress_time = (
+                now
+            )
+
+            return
+
+        stationary_time = (
+            now
+            - self.last_progress_time
+        ).nanoseconds / 1e9
+
+        # If there has been no useful movement for long enough,
+        # activate recovery.
+        if (
+            stationary_time
+            >= self.stuck_timeout
+        ):
+
+            self.get_logger().warn(
+                f'Robot appears stuck: '
+                f'translation={translation:.2f} m, '
+                f'rotation='
+                f'{math.degrees(heading_change):.1f} deg, '
+                f'time={stationary_time:.1f} s'
+            )
+
+            self.start_recovery(
+                cancel_navigation=True
+            )
+
+    # ================================================================
+    # RECOVERY
+    # ================================================================
+
+    def start_recovery(
+        self,
+        cancel_navigation
+    ):
+
+        # Prevent multiple simultaneous recovery attempts.
+        if self.state == 'RECOVERING':
+            return
+
+        if self.current_goal is None:
+            return
+
+        # Frontier already received its allowed recovery attempt.
+        if (
+            self.recovery_attempts
+            >= self.max_recovery_attempts
+        ):
+
+            self.get_logger().warn(
+                'Maximum recovery attempts reached. '
+                'Frontier considered unreachable.'
+            )
+
+            self.fail_current_frontier()
+
+            return
+
+        # Recovery requires current LiDAR data.
+        if self.latest_scan is None:
+
+            self.get_logger().warn(
+                'No LiDAR scan available for recovery.'
+            )
+
+            self.fail_current_frontier()
+
+            return
+
+        # ============================================================
+        # FIND A CLEAR DIRECTION FROM LIDAR
+        # ============================================================
+
+        ranges = np.array(
+            self.latest_scan.ranges,
+            dtype=float
+        )
+
+        if len(ranges) == 0:
+
+            self.fail_current_frontier()
+            return
+
+        # Positive infinity generally means no obstacle was detected
+        # within the sensor range.
+        ranges[
+            np.isposinf(ranges)
+        ] = self.latest_scan.range_max
+
+        # Invalid values should not appear as clear space.
+        ranges[
+            np.isnan(ranges)
+        ] = 0.0
+
+        ranges[
+            np.isneginf(ranges)
+        ] = 0.0
+
+        ranges[
+            ranges
+            < self.latest_scan.range_min
+        ] = 0.0
+
+        ranges[
+            ranges
+            > self.latest_scan.range_max
+        ] = self.latest_scan.range_max
+
+        # ------------------------------------------------------------
+        # Average neighbouring LiDAR rays.
+        #
+        # This prevents one noisy high range value from being selected
+        # as the recovery direction.
+        # ------------------------------------------------------------
+
+        angle_increment = abs(
+            self.latest_scan.angle_increment
+        )
+
+        if angle_increment == 0.0:
+
+            self.get_logger().warn(
+                'Invalid LiDAR angle increment.'
+            )
+
+            self.fail_current_frontier()
+
+            return
+
+        # Approx. +/- 10 degree averaging region.
+        window = max(
+            1,
+            int(
+                math.radians(10.0)
+                / angle_increment
+            )
+        )
+
+        averaged = np.zeros_like(
+            ranges
+        )
+
+        for offset in range(
+            -window,
+            window + 1
+        ):
+
+            averaged += np.roll(
+                ranges,
+                offset
+            )
+
+        averaged /= (
+            2 * window + 1
+        )
+
+        best_index = int(
+            np.argmax(averaged)
+        )
+
+        best_clearance = float(
+            averaged[best_index]
+        )
+
+        if (
+            best_clearance
+            < self.recovery_min_clearance
+        ):
+
+            self.get_logger().warn(
+                f'No sufficiently clear recovery '
+                f'direction found. '
+                f'Best clearance='
+                f'{best_clearance:.2f} m'
+            )
+
+            self.fail_current_frontier()
+
+            return
+
+        # LaserScan angles are measured relative to the robot.
+        recovery_heading = (
+            self.latest_scan.angle_min
+            +
+            best_index
+            * self.latest_scan.angle_increment
+        )
+
+        self.recovery_attempts += 1
+
+        self.state = 'RECOVERING'
+
+        self.get_logger().warn(
+            f'Recovery attempt '
+            f'{self.recovery_attempts}/'
+            f'{self.max_recovery_attempts}: '
+            f'heading='
+            f'{math.degrees(recovery_heading):.1f} deg, '
+            f'clearance='
+            f'{best_clearance:.2f} m'
+        )
+
+        # ============================================================
+        # RECOVERY CALLBACKS
+        #
+        # Nested callbacks keep the recovery logic together rather
+        # than spreading it across many separate functions.
+        # ============================================================
+
+        def recovery_failed(
+            message
+        ):
+
+            self.get_logger().warn(
+                message
+            )
+
+            self.fail_current_frontier()
+
+        # ------------------------------------------------------------
+        # DRIVE RESULT
+        # ------------------------------------------------------------
+
+        def drive_result(
+            result_future
+        ):
+
+            try:
+
+                status = (
+                    result_future
+                    .result()
+                    .status
+                )
+
+            except Exception:
+
+                recovery_failed(
+                    'Could not get recovery '
+                    'drive result.'
+                )
+
+                return
+
+            if (
+                status
+                != GoalStatus.STATUS_SUCCEEDED
+            ):
+
+                recovery_failed(
+                    'Recovery drive failed.'
+                )
+
+                return
+
+            self.get_logger().info(
+                'Recovery successful. '
+                'Retrying same frontier.'
+            )
+
+            # Keep current_goal unchanged so the same frontier is retried.
+            self.navigation_goal_handle = None
+
+            self.last_progress_pose = None
+            self.last_progress_time = None
+
+            self.state = 'GOAL_SELECTED'
+
+            if not self.send_navigation_goal():
+
+                self.fail_current_frontier()
+
+        # ------------------------------------------------------------
+        # DRIVE GOAL RESPONSE
+        # ------------------------------------------------------------
+
+        def drive_response(
+            drive_future
+        ):
+
+            try:
+
+                handle = (
+                    drive_future.result()
+                )
+
+            except Exception:
+
+                recovery_failed(
+                    'Could not send '
+                    'recovery drive.'
+                )
+
+                return
+
+            if not handle.accepted:
+
+                recovery_failed(
+                    'Recovery drive rejected.'
+                )
+
+                return
+
+            handle.get_result_async().add_done_callback(
+                drive_result
+            )
+
+        # ------------------------------------------------------------
+        # START DRIVE
+        # ------------------------------------------------------------
+
+        def start_drive():
+
+            if not self.drive_client.wait_for_server(
+                timeout_sec=1.0
+            ):
+
+                recovery_failed(
+                    'DriveOnHeading '
+                    'action server unavailable.'
+                )
+
+                return
+
+            goal = DriveOnHeading.Goal()
+
+            # Robot has already rotated toward free space,
+            # so positive x means drive forward in that direction.
+            goal.target = Point(
+                x=float(
+                    self.recovery_distance
+                ),
+                y=0.0,
+                z=0.0
+            )
+
+            goal.speed = float(
+                self.recovery_speed
+            )
+
+            expected_time = (
+                self.recovery_distance
+                /
+                max(
+                    self.recovery_speed,
+                    0.01
+                )
+            )
+
+            goal.time_allowance = Duration(
+                sec=int(
+                    math.ceil(
+                        expected_time + 3.0
+                    )
+                )
+            )
+
+            # Keep collision checking enabled.
+            if hasattr(
+                goal,
+                'disable_collision_checks'
+            ):
+
+                goal.disable_collision_checks = False
+
+            future = (
+                self.drive_client
+                .send_goal_async(goal)
+            )
+
+            future.add_done_callback(
+                drive_response
+            )
+
+        # ------------------------------------------------------------
+        # SPIN RESULT
+        # ------------------------------------------------------------
+
+        def spin_result(
+            result_future
+        ):
+
+            try:
+
+                status = (
+                    result_future
+                    .result()
+                    .status
+                )
+
+            except Exception:
+
+                recovery_failed(
+                    'Could not get recovery '
+                    'spin result.'
+                )
+
+                return
+
+            if (
+                status
+                != GoalStatus.STATUS_SUCCEEDED
+            ):
+
+                recovery_failed(
+                    'Recovery spin failed.'
+                )
+
+                return
+
+            # Rotation succeeded.
+            # Now drive a short distance into the open area.
+            start_drive()
+
+        # ------------------------------------------------------------
+        # SPIN GOAL RESPONSE
+        # ------------------------------------------------------------
+
+        def spin_response(
+            spin_future
+        ):
+
+            try:
+
+                handle = (
+                    spin_future.result()
+                )
+
+            except Exception:
+
+                recovery_failed(
+                    'Could not send '
+                    'recovery spin.'
+                )
+
+                return
+
+            if not handle.accepted:
+
+                recovery_failed(
+                    'Recovery spin rejected.'
+                )
+
+                return
+
+            handle.get_result_async().add_done_callback(
+                spin_result
+            )
+
+        # ------------------------------------------------------------
+        # START SPIN
+        # ------------------------------------------------------------
+
+        def start_spin():
+
+            if not self.spin_client.wait_for_server(
+                timeout_sec=1.0
+            ):
+
+                recovery_failed(
+                    'Spin action server unavailable.'
+                )
+
+                return
+
+            goal = Spin.Goal()
+
+            # Relative rotation toward clearest LiDAR direction.
+            goal.target_yaw = float(
+                recovery_heading
+            )
+
+            goal.time_allowance = Duration(
+                sec=6
+            )
+
+            # Never disable collision checking for recovery.
+            if hasattr(
+                goal,
+                'disable_collision_checks'
+            ):
+
+                goal.disable_collision_checks = False
+
+            future = (
+                self.spin_client
+                .send_goal_async(goal)
+            )
+
+            future.add_done_callback(
+                spin_response
+            )
+
+        # ============================================================
+        # BEGIN RECOVERY
+        # ============================================================
+
+        # If Nav2 is still actively navigating, cancel that goal first
+        # so navigation and recovery do not fight each other.
+        if (
+            cancel_navigation
+            and self.navigation_goal_handle
+            is not None
+        ):
+
+            cancel_future = (
+                self.navigation_goal_handle
+                .cancel_goal_async()
+            )
+
+            cancel_future.add_done_callback(
+                lambda _: start_spin()
+            )
+
+        else:
+
+            start_spin()
+
+    # ================================================================
+    # FAILED FRONTIER
+    # ================================================================
+
+    def fail_current_frontier(self):
+
+        if self.current_goal is not None:
+
+            x = self.current_goal.position.x
+            y = self.current_goal.position.y
+
+            # Avoid recording the same failed area repeatedly.
+            duplicate = any(
+                math.hypot(
+                    x - failed_x,
+                    y - failed_y
+                )
+                < self.failed_region_radius
+
+                for failed_x, failed_y
+                in self.failed_regions
+            )
+
+            if not duplicate:
+
+                self.failed_regions.append(
+                    (
+                        x,
+                        y
+                    )
+                )
+
+                self.get_logger().warn(
+                    f'Failed frontier recorded: '
+                    f'x={x:.2f}, '
+                    f'y={y:.2f}'
+                )
+
+        # Reset goal-specific state.
         self.current_goal = None
+        self.navigation_goal_handle = None
+
+        self.last_progress_pose = None
+        self.last_progress_time = None
+
+        self.recovery_attempts = 0
+
+        # Return to exploration and choose another frontier.
         self.state = 'READY'
 
+    # ================================================================
+    # MAIN EXPLORATION LOOP
+    # ================================================================
 
     def exploration_cb(self):
 
+        # While navigating, do not choose another frontier.
+        # Only check whether useful progress is occurring.
+        if self.state == 'NAVIGATING':
+
+            self.check_stuck()
+            return
+
+        # Recovery owns control while it is active.
+        if self.state == 'RECOVERING':
+            return
+
+        # Only select goals from READY state.
         if self.state != 'READY':
             return
 
-        result = self.select_best_candidate()
-
-        if result is None:
-            return
-
-        (
-            candidate,
-            score,
-            distance,
-            information_gain
-        ) = result
-
-        self.current_goal = candidate
-        self.state = 'GOAL_SELECTED'
-
-        self.get_logger().info(
-            f'Selected frontier '
-            f'x={candidate.position.x:.2f}, '
-            f'y={candidate.position.y:.2f}, '
-            f'distance={distance:.2f}, '
-            f'information={information_gain}, '
-            f'score={score:.3f}'
+        candidate = (
+            self.select_best_candidate()
         )
 
-        goal_sent = self.send_navigation_goal(
+        if candidate is None:
+            return
+
+        self.current_goal = (
             candidate
         )
 
-        if not goal_sent:
+        # New frontier receives a fresh recovery allowance.
+        self.recovery_attempts = 0
+
+        self.last_progress_pose = None
+        self.last_progress_time = None
+
+        self.state = 'GOAL_SELECTED'
+
+        if not self.send_navigation_goal():
+
             self.current_goal = None
             self.state = 'READY'
 
 
+# ================================================================
+# MAIN
+# ================================================================
+
 def main(args=None):
 
-    rclpy.init(args=args)
+    rclpy.init(
+        args=args
+    )
 
     node = ExplorationManager()
 
-    rclpy.spin(node)
+    rclpy.spin(
+        node
+    )
 
     node.destroy_node()
+
     rclpy.shutdown()
 
 
