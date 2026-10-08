@@ -1,6 +1,19 @@
 # metr4202-g29
 Collaboration space for Group 29 work on the Turtlebot for METR4202
 
+## Setup
+1. Clone repository into workspace:
+```
+cd ~/ws/src;
+git clone https://github.com/Vosca/metr4202_2026_team29.git;
+cd ..;
+colcon build;
+```
+
+## Testing
+
+
+
 ## Task Breakdown:
  - Creating measurable criteria
  - Ensure ROS Gazebo environment is working
