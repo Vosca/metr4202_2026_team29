@@ -35,22 +35,3 @@ ros2 run exploration_manager exploration_manager
 ```
 ros2 run frontier_detector frontier_detector
 ```
-
-## Task Breakdown:
- - Creating measurable criteria
- - Ensure ROS Gazebo environment is working
- - Finding frontiers of the map
- - Exploration strategy, which frontiers do we navigate to?
- - Navigation algorithm
- - Identifying the markers location
- - Testing
-
-## Team Responsibilities:
- - Michael - ArUco Markers
- - Robin - Testing
- - Mitch - Finding map frontiers
- - Thomas - Exploration and Navigation
-
-### Useful existing solutions
-Frontier Detection: https://github.com/AniArka/Autonomous-Explorer-and-Mapper-ros2-nav2
-ArUco Markers : https://github.com/JMU-ROBOTICS-VIVA/ros2_aruco/tree/main
