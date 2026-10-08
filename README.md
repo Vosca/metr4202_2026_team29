@@ -7,7 +7,7 @@ Collaboration space for Group 29 work on the Turtlebot for METR4202
 cd ~/ws/src;
 git clone https://github.com/Vosca/metr4202_2026_team29.git;
 cd ..;
-colcon build;
+colcon build exploration_manager frontier_detector;
 ```
 
 ## Testing
@@ -31,7 +31,7 @@ ros2 launch nav2_bringup rviz_launch.py
 ```
 ros2 run exploration_manager exploration_manager
 ```
-6. Run Frontier detector??:
+6. Run Frontier detector:
 ```
 ros2 run frontier_detector frontier_detector
 ```
