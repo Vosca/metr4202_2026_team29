@@ -11,8 +11,30 @@ colcon build;
 ```
 
 ## Testing
-
-
+1. Launch Turtlebot3 in gazebo:
+```
+ros2 launch turtlebot3_gazebo turtlebot3_world.launch.py
+```
+2. Launch Nav2:
+```
+ros2 launch nav2_bringup navigation_launch.py use_sim_time:=True
+```
+3. Launch SLAM:
+```
+ros2 launch slam_toolbox online_async_launch.py
+```
+4. Launch Rvis:
+```
+ros2 launch nav2_bringup rviz_launch.py
+```
+5. Run explorer manager:
+```
+ros2 run exploration_manager exploration_manager
+```
+6. Run Frontier detector??:
+```
+ros2 run frontier_detector frontier_detector
+```
 
 ## Task Breakdown:
  - Creating measurable criteria
