@@ -29,11 +29,7 @@ class ExplorationManager(Node):
             1.0
         ).value
 
-        # Frontier scoring:
-        #
-        # score =
-        #   information_weight * normalised_information
-        #   - distance_weight * normalised_distance
+        
         self.information_weight = self.declare_parameter(
             'information_weight',
             0.6
@@ -44,11 +40,7 @@ class ExplorationManager(Node):
             0.4
         ).value
 
-        # Do not send Nav2 goals that are already very close
-        # to the robot.
-        #
-        # This prevents Nav2 immediately declaring a nearby goal
-        # successful without the robot actually moving.
+    
         self.min_goal_distance = self.declare_parameter(
             'min_goal_distance',
             0.5
@@ -127,14 +119,11 @@ class ExplorationManager(Node):
         # Current frontier sent to Nav2.
         self.current_goal = None
 
-        # Handle for the currently active NavigateToPose action.
         self.navigation_goal_handle = None
 
-        # Number of consecutive frontier updates containing no goals.
         self.empty_frontier_update_count = 0
 
-        # Pose and time from the last detected useful movement.
-        # Pose format: (x, y, yaw)
+    
         self.last_progress_pose = None
         self.last_progress_time = None
 
@@ -158,7 +147,6 @@ class ExplorationManager(Node):
         # ROS SUBSCRIPTIONS
         # ============================================================
 
-        # Candidate frontier locations produced by Frontier Detector.
         self.frontier_subscription = self.create_subscription(
             PoseArray,
             '/frontier_candidates',
@@ -166,7 +154,6 @@ class ExplorationManager(Node):
             10
         )
 
-        # SLAM occupancy-grid map.
         self.map_subscription = self.create_subscription(
             OccupancyGrid,
             '/map',
@@ -195,7 +182,6 @@ class ExplorationManager(Node):
             'navigate_to_pose'
         )
 
-        # Main exploration-management loop.
         self.exploration_timer = self.create_timer(
             1.0,
             self.exploration_cb
@@ -217,9 +203,7 @@ class ExplorationManager(Node):
         if self.state == 'EXPLORATION_COMPLETE':
             return
 
-        # ------------------------------------------------------------
         # After reaching a goal, wait for fresh frontier information.
-        # ------------------------------------------------------------
 
         if self.state == 'WAITING_FOR_UPDATE':
 
@@ -289,7 +273,6 @@ class ExplorationManager(Node):
     def check_ready(self):
 
         # Exploration cannot begin until both:
-        #
         # 1. a map exists
         # 2. at least one frontier candidate exists
 
@@ -422,11 +405,7 @@ class ExplorationManager(Node):
 
         unknown_count = 0
 
-        # ------------------------------------------------------------
-        # Count unknown cells (-1) surrounding the candidate.
-        #
         # Only cells inside a circular radius are considered.
-        # ------------------------------------------------------------
 
         for check_row in range(
             max(
@@ -503,17 +482,11 @@ class ExplorationManager(Node):
                 - robot_y
             )
 
-            # --------------------------------------------------------
-            # FIX 1:
-            # Do not send goals already inside/near Nav2 tolerance.
-            # --------------------------------------------------------
 
             if distance < self.min_goal_distance:
                 continue
 
-            # --------------------------------------------------------
             # Skip regions that previously failed.
-            # --------------------------------------------------------
 
             near_failed_region = any(
                 math.hypot(
@@ -531,10 +504,7 @@ class ExplorationManager(Node):
             if near_failed_region:
                 continue
 
-            # --------------------------------------------------------
-            # FIX 2:
             # Also skip regions already successfully reached.
-            # --------------------------------------------------------
 
             near_reached_region = any(
                 math.hypot(
@@ -592,8 +562,6 @@ class ExplorationManager(Node):
             minimum = np.min(values)
             maximum = np.max(values)
 
-            # If every value is identical, there is no distinction
-            # between candidates for this factor.
             if maximum == minimum:
 
                 return np.full(
@@ -617,8 +585,6 @@ class ExplorationManager(Node):
             0.0
         )
 
-        # High information is rewarded.
-        # Long travel distance is penalised.
         scores = (
             self.information_weight
             * information_norm
@@ -681,7 +647,6 @@ class ExplorationManager(Node):
             self.current_goal
         )
 
-        # Pose orientations cannot contain an all-zero quaternion.
         q = goal.pose.pose.orientation
 
         if (
@@ -723,8 +688,6 @@ class ExplorationManager(Node):
                 f'{error}'
             )
 
-            # This is a communications/action-server problem rather
-            # than proof that the frontier itself is invalid.
             self.current_goal = None
             self.navigation_goal_handle = None
             self.state = 'READY'
@@ -806,11 +769,6 @@ class ExplorationManager(Node):
                 'Frontier reached successfully'
             )
 
-            # --------------------------------------------------------
-            # FIX 2:
-            # Remember reached frontiers in the same way that failed
-            # frontiers are remembered.
-            # --------------------------------------------------------
 
             if self.current_goal is not None:
 
@@ -872,8 +830,6 @@ class ExplorationManager(Node):
                 'Marking frontier as failed.'
             )
 
-            # Only now that Nav2 has completely stopped the old goal
-            # may the manager return to READY.
             self.fail_current_frontier()
 
             return
@@ -920,7 +876,6 @@ class ExplorationManager(Node):
         x, y, yaw = robot_pose
         now = self.get_clock().now()
 
-        # First measurement after navigation begins.
         if self.last_progress_pose is None:
 
             self.last_progress_pose = (
@@ -957,7 +912,6 @@ class ExplorationManager(Node):
             )
         )
 
-        # Translation OR rotation counts as useful progress.
         if (
             translation
             >= self.stuck_distance
@@ -1017,14 +971,6 @@ class ExplorationManager(Node):
 
             return
 
-        # ------------------------------------------------------------
-        # FIX 3:
-        #
-        # Change state BEFORE requesting cancellation.
-        #
-        # While CANCELING, exploration_cb() cannot send another goal.
-        # ------------------------------------------------------------
-
         self.state = 'CANCELING'
 
         self.get_logger().warn(
@@ -1060,11 +1006,6 @@ class ExplorationManager(Node):
                 f'{error}'
             )
 
-            # Important:
-            # We do NOT assume Nav2 stopped.
-            #
-            # Return to NAVIGATING and continue monitoring the
-            # existing goal rather than issuing a competing goal.
             if (
                 self.current_goal is not None
                 and
@@ -1079,8 +1020,7 @@ class ExplorationManager(Node):
 
             return
 
-        # If Nav2 did not accept a cancellation, assume the old
-        # navigation may still be active. Never send a new goal yet.
+      
         if not response.goals_canceling:
 
             self.get_logger().warn(
@@ -1095,18 +1035,9 @@ class ExplorationManager(Node):
 
             return
 
-        # ------------------------------------------------------------
-        # IMPORTANT:
-        #
-        # Do NOT mark the frontier failed here.
-        # Do NOT send another goal here.
-        #
-        # A cancellation request being accepted does not mean the
-        # navigation action has finished cancelling yet.
-        #
+      
         # navigation_result_cb() must receive STATUS_CANCELED first.
-        # ------------------------------------------------------------
-
+       
         self.get_logger().info(
             'Cancellation accepted by Nav2. '
             'Waiting for the navigation result to confirm cancellation.'
@@ -1156,8 +1087,7 @@ class ExplorationManager(Node):
         self.last_progress_pose = None
         self.last_progress_time = None
 
-        # At this point the old Nav2 goal has ended,
-        # so selecting another frontier is safe.
+    
         self.state = 'READY'
 
     # ================================================================
@@ -1166,22 +1096,15 @@ class ExplorationManager(Node):
 
     def exploration_cb(self):
 
-        # ------------------------------------------------------------
-        # Active navigation:
-        # only monitor progress.
-        # ------------------------------------------------------------
 
         if self.state == 'NAVIGATING':
 
             self.check_stuck()
             return
 
-        # ------------------------------------------------------------
-        # Critical safety behaviour:
-        #
+        
         # No goal selection occurs while a cancellation is pending.
-        # ------------------------------------------------------------
-
+      
         if self.state == 'CANCELING':
             return
 
@@ -1219,8 +1142,6 @@ class ExplorationManager(Node):
 
         if not self.send_navigation_goal():
 
-            # Nav2 server being unavailable does not imply that the
-            # selected frontier itself is invalid.
             self.current_goal = None
             self.navigation_goal_handle = None
 
