@@ -7,7 +7,7 @@ Collaboration space for Group 29 work on the Turtlebot for METR4202
 cd ~/ws/src;
 git clone https://github.com/Vosca/metr4202_2026_team29.git;
 cd ..;
-colcon build exploration_manager frontier_detector;
+colcon build --packages-select exploration_manager frontier_detector;
 ```
 
 ## Testing
