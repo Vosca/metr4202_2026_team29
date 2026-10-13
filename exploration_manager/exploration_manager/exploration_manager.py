@@ -46,7 +46,7 @@ class ExplorationManager(Node):
 
         self.heading_weight = self.declare_parameter(
             'heading_weight',
-            0.3
+            0.30
         ).value
 
         # Ignore goals that are already very close to the robot.
@@ -61,11 +61,20 @@ class ExplorationManager(Node):
             0.5
         ).value
 
-        # Ignore areas close to goals already reached.
+        # Normally ignore areas close to goals already reached.
         self.reached_region_radius = self.declare_parameter(
             'reached_region_radius',
             0.5
         ).value
+
+        # Prefer frontiers requiring no more than this amount of turning.
+        # If none exist, larger turns are still allowed.
+        self.preferred_turn_angle = math.radians(
+            self.declare_parameter(
+                'preferred_turn_angle_degrees',
+                90.0
+            ).value
+        )
 
         # Number of empty frontier updates before exploration ends.
         self.required_empty_updates = self.declare_parameter(
@@ -118,7 +127,7 @@ class ExplorationManager(Node):
         self.map_msg = None
         self.map_array = None
 
-        # Areas that should not be selected again.
+        # Areas that should normally not be selected again.
         self.failed_regions = []
         self.reached_regions = []
 
@@ -137,8 +146,6 @@ class ExplorationManager(Node):
         # STATE MACHINE
         # ============================================================
 
-        # Possible states:
-        #
         # WAITING_FOR_DATA
         # READY
         # GOAL_SELECTED
@@ -152,14 +159,15 @@ class ExplorationManager(Node):
         # ROS SUBSCRIPTIONS
         # ============================================================
 
-        # Receive frontier positions from the frontier detector.
+        # Frontier candidates from the frontier detector.
         self.frontier_subscription = self.create_subscription(
             PoseArray,
             '/frontier_candidates',
             self.frontier_cb,
             10
         )
-      
+
+        # Occupancy grid from SLAM.
         self.map_subscription = self.create_subscription(
             OccupancyGrid,
             '/map',
@@ -183,13 +191,14 @@ class ExplorationManager(Node):
         # NAV2
         # ============================================================
 
-        # Used to send navigation goals to Nav2.
+        # Used to send goals to Nav2.
         self.navigation_client = ActionClient(
             self,
             NavigateToPose,
             'navigate_to_pose'
         )
 
+        # Run main exploration logic once per second.
         self.exploration_timer = self.create_timer(
             1.0,
             self.exploration_cb
@@ -209,7 +218,8 @@ class ExplorationManager(Node):
 
         if self.state == 'EXPLORATION_COMPLETE':
             return
-          
+
+        # After a goal finishes, wait for fresh frontier information.
         if self.state == 'WAITING_FOR_UPDATE':
 
             if self.frontier_candidates:
@@ -257,7 +267,7 @@ class ExplorationManager(Node):
 
         self.map_msg = msg
 
-        # Convert the flat OccupancyGrid list into a 2D array.
+        # Convert the one-dimensional OccupancyGrid into rows and columns.
         self.map_array = np.array(
             msg.data
         ).reshape(
@@ -275,6 +285,7 @@ class ExplorationManager(Node):
 
     def check_ready(self):
 
+        # Start only once both map and frontier data exist.
         if (
             self.state == 'WAITING_FOR_DATA'
             and self.map_array is not None
@@ -295,6 +306,7 @@ class ExplorationManager(Node):
 
         try:
 
+            # Get robot position relative to the map.
             transform = self.tf_buffer.lookup_transform(
                 self.map_frame,
                 self.robot_frame,
@@ -320,7 +332,13 @@ class ExplorationManager(Node):
 
             return x, y, yaw
 
-        except Exception:
+        except Exception as error:
+
+            # Makes TF problems visible during testing.
+            self.get_logger().warn(
+                f'Could not get robot pose from TF: {error}'
+            )
+
             return None
 
     # ================================================================
@@ -329,7 +347,7 @@ class ExplorationManager(Node):
 
     def information_gain(self, candidate):
 
-        # Count unknown map cells around the frontier.
+        # Cannot calculate information gain without a map.
         if (
             self.map_msg is None
             or self.map_array is None
@@ -341,7 +359,7 @@ class ExplorationManager(Node):
 
         q = origin.orientation
 
-        # Find rotation of the occupancy grid origin.
+        # Find orientation of occupancy grid origin.
         origin_yaw = math.atan2(
             2.0 * (
                 q.w * q.z
@@ -353,6 +371,7 @@ class ExplorationManager(Node):
             )
         )
 
+        # Candidate relative to map origin.
         dx = (
             candidate.position.x
             - origin.position.x
@@ -363,6 +382,7 @@ class ExplorationManager(Node):
             - origin.position.y
         )
 
+        # Convert world position into local map coordinates.
         local_x = (
             dx * math.cos(origin_yaw)
             + dy * math.sin(origin_yaw)
@@ -373,6 +393,7 @@ class ExplorationManager(Node):
             + dy * math.cos(origin_yaw)
         )
 
+        # Convert metres into map cells.
         col = math.floor(
             local_x / resolution
         )
@@ -383,6 +404,7 @@ class ExplorationManager(Node):
 
         rows, cols = self.map_array.shape
 
+        # Ignore positions outside the occupancy grid.
         if (
             row < 0
             or row >= rows
@@ -398,24 +420,42 @@ class ExplorationManager(Node):
 
         unknown_count = 0
 
+        # Count unknown cells around the frontier.
         for check_row in range(
-            max(0, row - radius_cells),
-            min(rows, row + radius_cells + 1)
+            max(
+                0,
+                row - radius_cells
+            ),
+            min(
+                rows,
+                row + radius_cells + 1
+            )
         ):
 
             for check_col in range(
-                max(0, col - radius_cells),
-                min(cols, col + radius_cells + 1)
+                max(
+                    0,
+                    col - radius_cells
+                ),
+                min(
+                    cols,
+                    col + radius_cells + 1
+                )
             ):
 
                 distance = math.hypot(
-                    (check_row - row) * resolution,
-                    (check_col - col) * resolution
+                    (check_row - row)
+                    * resolution,
+                    (check_col - col)
+                    * resolution
                 )
 
+                # -1 is an unknown occupancy-grid cell.
                 if (
-                    distance <= self.information_radius
-                    and self.map_array[
+                    distance
+                    <= self.information_radius
+                    and
+                    self.map_array[
                         check_row,
                         check_col
                     ] == -1
@@ -426,88 +466,101 @@ class ExplorationManager(Node):
         return unknown_count
 
     # ================================================================
-    # FRONTIER SELECTION
+    # COLLECT VALID FRONTIERS
     # ================================================================
 
-    def select_best_candidate(self):
-
-        robot_pose = self.get_robot_pose()
-
-        if robot_pose is None:
-            return None
-
-        robot_x, robot_y, robot_yaw = robot_pose
+    def collect_valid_candidates(
+        self,
+        robot_x,
+        robot_y,
+        robot_yaw,
+        allow_reached
+    ):
 
         valid_candidates = []
         distances = []
         information_values = []
         heading_changes = []
 
-        for candidate in self.frontier_candidates:
+        too_close_count = 0
+        failed_count = 0
+        reached_count = 0
 
-            # --------------------------------------------------------
-            # DISTANCE
-            # --------------------------------------------------------
+        for candidate in self.frontier_candidates:
 
             # Straight-line distance from robot to frontier.
             distance = math.hypot(
-                candidate.position.x - robot_x,
-                candidate.position.y - robot_y
+                candidate.position.x
+                - robot_x,
+                candidate.position.y
+                - robot_y
             )
 
-            # Ignore goals already very close to the robot.
+            # Do not choose goals already within Nav2 goal tolerance area.
             if distance < self.min_goal_distance:
+
+                too_close_count += 1
                 continue
 
-            # --------------------------------------------------------
-            # FAILED AREAS
-            # --------------------------------------------------------
-
+            # Check whether candidate is near a failed location.
             near_failed_region = any(
                 math.hypot(
-                    candidate.position.x - failed_x,
-                    candidate.position.y - failed_y
-                ) < self.failed_region_radius
+                    candidate.position.x
+                    - failed_x,
+                    candidate.position.y
+                    - failed_y
+                )
+                < self.failed_region_radius
+
                 for failed_x, failed_y
                 in self.failed_regions
             )
 
             if near_failed_region:
+
+                failed_count += 1
                 continue
 
-            # --------------------------------------------------------
-            # REACHED AREAS
-            # --------------------------------------------------------
-
+            # Check whether candidate is near a reached location.
             near_reached_region = any(
                 math.hypot(
-                    candidate.position.x - reached_x,
-                    candidate.position.y - reached_y
-                ) < self.reached_region_radius
+                    candidate.position.x
+                    - reached_x,
+                    candidate.position.y
+                    - reached_y
+                )
+                < self.reached_region_radius
+
                 for reached_x, reached_y
                 in self.reached_regions
             )
 
             if near_reached_region:
-                continue
+                reached_count += 1
 
-            # --------------------------------------------------------
-            # HEADING CHANGE
-            # --------------------------------------------------------
+                # During normal selection, reached areas are rejected.
+                # During fallback selection they are allowed.
+                if not allow_reached:
+                    continue
 
-            # Direction from the robot to the frontier.
+            # Direction from robot to frontier.
             goal_heading = math.atan2(
-                candidate.position.y - robot_y,
-                candidate.position.x - robot_x
+                candidate.position.y
+                - robot_y,
+                candidate.position.x
+                - robot_x
             )
 
+            # Smallest amount of rotation needed to face the frontier.
             heading_change = abs(
                 math.atan2(
                     math.sin(
-                        goal_heading - robot_yaw
+                        goal_heading
+                        - robot_yaw
                     ),
                     math.cos(
-                        goal_heading - robot_yaw
+                        goal_heading
+                        - robot_yaw
                     )
                 )
             )
@@ -530,19 +583,160 @@ class ExplorationManager(Node):
                 heading_change
             )
 
-        if not valid_candidates:
-
-            self.get_logger().info(
-                'No valid frontier candidates after filtering'
+        counts = {
+            'total': len(
+                self.frontier_candidates
+            ),
+            'too_close': too_close_count,
+            'failed': failed_count,
+            'reached': reached_count,
+            'valid': len(
+                valid_candidates
             )
+        }
 
+        return (
+            valid_candidates,
+            distances,
+            information_values,
+            heading_changes,
+            counts
+        )
+
+    # ================================================================
+    # FRONTIER SELECTION
+    # ================================================================
+
+    def select_best_candidate(self):
+
+        robot_pose = self.get_robot_pose()
+
+        if robot_pose is None:
             return None
 
-        # ============================================================
-        # NORMALISE VALUES
-        # ============================================================
+        robot_x, robot_y, robot_yaw = robot_pose
 
-        def normalise(values, equal_value):
+        # ------------------------------------------------------------
+        # FIRST PASS
+        # ------------------------------------------------------------
+
+        # Normal behaviour:
+        # avoid too-close, failed and previously reached regions.
+        (
+            valid_candidates,
+            distances,
+            information_values,
+            heading_changes,
+            counts
+        ) = self.collect_valid_candidates(
+            robot_x,
+            robot_y,
+            robot_yaw,
+            allow_reached=False
+        )
+
+        # ------------------------------------------------------------
+        # FALLBACK
+        # ------------------------------------------------------------
+
+        # If every frontier was filtered out, allow reached regions.
+        # Failed regions and too-close goals are still rejected.
+        if not valid_candidates:
+
+            self.get_logger().warn(
+                f'No strict frontier candidates: '
+                f'total={counts["total"]}, '
+                f'too_close={counts["too_close"]}, '
+                f'failed={counts["failed"]}, '
+                f'reached={counts["reached"]}'
+            )
+
+            (
+                valid_candidates,
+                distances,
+                information_values,
+                heading_changes,
+                fallback_counts
+            ) = self.collect_valid_candidates(
+                robot_x,
+                robot_y,
+                robot_yaw,
+                allow_reached=True
+            )
+
+            if not valid_candidates:
+
+                self.get_logger().warn(
+                    f'No frontier available even after reached-region '
+                    f'fallback: '
+                    f'total={fallback_counts["total"]}, '
+                    f'too_close={fallback_counts["too_close"]}, '
+                    f'failed={fallback_counts["failed"]}'
+                )
+
+                return None
+
+            self.get_logger().warn(
+                f'Using reached-region fallback: '
+                f'{len(valid_candidates)} candidate(s) available'
+            )
+
+        # ------------------------------------------------------------
+        # DIRECTION PREFERENCE
+        # ------------------------------------------------------------
+
+        # Prefer candidates that do not require more than a 90 degree turn.
+        # This is a preference only. If none exist, all headings are allowed.
+        preferred_indices = [
+            index
+            for index, heading_change
+            in enumerate(heading_changes)
+            if heading_change
+            <= self.preferred_turn_angle
+        ]
+
+        if preferred_indices:
+
+            valid_candidates = [
+                valid_candidates[index]
+                for index in preferred_indices
+            ]
+
+            distances = [
+                distances[index]
+                for index in preferred_indices
+            ]
+
+            information_values = [
+                information_values[index]
+                for index in preferred_indices
+            ]
+
+            heading_changes = [
+                heading_changes[index]
+                for index in preferred_indices
+            ]
+
+            self.get_logger().info(
+                f'Using {len(valid_candidates)} '
+                f'forward-preferred frontier candidate(s)'
+            )
+
+        else:
+
+            self.get_logger().info(
+                'No forward-preferred frontier available; '
+                'allowing larger turns'
+            )
+
+        # ------------------------------------------------------------
+        # NORMALISE VALUES
+        # ------------------------------------------------------------
+
+        def normalise(
+            values,
+            equal_value
+        ):
 
             values = np.array(
                 values,
@@ -552,8 +746,8 @@ class ExplorationManager(Node):
             minimum = np.min(values)
             maximum = np.max(values)
 
-            # If all candidates have the same value,
-            # give them the same normalised score.
+            # If all values are equal, that factor cannot separate
+            # the candidates.
             if maximum == minimum:
 
                 return np.full(
@@ -577,15 +771,23 @@ class ExplorationManager(Node):
             0.0
         )
 
+        # Heading naturally ranges from 0 to pi.
+        #
+        # 0 degrees   = 0
+        # 90 degrees  = 0.5
+        # 180 degrees = 1
         heading_norm = np.array(
             heading_changes,
             dtype=float
         ) / math.pi
 
-        # ============================================================
+        # ------------------------------------------------------------
         # FRONTIER SCORE
-        # ============================================================
+        # ------------------------------------------------------------
 
+        # More information increases score.
+        # More distance decreases score.
+        # More turning decreases score.
         scores = (
             self.information_weight
             * information_norm
@@ -597,6 +799,8 @@ class ExplorationManager(Node):
             * heading_norm
         )
 
+        # np.argmax always selects the highest score,
+        # even if every score is negative.
         best_index = int(
             np.argmax(scores)
         )
@@ -610,8 +814,10 @@ class ExplorationManager(Node):
             f'x={candidate.position.x:.2f}, '
             f'y={candidate.position.y:.2f}, '
             f'distance={distances[best_index]:.2f} m, '
-            f'turn={math.degrees(heading_changes[best_index]):.1f} deg, '
-            f'information={information_values[best_index]}, '
+            f'turn='
+            f'{math.degrees(heading_changes[best_index]):.1f} deg, '
+            f'information='
+            f'{information_values[best_index]}, '
             f'score={scores[best_index]:.3f}'
         )
 
@@ -652,7 +858,7 @@ class ExplorationManager(Node):
             self.current_goal
         )
 
-        # Make sure the orientation quaternion is valid.
+        # Make sure goal orientation is a valid quaternion.
         q = goal.pose.pose.orientation
 
         if (
@@ -663,6 +869,7 @@ class ExplorationManager(Node):
         ):
             q.w = 1.0
 
+        # Send navigation asynchronously.
         future = (
             self.navigation_client
             .send_goal_async(goal)
@@ -690,7 +897,8 @@ class ExplorationManager(Node):
         except Exception as error:
 
             self.get_logger().error(
-                f'Could not send navigation goal: {error}'
+                f'Could not send navigation goal: '
+                f'{error}'
             )
 
             self.current_goal = None
@@ -699,6 +907,7 @@ class ExplorationManager(Node):
 
             return
 
+        # Nav2 rejected the goal.
         if not goal_handle.accepted:
 
             self.get_logger().warn(
@@ -722,6 +931,7 @@ class ExplorationManager(Node):
             'Navigation goal accepted'
         )
 
+        # Wait asynchronously for final navigation result.
         result_future = (
             goal_handle
             .get_result_async()
@@ -742,15 +952,18 @@ class ExplorationManager(Node):
 
         try:
 
-            status = future.result().status
+            status = (
+                future.result().status
+            )
 
         except Exception as error:
 
             self.get_logger().error(
-                f'Could not obtain navigation result: {error}'
+                f'Could not obtain navigation result: '
+                f'{error}'
             )
 
-            # Do not send another goal while Nav2 state is unknown.
+            # Do not issue another goal while Nav2 state is unknown.
             self.state = 'CANCELING'
 
             return
@@ -759,7 +972,10 @@ class ExplorationManager(Node):
         # SUCCESS
         # ------------------------------------------------------------
 
-        if status == GoalStatus.STATUS_SUCCEEDED:
+        if (
+            status
+            == GoalStatus.STATUS_SUCCEEDED
+        ):
 
             self.get_logger().info(
                 'Frontier reached successfully'
@@ -772,12 +988,16 @@ class ExplorationManager(Node):
                     self.current_goal.position.y
                 )
 
-                # Avoid storing nearly identical reached positions.
+                # Avoid storing duplicate reached locations.
                 duplicate = any(
                     math.hypot(
-                        reached_position[0] - old_x,
-                        reached_position[1] - old_y
-                    ) < self.reached_region_radius
+                        reached_position[0]
+                        - old_x,
+                        reached_position[1]
+                        - old_y
+                    )
+                    < self.reached_region_radius
+
                     for old_x, old_y
                     in self.reached_regions
                 )
@@ -802,17 +1022,19 @@ class ExplorationManager(Node):
 
             self.empty_frontier_update_count = 0
 
+            # Wait for new frontier data after movement.
             self.state = 'WAITING_FOR_UPDATE'
 
             return
 
         # ------------------------------------------------------------
-        # CANCELLED GOAL
+        # CONFIRMED CANCELLATION
         # ------------------------------------------------------------
 
         if (
             self.state == 'CANCELING'
-            and status == GoalStatus.STATUS_CANCELED
+            and
+            status == GoalStatus.STATUS_CANCELED
         ):
 
             self.get_logger().warn(
@@ -828,17 +1050,29 @@ class ExplorationManager(Node):
         # OTHER FAILURE
         # ------------------------------------------------------------
 
-        if status == GoalStatus.STATUS_ABORTED:
+        if (
+            status
+            == GoalStatus.STATUS_ABORTED
+        ):
+
             status_name = 'ABORTED'
 
-        elif status == GoalStatus.STATUS_CANCELED:
+        elif (
+            status
+            == GoalStatus.STATUS_CANCELED
+        ):
+
             status_name = 'CANCELED'
 
         else:
-            status_name = str(status)
+
+            status_name = str(
+                status
+            )
 
         self.get_logger().warn(
-            f'Navigation failed: {status_name}'
+            f'Navigation failed: '
+            f'{status_name}'
         )
 
         self.fail_current_frontier()
@@ -857,6 +1091,7 @@ class ExplorationManager(Node):
         x, y, yaw = robot_pose
         now = self.get_clock().now()
 
+        # First measurement becomes the reference pose.
         if self.last_progress_pose is None:
 
             self.last_progress_pose = (
@@ -873,13 +1108,13 @@ class ExplorationManager(Node):
             self.last_progress_pose
         )
 
-        # Check how far the robot has moved.
+        # Translation since last meaningful progress.
         translation = math.hypot(
             x - old_x,
             y - old_y
         )
 
-        # Check how much the robot has rotated.
+        # Rotation since last meaningful progress.
         heading_change = abs(
             math.atan2(
                 math.sin(
@@ -891,10 +1126,13 @@ class ExplorationManager(Node):
             )
         )
 
-        # Moving or rotating enough counts as progress.
+        # Moving OR rotating enough counts as progress.
         if (
-            translation >= self.stuck_distance
-            or heading_change >= self.stuck_angle
+            translation
+            >= self.stuck_distance
+            or
+            heading_change
+            >= self.stuck_angle
         ):
 
             self.last_progress_pose = (
@@ -912,12 +1150,17 @@ class ExplorationManager(Node):
             - self.last_progress_time
         ).nanoseconds / 1e9
 
-        if stationary_time >= self.stuck_timeout:
+        # Cancel the goal if there has been no useful progress.
+        if (
+            stationary_time
+            >= self.stuck_timeout
+        ):
 
             self.get_logger().warn(
                 f'Robot appears stuck: '
                 f'translation={translation:.2f} m, '
-                f'rotation={math.degrees(heading_change):.1f} deg, '
+                f'rotation='
+                f'{math.degrees(heading_change):.1f} deg, '
                 f'time={stationary_time:.1f} s'
             )
 
@@ -935,12 +1178,13 @@ class ExplorationManager(Node):
         if self.navigation_goal_handle is None:
 
             self.get_logger().warn(
-                'Stuck detected but no active navigation goal exists'
+                'Stuck detected but no active '
+                'navigation goal exists'
             )
 
             return
 
-        # Change state first so no new goal can be sent.
+        # Prevent another goal being selected while cancelling.
         self.state = 'CANCELING'
 
         self.get_logger().warn(
@@ -972,12 +1216,15 @@ class ExplorationManager(Node):
         except Exception as error:
 
             self.get_logger().error(
-                f'Cancellation request failed: {error}'
+                f'Cancellation request failed: '
+                f'{error}'
             )
 
+            # Cancellation failed, so assume original goal remains active.
             if (
                 self.current_goal is not None
-                and self.navigation_goal_handle is not None
+                and
+                self.navigation_goal_handle is not None
             ):
 
                 self.state = 'NAVIGATING'
@@ -1001,6 +1248,8 @@ class ExplorationManager(Node):
 
             return
 
+        # Do not select another frontier yet.
+        # navigation_result_cb must confirm STATUS_CANCELED.
         self.get_logger().info(
             'Cancellation accepted by Nav2. '
             'Waiting for cancellation result.'
@@ -1019,11 +1268,16 @@ class ExplorationManager(Node):
                 self.current_goal.position.y
             )
 
+            # Avoid storing duplicate failed locations.
             duplicate = any(
                 math.hypot(
-                    failed_position[0] - old_x,
-                    failed_position[1] - old_y
-                ) < self.failed_region_radius
+                    failed_position[0]
+                    - old_x,
+                    failed_position[1]
+                    - old_y
+                )
+                < self.failed_region_radius
+
                 for old_x, old_y
                 in self.failed_regions
             )
@@ -1054,35 +1308,40 @@ class ExplorationManager(Node):
 
     def exploration_cb(self):
 
-        # While navigating, only monitor progress.
+        # While navigating, only check whether progress is being made.
         if self.state == 'NAVIGATING':
 
             self.check_stuck()
             return
 
-        # Never send another goal while cancellation is pending.
+        # Never choose another goal while cancellation is pending.
         if self.state == 'CANCELING':
             return
 
-        # Only select a frontier when the manager is ready.
+        # Only choose a frontier when ready.
         if self.state != 'READY':
             return
 
-        candidate = self.select_best_candidate()
+        candidate = (
+            self.select_best_candidate()
+        )
 
         if candidate is None:
 
+            # Wait for another frontier update.
             self.state = 'WAITING_FOR_UPDATE'
             return
 
-        self.current_goal = candidate
+        self.current_goal = (
+            candidate
+        )
 
         self.last_progress_pose = None
         self.last_progress_time = None
 
         self.state = 'GOAL_SELECTED'
 
-        # Send the chosen frontier to Nav2.
+        # Send selected frontier to Nav2.
         if not self.send_navigation_goal():
 
             self.current_goal = None
@@ -1093,11 +1352,15 @@ class ExplorationManager(Node):
 
 def main(args=None):
 
-    rclpy.init(args=args)
+    rclpy.init(
+        args=args
+    )
 
     node = ExplorationManager()
 
-    rclpy.spin(node)
+    rclpy.spin(
+        node
+    )
 
     node.destroy_node()
 
@@ -1105,4 +1368,5 @@ def main(args=None):
 
 
 if __name__ == '__main__':
-    main()
+    main()git status
+    
