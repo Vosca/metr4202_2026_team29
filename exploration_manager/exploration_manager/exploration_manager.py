@@ -36,17 +36,17 @@ class ExplorationManager(Node):
         # Heading = how much the robot must turn.
         self.information_weight = self.declare_parameter(
             'information_weight',
-            0.5
+            0.35
         ).value
 
         self.distance_weight = self.declare_parameter(
             'distance_weight',
-            0.3
+            0.35
         ).value
 
         self.heading_weight = self.declare_parameter(
             'heading_weight',
-            0.2
+            0.3
         ).value
 
         # Ignore goals that are already very close to the robot.
