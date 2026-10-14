@@ -29,7 +29,7 @@ class ExplorationManager(Node):
         ).value
 
         # Frontier scoring weights.
-        
+
         # Information = how useful the frontier is.
         # Distance = how far the robot must travel.
         # Heading = how much the robot must turn.
@@ -79,30 +79,6 @@ class ExplorationManager(Node):
         ).value
 
         # ============================================================
-        # STUCK DETECTION
-        # ============================================================
-
-        # Robot must move at least this distance to count as progress.
-        self.stuck_distance = self.declare_parameter(
-            'stuck_distance',
-            0.15
-        ).value
-
-        # Rotation can also count as progress.
-        self.stuck_angle = math.radians(
-            self.declare_parameter(
-                'stuck_angle_degrees',
-                20.0
-            ).value
-        )
-
-        # Cancel the goal if no useful movement occurs for this long.
-        self.stuck_timeout = self.declare_parameter(
-            'stuck_timeout',
-            4.0
-        ).value
-
-        # ============================================================
         # STORED DATA
         # ============================================================
 
@@ -124,10 +100,6 @@ class ExplorationManager(Node):
         # Used to decide when exploration has finished.
         self.empty_frontier_update_count = 0
 
-        # Used to monitor robot movement.
-        self.last_progress_pose = None
-        self.last_progress_time = None
-
         # ============================================================
         # STATE MACHINE
         # ============================================================
@@ -138,7 +110,6 @@ class ExplorationManager(Node):
         # READY
         # GOAL_SELECTED
         # NAVIGATING
-        # CANCELING
         # WAITING_FOR_UPDATE
         # EXPLORATION_COMPLETE
         self.state = 'WAITING_FOR_DATA'
@@ -147,7 +118,8 @@ class ExplorationManager(Node):
         # ROS SUBSCRIPTIONS
         # ============================================================
 
-        # Receive frontier positions from the frontier detector.
+        # Receive frontier positions continuously from the
+        # frontier detector.
         self.frontier_subscription = self.create_subscription(
             PoseArray,
             '/frontier_candidates',
@@ -186,6 +158,7 @@ class ExplorationManager(Node):
             'navigate_to_pose'
         )
 
+        # Run the main exploration logic once every second.
         self.exploration_timer = self.create_timer(
             1.0,
             self.exploration_cb
@@ -201,11 +174,16 @@ class ExplorationManager(Node):
 
     def frontier_cb(self, msg):
 
-        self.frontier_candidates = list(msg.poses)
+        # Store the newest frontier list every time the
+        # frontier detector publishes.
+        self.frontier_candidates = list(
+            msg.poses
+        )
 
         if self.state == 'EXPLORATION_COMPLETE':
             return
 
+        # After navigation finishes, wait for updated frontier data.
         if self.state == 'WAITING_FOR_UPDATE':
 
             if self.frontier_candidates:
@@ -477,6 +455,7 @@ class ExplorationManager(Node):
 
         for candidate in self.frontier_candidates:
 
+            # Calculate straight-line distance from the robot.
             distance = math.hypot(
                 candidate.position.x
                 - robot_x,
@@ -592,8 +571,7 @@ class ExplorationManager(Node):
         # ------------------------------------------------------------
 
         # Prefer frontiers requiring no more than a 90 degree turn.
-        #
-        # This is only a preference.
+    
         # If none exist, frontiers requiring larger turns are allowed.
         preferred_indices = [
             index
@@ -632,8 +610,6 @@ class ExplorationManager(Node):
 
         else:
 
-            # Exploration can still continue if all remaining
-            # frontiers require the robot to turn around.
             self.get_logger().info(
                 'No forward-preferred frontier available; '
                 'allowing larger turns'
@@ -689,6 +665,10 @@ class ExplorationManager(Node):
         # ------------------------------------------------------------
         # FRONTIER SCORE
         # ------------------------------------------------------------
+
+        # Information contributes 10%.
+        # Distance contributes a 40% penalty.
+        # Rotation contributes a 50% penalty.
         scores = (
             self.information_weight
             * information_norm
@@ -700,6 +680,8 @@ class ExplorationManager(Node):
             * heading_norm
         )
 
+        # Select the candidate with the highest score.
+    
         best_index = int(
             np.argmax(scores)
         )
@@ -759,6 +741,7 @@ class ExplorationManager(Node):
 
         q = goal.pose.pose.orientation
 
+        # Make sure the orientation quaternion is valid.
         if (
             q.x == 0.0
             and q.y == 0.0
@@ -805,6 +788,7 @@ class ExplorationManager(Node):
 
             return
 
+        # Nav2 did not accept the goal.
         if not goal_handle.accepted:
 
             self.get_logger().warn(
@@ -820,9 +804,6 @@ class ExplorationManager(Node):
         )
 
         self.state = 'NAVIGATING'
-
-        self.last_progress_pose = None
-        self.last_progress_time = None
 
         self.get_logger().info(
             'Navigation goal accepted'
@@ -859,7 +840,9 @@ class ExplorationManager(Node):
                 f'{error}'
             )
 
-            self.state = 'CANCELING'
+            self.current_goal = None
+            self.navigation_goal_handle = None
+            self.state = 'READY'
 
             return
 
@@ -883,8 +866,6 @@ class ExplorationManager(Node):
                     self.current_goal.position.y
                 )
 
-                # Check whether this exact frontier has already
-                # been stored as reached.
                 duplicate = any(
                     math.hypot(
                         reached_position[0]
@@ -913,37 +894,16 @@ class ExplorationManager(Node):
             self.current_goal = None
             self.navigation_goal_handle = None
 
-            self.last_progress_pose = None
-            self.last_progress_time = None
-
             self.empty_frontier_update_count = 0
 
-            # Wait for new map/frontier data before choosing again.
+            # Wait for updated frontier information before
+            # selecting another goal.
             self.state = 'WAITING_FOR_UPDATE'
 
             return
 
         # ------------------------------------------------------------
-        # CONFIRMED CANCELLATION
-        # ------------------------------------------------------------
-
-        if (
-            self.state == 'CANCELING'
-            and
-            status == GoalStatus.STATUS_CANCELED
-        ):
-
-            self.get_logger().warn(
-                'Navigation cancellation complete. '
-                'Recording failed frontier.'
-            )
-
-            self.fail_current_frontier()
-
-            return
-
-        # ------------------------------------------------------------
-        # OTHER FAILURE
+        # ABORTED
         # ------------------------------------------------------------
 
         if (
@@ -951,203 +911,23 @@ class ExplorationManager(Node):
             == GoalStatus.STATUS_ABORTED
         ):
 
-            status_name = 'ABORTED'
-
-        elif (
-            status
-            == GoalStatus.STATUS_CANCELED
-        ):
-
-            status_name = 'CANCELED'
-
-        else:
-
-            status_name = str(
-                status
+            self.get_logger().warn(
+                'Navigation failed: ABORTED'
             )
 
+            self.fail_current_frontier()
+
+            return
+
+        # ------------------------------------------------------------
+        # OTHER RESULT
+        # ------------------------------------------------------------
+
         self.get_logger().warn(
-            f'Navigation failed: '
-            f'{status_name}'
+            f'Navigation ended with status={status}'
         )
 
         self.fail_current_frontier()
-
-    # ================================================================
-    # STUCK DETECTION
-    # ================================================================
-
-    def check_stuck(self):
-
-        robot_pose = self.get_robot_pose()
-
-        if robot_pose is None:
-            return
-
-        x, y, yaw = robot_pose
-        now = self.get_clock().now()
-
-        if self.last_progress_pose is None:
-
-            self.last_progress_pose = (
-                x,
-                y,
-                yaw
-            )
-
-            self.last_progress_time = now
-
-            return
-
-        old_x, old_y, old_yaw = (
-            self.last_progress_pose
-        )
-
-        # Check how far the robot has moved.
-        translation = math.hypot(
-            x - old_x,
-            y - old_y
-        )
-
-        # Check how much the robot has rotated.
-        heading_change = abs(
-            math.atan2(
-                math.sin(
-                    yaw - old_yaw
-                ),
-                math.cos(
-                    yaw - old_yaw
-                )
-            )
-        )
-
-        # Moving or rotating enough counts as progress.
-        if (
-            translation
-            >= self.stuck_distance
-            or
-            heading_change
-            >= self.stuck_angle
-        ):
-
-            self.last_progress_pose = (
-                x,
-                y,
-                yaw
-            )
-
-            self.last_progress_time = now
-
-            return
-
-        stationary_time = (
-            now
-            - self.last_progress_time
-        ).nanoseconds / 1e9
-
-        # Cancel navigation if no useful movement occurs.
-        if (
-            stationary_time
-            >= self.stuck_timeout
-        ):
-
-            self.get_logger().warn(
-                f'Robot appears stuck: '
-                f'translation={translation:.2f} m, '
-                f'rotation='
-                f'{math.degrees(heading_change):.1f} deg, '
-                f'time={stationary_time:.1f} s'
-            )
-
-            self.cancel_stuck_goal()
-
-    # ================================================================
-    # CANCEL STUCK GOAL
-    # ================================================================
-
-    def cancel_stuck_goal(self):
-
-        if self.state != 'NAVIGATING':
-            return
-
-        if self.navigation_goal_handle is None:
-
-            self.get_logger().warn(
-                'Stuck detected but no active '
-                'navigation goal exists'
-            )
-
-            return
-
-        # Change state first so another goal cannot be selected.
-        self.state = 'CANCELING'
-
-        self.get_logger().warn(
-            'Cancelling stuck navigation goal'
-        )
-
-        cancel_future = (
-            self.navigation_goal_handle
-            .cancel_goal_async()
-        )
-
-        cancel_future.add_done_callback(
-            self.cancel_response_cb
-        )
-
-    # ================================================================
-    # CANCELLATION RESPONSE
-    # ================================================================
-
-    def cancel_response_cb(
-        self,
-        future
-    ):
-
-        try:
-
-            response = future.result()
-
-        except Exception as error:
-
-            self.get_logger().error(
-                f'Cancellation request failed: '
-                f'{error}'
-            )
-
-            # Cancellation failed, so keep the original goal active.
-            if (
-                self.current_goal is not None
-                and
-                self.navigation_goal_handle is not None
-            ):
-
-                self.state = 'NAVIGATING'
-
-                self.last_progress_pose = None
-                self.last_progress_time = None
-
-            return
-
-        # If cancellation was not accepted, continue navigating.
-        if not response.goals_canceling:
-
-            self.get_logger().warn(
-                'Nav2 did not accept cancellation. '
-                'Keeping current goal active.'
-            )
-
-            self.state = 'NAVIGATING'
-
-            self.last_progress_pose = None
-            self.last_progress_time = None
-
-            return
-
-        self.get_logger().info(
-            'Cancellation accepted by Nav2. '
-            'Waiting for cancellation result.'
-        )
 
     # ================================================================
     # STORE FAILED FRONTIER
@@ -1192,9 +972,6 @@ class ExplorationManager(Node):
         self.current_goal = None
         self.navigation_goal_handle = None
 
-        self.last_progress_pose = None
-        self.last_progress_time = None
-
         # Navigation has finished, so another frontier may be selected.
         self.state = 'READY'
 
@@ -1204,15 +981,11 @@ class ExplorationManager(Node):
 
     def exploration_cb(self):
 
+        # Wait for Nav2 to finish the current navigation goal.
         if self.state == 'NAVIGATING':
-
-            self.check_stuck()
             return
 
-        if self.state == 'CANCELING':
-            return
-
-        # Only select a frontier when ready.
+        # Only select a new frontier when ready.
         if self.state != 'READY':
             return
 
@@ -1228,9 +1001,6 @@ class ExplorationManager(Node):
         self.current_goal = (
             candidate
         )
-
-        self.last_progress_pose = None
-        self.last_progress_time = None
 
         self.state = 'GOAL_SELECTED'
 
@@ -1261,4 +1031,3 @@ def main(args=None):
 
 if __name__ == '__main__':
     main()
-    
