@@ -35,7 +35,7 @@ class ExplorationManager(Node):
         # Heading = how much the robot must turn.
         self.information_weight = self.declare_parameter(
             'information_weight',
-            0.10
+            0.30
         ).value
 
         self.distance_weight = self.declare_parameter(
@@ -45,7 +45,7 @@ class ExplorationManager(Node):
 
         self.heading_weight = self.declare_parameter(
             'heading_weight',
-            0.50
+            0.30
         ).value
 
         # Small tolerance used to identify the same frontier coordinate.
