@@ -48,6 +48,7 @@ class ExplorationManager(Node):
             0.50
         ).value
 
+        # Small tolerance used to identify the same frontier coordinate.
         self.frontier_match_tolerance = self.declare_parameter(
             'frontier_match_tolerance',
             0.01
@@ -62,7 +63,6 @@ class ExplorationManager(Node):
             ).value
         )
 
-        # Number of empty frontier updates before exploration ends.
         self.required_empty_updates = self.declare_parameter(
             'required_empty_updates',
             3
@@ -183,7 +183,6 @@ class ExplorationManager(Node):
         if self.state == 'EXPLORATION_COMPLETE':
             return
 
-        # After navigation finishes, wait for updated frontier data.
         if self.state == 'WAITING_FOR_UPDATE':
 
             if self.frontier_candidates:
@@ -310,7 +309,6 @@ class ExplorationManager(Node):
 
     def information_gain(self, candidate):
 
-        # Count unknown map cells around the frontier.
         if (
             self.map_msg is None
             or self.map_array is None
@@ -571,7 +569,8 @@ class ExplorationManager(Node):
         # ------------------------------------------------------------
 
         # Prefer frontiers requiring no more than a 90 degree turn.
-    
+        #
+        # This is only a preference.
         # If none exist, frontiers requiring larger turns are allowed.
         preferred_indices = [
             index
@@ -681,7 +680,8 @@ class ExplorationManager(Node):
         )
 
         # Select the candidate with the highest score.
-    
+        #
+        # The highest score is selected even if all scores are negative.
         best_index = int(
             np.argmax(scores)
         )
@@ -723,6 +723,23 @@ class ExplorationManager(Node):
 
             return False
 
+        # Get the robot position when the goal is being sent.
+        #
+        # This is used to calculate the direction from the robot
+        # toward the selected frontier.
+        robot_pose = self.get_robot_pose()
+
+        if robot_pose is None:
+
+            self.get_logger().warn(
+                'Cannot send navigation goal because '
+                'robot pose is unavailable'
+            )
+
+            return False
+
+        robot_x, robot_y, _ = robot_pose
+
         goal = NavigateToPose.Goal()
 
         goal.pose.header.frame_id = (
@@ -739,18 +756,34 @@ class ExplorationManager(Node):
             self.current_goal
         )
 
-        q = goal.pose.pose.orientation
+        # ------------------------------------------------------------
+        # GOAL ORIENTATION
+        # ------------------------------------------------------------
 
-        # Make sure the orientation quaternion is valid.
-        if (
-            q.x == 0.0
-            and q.y == 0.0
-            and q.z == 0.0
-            and q.w == 0.0
-        ):
-            q.w = 1.0
+        goal_yaw = math.atan2(
+            self.current_goal.position.y
+            - robot_y,
+            self.current_goal.position.x
+            - robot_x
+        )
 
-        # Send the goal without blocking the node.
+        # Convert the desired yaw into a quaternion.
+        goal.pose.pose.orientation.x = 0.0
+        goal.pose.pose.orientation.y = 0.0
+
+        goal.pose.pose.orientation.z = math.sin(
+            goal_yaw / 2.0
+        )
+
+        goal.pose.pose.orientation.w = math.cos(
+            goal_yaw / 2.0
+        )
+
+        self.get_logger().info(
+            f'Navigation goal orientation='
+            f'{math.degrees(goal_yaw):.1f} deg'
+        )
+
         future = (
             self.navigation_client
             .send_goal_async(goal)
@@ -788,7 +821,6 @@ class ExplorationManager(Node):
 
             return
 
-        # Nav2 did not accept the goal.
         if not goal_handle.accepted:
 
             self.get_logger().warn(
@@ -866,6 +898,8 @@ class ExplorationManager(Node):
                     self.current_goal.position.y
                 )
 
+                # Check whether this exact frontier has already
+                # been stored as reached.
                 duplicate = any(
                     math.hypot(
                         reached_position[0]
@@ -922,7 +956,6 @@ class ExplorationManager(Node):
         # ------------------------------------------------------------
         # OTHER RESULT
         # ------------------------------------------------------------
-
         self.get_logger().warn(
             f'Navigation ended with status={status}'
         )
@@ -972,7 +1005,6 @@ class ExplorationManager(Node):
         self.current_goal = None
         self.navigation_goal_handle = None
 
-        # Navigation has finished, so another frontier may be selected.
         self.state = 'READY'
 
     # ================================================================
@@ -995,6 +1027,7 @@ class ExplorationManager(Node):
 
         if candidate is None:
 
+            # Wait for updated frontier information.
             self.state = 'WAITING_FOR_UPDATE'
             return
 
@@ -1004,6 +1037,7 @@ class ExplorationManager(Node):
 
         self.state = 'GOAL_SELECTED'
 
+        # Send the selected frontier to Nav2.
         if not self.send_navigation_goal():
 
             self.current_goal = None
