@@ -1,0 +1,849 @@
+[INFO] [1791956367.375008503] [exploration_manager]: Exploration manager started
+[INFO] [1791956370.700788026] [exploration_manager]: Exploration manager ready
+[INFO] [1791956371.368543611] [exploration_manager]: Using 4 forward-preferred frontier candidate(s)
+[INFO] [1791956371.369369459] [exploration_manager]: Selected frontier x=0.12, y=0.01, distance=0.12 m, turn=3.7 deg, information=924, score=-0.006
+[INFO] [1791956371.370703352] [exploration_manager]: Navigation goal orientation=3.7 deg
+[INFO] [1791956371.373996648] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956371.445650672] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956371.446277348] [exploration_manager]: Reached frontier recorded: x=0.12, y=0.01
+[INFO] [1791956375.656379761] [exploration_manager]: Updated frontier data received
+[INFO] [1791956376.364632479] [exploration_manager]: Using 3 forward-preferred frontier candidate(s)
+[INFO] [1791956376.365314869] [exploration_manager]: Selected frontier x=0.87, y=0.11, distance=0.88 m, turn=7.0 deg, information=1147, score=0.068
+[INFO] [1791956376.367260456] [exploration_manager]: Navigation goal orientation=7.0 deg
+[INFO] [1791956376.372214478] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956379.582449963] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956379.583139592] [exploration_manager]: Reached frontier recorded: x=0.87, y=0.11
+[INFO] [1791956380.661300944] [exploration_manager]: Updated frontier data received
+[INFO] [1791956381.364038390] [exploration_manager]: No forward-preferred frontier available; allowing larger turns
+[INFO] [1791956381.364825527] [exploration_manager]: Selected frontier x=0.17, y=-0.59, distance=0.80 m, turn=135.3 deg, information=965, score=-0.067
+[INFO] [1791956381.366070088] [exploration_manager]: Navigation goal orientation=-125.8 deg
+[INFO] [1791956381.370495670] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956387.890357243] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956387.891178981] [exploration_manager]: Reached frontier recorded: x=0.17, y=-0.59
+[INFO] [1791956393.938750932] [exploration_manager]: Updated frontier data received
+[INFO] [1791956394.420953791] [exploration_manager]: Using 12 forward-preferred frontier candidate(s)
+[INFO] [1791956394.422095373] [exploration_manager]: Selected frontier x=0.15, y=-0.70, distance=0.29 m, turn=2.8 deg, information=610, score=-0.005
+[INFO] [1791956394.424539679] [exploration_manager]: Navigation goal orientation=-142.1 deg
+[INFO] [1791956394.429295482] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956394.989072751] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956394.989848041] [exploration_manager]: Reached frontier recorded: x=0.15, y=-0.70
+[INFO] [1791956395.721927647] [exploration_manager]: Updated frontier data received
+[INFO] [1791956396.441258362] [exploration_manager]: Using 10 forward-preferred frontier candidate(s)
+[INFO] [1791956396.442102354] [exploration_manager]: Selected frontier x=-0.15, y=-1.10, distance=0.72 m, turn=11.0 deg, information=645, score=-0.018
+[INFO] [1791956396.443644713] [exploration_manager]: Navigation goal orientation=-131.8 deg
+[INFO] [1791956396.448930782] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956399.008266785] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956399.009249385] [exploration_manager]: Reached frontier recorded: x=-0.15, y=-1.10
+[INFO] [1791956400.719801454] [exploration_manager]: Updated frontier data received
+[INFO] [1791956401.412937777] [exploration_manager]: Using 6 forward-preferred frontier candidate(s)
+[INFO] [1791956401.414462175] [exploration_manager]: Selected frontier x=-0.30, y=-2.10, distance=1.22 m, turn=28.6 deg, information=801, score=0.078
+[INFO] [1791956401.418675231] [exploration_manager]: Navigation goal orientation=-103.4 deg
+[INFO] [1791956401.422580659] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956406.184052813] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956406.184868914] [exploration_manager]: Reached frontier recorded: x=-0.30, y=-2.10
+[INFO] [1791956410.693262976] [exploration_manager]: Updated frontier data received
+[INFO] [1791956411.431674731] [exploration_manager]: Using 7 forward-preferred frontier candidate(s)
+[INFO] [1791956411.432985586] [exploration_manager]: Selected frontier x=-0.93, y=-2.35, distance=0.84 m, turn=45.2 deg, information=681, score=0.225
+[INFO] [1791956411.435072070] [exploration_manager]: Navigation goal orientation=-145.2 deg
+[INFO] [1791956411.439994986] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956415.399022769] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956415.399642965] [exploration_manager]: Reached frontier recorded: x=-0.93, y=-2.35
+[INFO] [1791956415.707873268] [exploration_manager]: Updated frontier data received
+[INFO] [1791956416.434229383] [exploration_manager]: Using 4 forward-preferred frontier candidate(s)
+[INFO] [1791956416.435362325] [exploration_manager]: Selected frontier x=-0.94, y=-2.26, distance=0.23 m, turn=32.2 deg, information=533, score=0.196
+[INFO] [1791956416.437148450] [exploration_manager]: Navigation goal orientation=169.1 deg
+[INFO] [1791956416.441215101] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956418.051132570] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956418.051643093] [exploration_manager]: Reached frontier recorded: x=-0.94, y=-2.26
+[INFO] [1791956420.696828420] [exploration_manager]: Updated frontier data received
+[INFO] [1791956421.406519897] [exploration_manager]: Using 8 forward-preferred frontier candidate(s)
+[INFO] [1791956421.407119853] [exploration_manager]: Selected frontier x=-1.24, y=-2.66, distance=0.63 m, turn=31.4 deg, information=542, score=0.068
+[INFO] [1791956421.408192424] [exploration_manager]: Navigation goal orientation=-145.8 deg
+[INFO] [1791956421.411141541] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956423.621879661] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956423.622547757] [exploration_manager]: Reached frontier recorded: x=-1.24, y=-2.66
+[INFO] [1791956425.703469688] [exploration_manager]: Updated frontier data received
+[INFO] [1791956429.181306433] [exploration_manager]: Using 1 forward-preferred frontier candidate(s)
+[INFO] [1791956429.182380790] [exploration_manager]: Selected frontier x=-1.69, y=-3.01, distance=0.80 m, turn=0.2 deg, information=371, score=0.300
+[INFO] [1791956429.184486850] [exploration_manager]: Navigation goal orientation=-137.9 deg
+[INFO] [1791956429.188281807] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956431.949610512] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956431.950260008] [exploration_manager]: Reached frontier recorded: x=-1.69, y=-3.01
+[INFO] [1791956433.957172041] [exploration_manager]: Updated frontier data received
+[INFO] [1791956434.435863378] [exploration_manager]: Using 1 forward-preferred frontier candidate(s)
+[INFO] [1791956434.436864573] [exploration_manager]: Selected frontier x=-1.94, y=-3.17, distance=0.53 m, turn=2.5 deg, information=243, score=0.296
+[INFO] [1791956434.437986147] [exploration_manager]: Navigation goal orientation=-141.9 deg
+[INFO] [1791956434.441542671] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956436.512904956] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956436.513723802] [exploration_manager]: Reached frontier recorded: x=-1.94, y=-3.17
+[INFO] [1791956440.716690397] [exploration_manager]: Updated frontier data received
+[INFO] [1791956441.427436157] [exploration_manager]: No forward-preferred frontier available; allowing larger turns
+[INFO] [1791956441.428584416] [exploration_manager]: Selected frontier x=-1.49, y=-1.82, distance=1.16 m, turn=125.6 deg, information=834, score=-0.068
+[INFO] [1791956441.430367609] [exploration_manager]: Navigation goal orientation=79.0 deg
+[INFO] [1791956441.433888243] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956448.705668800] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956448.706587161] [exploration_manager]: Reached frontier recorded: x=-1.49, y=-1.82
+[INFO] [1791956450.730475208] [exploration_manager]: Updated frontier data received
+[INFO] [1791956451.445507238] [exploration_manager]: Using 24 forward-preferred frontier candidate(s)
+[INFO] [1791956451.446638720] [exploration_manager]: Selected frontier x=-1.54, y=-1.72, distance=0.30 m, turn=4.0 deg, information=842, score=0.186
+[INFO] [1791956451.448642940] [exploration_manager]: Navigation goal orientation=69.3 deg
+[INFO] [1791956451.453041414] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956452.012686252] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956452.013233538] [exploration_manager]: Reached frontier recorded: x=-1.54, y=-1.72
+[INFO] [1791956455.720717619] [exploration_manager]: Updated frontier data received
+[INFO] [1791956456.425429278] [exploration_manager]: Using 22 forward-preferred frontier candidate(s)
+[INFO] [1791956456.426112277] [exploration_manager]: Selected frontier x=-1.89, y=-1.27, distance=0.72 m, turn=44.4 deg, information=968, score=0.168
+[INFO] [1791956456.427617891] [exploration_manager]: Navigation goal orientation=112.1 deg
+[INFO] [1791956456.432246305] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956459.641277193] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956459.642021414] [exploration_manager]: Reached frontier recorded: x=-1.89, y=-1.27
+[INFO] [1791956460.770769989] [exploration_manager]: Updated frontier data received
+[INFO] [1791956461.440934395] [exploration_manager]: Using 12 forward-preferred frontier candidate(s)
+[INFO] [1791956461.442035773] [exploration_manager]: Selected frontier x=-1.90, y=-1.17, distance=0.31 m, turn=1.4 deg, information=819, score=0.180
+[INFO] [1791956461.443213907] [exploration_manager]: Navigation goal orientation=127.0 deg
+[INFO] [1791956461.447769401] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956465.394717654] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956465.396066066] [exploration_manager]: Reached frontier recorded: x=-1.90, y=-1.17
+[INFO] [1791956469.113003170] [exploration_manager]: Updated frontier data received
+[INFO] [1791956469.425742224] [exploration_manager]: Using 11 forward-preferred frontier candidate(s)
+[INFO] [1791956469.426361180] [exploration_manager]: Selected frontier x=-2.30, y=-1.72, distance=0.65 m, turn=84.8 deg, information=919, score=0.079
+[INFO] [1791956469.427512115] [exploration_manager]: Navigation goal orientation=-146.0 deg
+[INFO] [1791956469.431177680] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956474.043656376] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956474.044602514] [exploration_manager]: Reached frontier recorded: x=-2.30, y=-1.72
+[INFO] [1791956475.746400072] [exploration_manager]: Updated frontier data received
+[INFO] [1791956476.439570840] [exploration_manager]: Using 9 forward-preferred frontier candidate(s)
+[INFO] [1791956476.440492639] [exploration_manager]: Selected frontier x=-2.95, y=-1.62, distance=0.72 m, turn=37.4 deg, information=1109, score=0.238
+[INFO] [1791956476.441687161] [exploration_manager]: Navigation goal orientation=-170.0 deg
+[INFO] [1791956476.444387621] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956479.055677015] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956479.056458550] [exploration_manager]: Reached frontier recorded: x=-2.95, y=-1.62
+[INFO] [1791956480.743442544] [exploration_manager]: Updated frontier data received
+[INFO] [1791956481.435158642] [exploration_manager]: Using 5 forward-preferred frontier candidate(s)
+[INFO] [1791956481.436197841] [exploration_manager]: Selected frontier x=-3.60, y=-2.02, distance=0.95 m, turn=26.8 deg, information=1096, score=0.210
+[INFO] [1791956481.437757431] [exploration_manager]: Navigation goal orientation=-157.7 deg
+[INFO] [1791956481.441351428] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956484.903873048] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956484.904426548] [exploration_manager]: Reached frontier recorded: x=-3.60, y=-2.02
+[INFO] [1791956485.779249898] [exploration_manager]: Updated frontier data received
+[INFO] [1791956486.479686362] [exploration_manager]: Using 6 forward-preferred frontier candidate(s)
+[INFO] [1791956486.480346675] [exploration_manager]: Selected frontier x=-4.64, y=-2.68, distance=1.46 m, turn=0.3 deg, information=952, score=-0.023
+[INFO] [1791956486.481415698] [exploration_manager]: Navigation goal orientation=-146.8 deg
+[INFO] [1791956486.485894472] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956491.896045573] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956491.896782126] [exploration_manager]: Reached frontier recorded: x=-4.64, y=-2.68
+[INFO] [1791956495.798565493] [exploration_manager]: Updated frontier data received
+[INFO] [1791956496.464659500] [exploration_manager]: Using 6 forward-preferred frontier candidate(s)
+[INFO] [1791956496.465405738] [exploration_manager]: Selected frontier x=-4.54, y=-2.72, distance=0.18 m, turn=21.9 deg, information=791, score=0.197
+[INFO] [1791956496.466726644] [exploration_manager]: Navigation goal orientation=-124.5 deg
+[INFO] [1791956496.470872965] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956497.381283029] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956497.381837929] [exploration_manager]: Reached frontier recorded: x=-4.54, y=-2.72
+[INFO] [1791956504.003395062] [exploration_manager]: Updated frontier data received
+[INFO] [1791956504.462186718] [exploration_manager]: Using 3 forward-preferred frontier candidate(s)
+[INFO] [1791956504.462841527] [exploration_manager]: Selected frontier x=-5.04, y=-2.92, distance=0.70 m, turn=11.6 deg, information=890, score=0.281
+[INFO] [1791956504.464069703] [exploration_manager]: Navigation goal orientation=-149.8 deg
+[INFO] [1791956504.468111946] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956507.277982106] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956507.278557114] [exploration_manager]: Reached frontier recorded: x=-5.04, y=-2.92
+[INFO] [1791956510.812852016] [exploration_manager]: Updated frontier data received
+[INFO] [1791956511.517597187] [exploration_manager]: Using 4 forward-preferred frontier candidate(s)
+[INFO] [1791956511.518279749] [exploration_manager]: Selected frontier x=-4.94, y=-3.24, distance=0.30 m, turn=35.9 deg, information=835, score=0.240
+[INFO] [1791956511.519387834] [exploration_manager]: Navigation goal orientation=-115.6 deg
+[INFO] [1791956511.522056088] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956512.483896704] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956512.484722139] [exploration_manager]: Reached frontier recorded: x=-4.94, y=-3.24
+[INFO] [1791956515.812365372] [exploration_manager]: Updated frontier data received
+[INFO] [1791956516.511707061] [exploration_manager]: Using 2 forward-preferred frontier candidate(s)
+[INFO] [1791956516.512813230] [exploration_manager]: Selected frontier x=-5.54, y=-2.89, distance=0.67 m, turn=61.5 deg, information=458, score=-0.102
+[INFO] [1791956516.514041441] [exploration_manager]: Navigation goal orientation=168.9 deg
+[INFO] [1791956516.517076553] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956519.280696967] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956519.281241360] [exploration_manager]: Reached frontier recorded: x=-5.54, y=-2.89
+[INFO] [1791956520.811258412] [exploration_manager]: Updated frontier data received
+[INFO] [1791956521.511271626] [exploration_manager]: Using 5 forward-preferred frontier candidate(s)
+[INFO] [1791956521.513462132] [exploration_manager]: Selected frontier x=-5.24, y=-1.36, distance=1.86 m, turn=76.4 deg, information=569, score=-0.105
+[INFO] [1791956521.515399044] [exploration_manager]: Navigation goal orientation=87.6 deg
+[INFO] [1791956521.520859264] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956543.660498300] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956543.661153314] [exploration_manager]: Reached frontier recorded: x=-5.24, y=-1.36
+[INFO] [1791956545.813437857] [exploration_manager]: Updated frontier data received
+[INFO] [1791956546.537813993] [exploration_manager]: Using 22 forward-preferred frontier candidate(s)
+[INFO] [1791956546.538573793] [exploration_manager]: Selected frontier x=-4.36, y=-0.85, distance=0.88 m, turn=59.8 deg, information=970, score=0.142
+[INFO] [1791956546.540684817] [exploration_manager]: Navigation goal orientation=41.5 deg
+[INFO] [1791956546.546119122] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956551.807009182] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956551.808054158] [exploration_manager]: Reached frontier recorded: x=-4.36, y=-0.85
+[INFO] [1791956555.841482314] [exploration_manager]: Updated frontier data received
+[INFO] [1791956556.497292075] [exploration_manager]: Using 43 forward-preferred frontier candidate(s)
+[INFO] [1791956556.498031319] [exploration_manager]: Selected frontier x=-3.91, y=-0.55, distance=0.75 m, turn=3.2 deg, information=878, score=0.194
+[INFO] [1791956556.499033716] [exploration_manager]: Navigation goal orientation=24.7 deg
+[INFO] [1791956556.502263642] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956559.013617190] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956559.014179297] [exploration_manager]: Reached frontier recorded: x=-3.91, y=-0.55
+[INFO] [1791956560.804914239] [exploration_manager]: Updated frontier data received
+[INFO] [1791956561.510409451] [exploration_manager]: Using 39 forward-preferred frontier candidate(s)
+[INFO] [1791956561.511281124] [exploration_manager]: Selected frontier x=-3.96, y=0.60, distance=1.26 m, turn=61.8 deg, information=1042, score=0.143
+[INFO] [1791956561.512747555] [exploration_manager]: Navigation goal orientation=82.8 deg
+[INFO] [1791956561.517609098] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956566.926972226] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956566.927881960] [exploration_manager]: Reached frontier recorded: x=-3.96, y=0.60
+[INFO] [1791956574.148391343] [exploration_manager]: Updated frontier data received
+[INFO] [1791956574.493156988] [exploration_manager]: Using 5 forward-preferred frontier candidate(s)
+[INFO] [1791956574.493954812] [exploration_manager]: Selected frontier x=-3.97, y=1.15, distance=0.77 m, turn=1.2 deg, information=679, score=0.074
+[INFO] [1791956574.495040252] [exploration_manager]: Navigation goal orientation=95.1 deg
+[INFO] [1791956574.499419318] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956577.759057183] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956577.759802131] [exploration_manager]: Reached frontier recorded: x=-3.97, y=1.15
+[INFO] [1791956580.824530751] [exploration_manager]: Updated frontier data received
+[INFO] [1791956581.492456895] [exploration_manager]: Using 4 forward-preferred frontier candidate(s)
+[INFO] [1791956581.493143988] [exploration_manager]: Selected frontier x=-4.32, y=1.15, distance=0.45 m, turn=55.8 deg, information=799, score=-0.019
+[INFO] [1791956581.494188443] [exploration_manager]: Navigation goal orientation=147.9 deg
+[INFO] [1791956581.498426351] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956583.259167914] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956583.259808920] [exploration_manager]: Reached frontier recorded: x=-4.32, y=1.15
+[INFO] [1791956585.870729728] [exploration_manager]: Updated frontier data received
+[INFO] [1791956586.491462226] [exploration_manager]: Using 3 forward-preferred frontier candidate(s)
+[INFO] [1791956586.492318239] [exploration_manager]: Selected frontier x=-4.42, y=0.40, distance=0.82 m, turn=89.9 deg, information=627, score=-0.104
+[INFO] [1791956586.493486983] [exploration_manager]: Navigation goal orientation=-114.0 deg
+[INFO] [1791956586.498079295] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956591.962402392] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956591.963090310] [exploration_manager]: Reached frontier recorded: x=-4.42, y=0.40
+[INFO] [1791956595.840547807] [exploration_manager]: Updated frontier data received
+[INFO] [1791956596.550762385] [exploration_manager]: Using 35 forward-preferred frontier candidate(s)
+[INFO] [1791956596.551577395] [exploration_manager]: Selected frontier x=-4.97, y=0.45, distance=0.51 m, turn=61.2 deg, information=624, score=0.121
+[INFO] [1791956596.553014510] [exploration_manager]: Navigation goal orientation=-161.6 deg
+[INFO] [1791956596.560666950] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956599.668645030] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956599.669547786] [exploration_manager]: Reached frontier recorded: x=-4.97, y=0.45
+[INFO] [1791956600.848020859] [exploration_manager]: Updated frontier data received
+[INFO] [1791956601.501818273] [exploration_manager]: Using 11 forward-preferred frontier candidate(s)
+[INFO] [1791956601.502571069] [exploration_manager]: Selected frontier x=-5.27, y=0.15, distance=0.56 m, turn=17.5 deg, information=601, score=0.055
+[INFO] [1791956601.504101038] [exploration_manager]: Navigation goal orientation=-157.9 deg
+[INFO] [1791956601.508125006] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956603.417344985] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956603.418535451] [exploration_manager]: Reached frontier recorded: x=-5.27, y=0.15
+[INFO] [1791956609.224884412] [exploration_manager]: Updated frontier data received
+[INFO] [1791956609.522003043] [exploration_manager]: Using 6 forward-preferred frontier candidate(s)
+[INFO] [1791956609.523190715] [exploration_manager]: Selected frontier x=-5.97, y=-0.55, distance=1.22 m, turn=16.6 deg, information=485, score=0.161
+[INFO] [1791956609.524863966] [exploration_manager]: Navigation goal orientation=-137.0 deg
+[INFO] [1791956609.531114199] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956613.939589601] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956613.940342678] [exploration_manager]: Reached frontier recorded: x=-5.97, y=-0.55
+[INFO] [1791956615.889339881] [exploration_manager]: Updated frontier data received
+[INFO] [1791956616.583245735] [exploration_manager]: Using 9 forward-preferred frontier candidate(s)
+[INFO] [1791956616.584165836] [exploration_manager]: Selected frontier x=-6.83, y=-0.60, distance=1.07 m, turn=28.4 deg, information=1093, score=0.162
+[INFO] [1791956616.585977639] [exploration_manager]: Navigation goal orientation=-165.8 deg
+[INFO] [1791956616.592784246] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956620.459908546] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956620.460604943] [exploration_manager]: Reached frontier recorded: x=-6.83, y=-0.60
+[INFO] [1791956620.940652496] [exploration_manager]: Updated frontier data received
+[INFO] [1791956621.604601662] [exploration_manager]: Using 13 forward-preferred frontier candidate(s)
+[INFO] [1791956621.605323483] [exploration_manager]: Selected frontier x=-6.83, y=-1.00, distance=0.54 m, turn=48.5 deg, information=719, score=0.104
+[INFO] [1791956621.606966307] [exploration_manager]: Navigation goal orientation=-112.8 deg
+[INFO] [1791956621.612766894] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956623.871644384] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956623.872699923] [exploration_manager]: Reached frontier recorded: x=-6.83, y=-1.00
+[INFO] [1791956625.920469185] [exploration_manager]: Updated frontier data received
+[INFO] [1791956626.552352454] [exploration_manager]: Using 19 forward-preferred frontier candidate(s)
+[INFO] [1791956626.553120839] [exploration_manager]: Selected frontier x=-6.48, y=-1.45, distance=0.79 m, turn=41.0 deg, information=762, score=0.135
+[INFO] [1791956626.554286683] [exploration_manager]: Navigation goal orientation=-58.7 deg
+[INFO] [1791956626.556524588] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956629.518477362] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956629.519202354] [exploration_manager]: Reached frontier recorded: x=-6.48, y=-1.45
+[INFO] [1791956630.936177829] [exploration_manager]: Updated frontier data received
+[INFO] [1791956631.600799807] [exploration_manager]: Using 44 forward-preferred frontier candidate(s)
+[INFO] [1791956631.601647058] [exploration_manager]: Selected frontier x=-6.38, y=-2.50, distance=1.26 m, turn=18.3 deg, information=1018, score=0.207
+[INFO] [1791956631.603173089] [exploration_manager]: Navigation goal orientation=-72.7 deg
+[INFO] [1791956631.606923592] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956636.368971355] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956636.369556644] [exploration_manager]: Reached frontier recorded: x=-6.38, y=-2.50
+[INFO] [1791956644.267106719] [exploration_manager]: Updated frontier data received
+[INFO] [1791956644.531364331] [exploration_manager]: Using 20 forward-preferred frontier candidate(s)
+[INFO] [1791956644.532249466] [exploration_manager]: Selected frontier x=-6.33, y=-3.43, distance=1.20 m, turn=6.8 deg, information=973, score=0.233
+[INFO] [1791956644.533628135] [exploration_manager]: Navigation goal orientation=-75.8 deg
+[INFO] [1791956644.537464771] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956649.149760905] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956649.150629582] [exploration_manager]: Reached frontier recorded: x=-6.33, y=-3.43
+[INFO] [1791956649.305643263] [exploration_manager]: Updated frontier data received
+[INFO] [1791956649.547207593] [exploration_manager]: Using 21 forward-preferred frontier candidate(s)
+[INFO] [1791956649.548327923] [exploration_manager]: Selected frontier x=-5.68, y=-4.21, distance=1.44 m, turn=25.7 deg, information=1027, score=0.217
+[INFO] [1791956649.549611360] [exploration_manager]: Navigation goal orientation=-45.2 deg
+[INFO] [1791956649.554270135] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956660.715620393] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956660.716266882] [exploration_manager]: Reached frontier recorded: x=-5.68, y=-4.21
+[INFO] [1791956660.999869668] [exploration_manager]: Updated frontier data received
+[INFO] [1791956661.587974009] [exploration_manager]: Using 39 forward-preferred frontier candidate(s)
+[INFO] [1791956661.589554829] [exploration_manager]: Selected frontier x=-5.28, y=-3.73, distance=0.82 m, turn=85.3 deg, information=754, score=0.040
+[INFO] [1791956661.591929854] [exploration_manager]: Navigation goal orientation=53.6 deg
+[INFO] [1791956661.599284677] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956686.392826002] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956686.393418998] [exploration_manager]: Reached frontier recorded: x=-5.28, y=-3.73
+[INFO] [1791956691.030298459] [exploration_manager]: Updated frontier data received
+[INFO] [1791956691.587273591] [exploration_manager]: Using 63 forward-preferred frontier candidate(s)
+[INFO] [1791956691.588114869] [exploration_manager]: Selected frontier x=-4.83, y=-3.43, distance=0.75 m, turn=18.9 deg, information=618, score=0.103
+[INFO] [1791956691.590391748] [exploration_manager]: Navigation goal orientation=42.9 deg
+[INFO] [1791956691.593273022] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956694.204691142] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956694.205394752] [exploration_manager]: Reached frontier recorded: x=-4.83, y=-3.43
+[INFO] [1791956696.038427476] [exploration_manager]: Updated frontier data received
+[INFO] [1791956696.564818737] [exploration_manager]: Using 59 forward-preferred frontier candidate(s)
+[INFO] [1791956696.565607924] [exploration_manager]: Selected frontier x=-4.33, y=-3.18, distance=0.79 m, turn=7.4 deg, information=577, score=0.108
+[INFO] [1791956696.567776187] [exploration_manager]: Navigation goal orientation=25.8 deg
+[INFO] [1791956696.576039740] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956699.336640600] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956699.337201246] [exploration_manager]: Reached frontier recorded: x=-4.33, y=-3.18
+[INFO] [1791956700.978980781] [exploration_manager]: Updated frontier data received
+[INFO] [1791956701.558410590] [exploration_manager]: Using 52 forward-preferred frontier candidate(s)
+[INFO] [1791956701.559220677] [exploration_manager]: Selected frontier x=-4.43, y=-3.28, distance=0.11 m, turn=22.1 deg, information=548, score=0.075
+[INFO] [1791956701.560352592] [exploration_manager]: Navigation goal orientation=-0.7 deg
+[INFO] [1791956701.564387752] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956702.523629711] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956702.524263663] [exploration_manager]: Reached frontier recorded: x=-4.43, y=-3.28
+[INFO] [1791956706.035302870] [exploration_manager]: Updated frontier data received
+[INFO] [1791956706.551163508] [exploration_manager]: Using 46 forward-preferred frontier candidate(s)
+[INFO] [1791956706.551891797] [exploration_manager]: Selected frontier x=-3.63, y=-3.48, distance=0.93 m, turn=25.4 deg, information=729, score=0.117
+[INFO] [1791956706.553044223] [exploration_manager]: Navigation goal orientation=-12.5 deg
+[INFO] [1791956706.556052455] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956709.918016750] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956709.918902112] [exploration_manager]: Reached frontier recorded: x=-3.63, y=-3.48
+[INFO] [1791956710.965253285] [exploration_manager]: Updated frontier data received
+[INFO] [1791956711.563560940] [exploration_manager]: Using 30 forward-preferred frontier candidate(s)
+[INFO] [1791956711.564228064] [exploration_manager]: Selected frontier x=-3.73, y=-3.48, distance=0.16 m, turn=28.7 deg, information=702, score=0.117
+[INFO] [1791956711.565333038] [exploration_manager]: Navigation goal orientation=-52.8 deg
+[INFO] [1791956711.570472601] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956716.382637060] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956716.383753650] [exploration_manager]: Reached frontier recorded: x=-3.73, y=-3.48
+[INFO] [1791956719.387995905] [exploration_manager]: Updated frontier data received
+[INFO] [1791956720.553501321] [exploration_manager]: Using 23 forward-preferred frontier candidate(s)
+[INFO] [1791956720.554283329] [exploration_manager]: Selected frontier x=-2.63, y=-3.63, distance=1.23 m, turn=26.1 deg, information=699, score=0.121
+[INFO] [1791956720.555360616] [exploration_manager]: Navigation goal orientation=-13.1 deg
+[INFO] [1791956720.559800670] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956725.372122309] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956725.372945783] [exploration_manager]: Reached frontier recorded: x=-2.63, y=-3.63
+[INFO] [1791956725.945867655] [exploration_manager]: Updated frontier data received
+[INFO] [1791956726.560258547] [exploration_manager]: Using 24 forward-preferred frontier candidate(s)
+[INFO] [1791956726.561055401] [exploration_manager]: Selected frontier x=1.02, y=-3.08, distance=3.91 m, turn=18.3 deg, information=939, score=0.026
+[INFO] [1791956726.562168036] [exploration_manager]: Navigation goal orientation=7.2 deg
+[INFO] [1791956726.565839938] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956752.207084165] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956752.207870613] [exploration_manager]: Reached frontier recorded: x=1.02, y=-3.08
+[INFO] [1791956754.515495649] [exploration_manager]: Updated frontier data received
+[INFO] [1791956755.572340833] [exploration_manager]: Using 5 forward-preferred frontier candidate(s)
+[INFO] [1791956755.573105618] [exploration_manager]: Selected frontier x=1.82, y=-2.68, distance=0.95 m, turn=13.0 deg, information=1047, score=0.160
+[INFO] [1791956755.574120334] [exploration_manager]: Navigation goal orientation=6.8 deg
+[INFO] [1791956755.577606237] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956758.988943467] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956758.989538545] [exploration_manager]: Reached frontier recorded: x=1.82, y=-2.68
+[INFO] [1791956760.987525610] [exploration_manager]: Updated frontier data received
+[INFO] [1791956761.597904142] [exploration_manager]: Using 11 forward-preferred frontier candidate(s)
+[INFO] [1791956761.598602032] [exploration_manager]: Selected frontier x=2.92, y=-2.53, distance=1.34 m, turn=1.7 deg, information=801, score=-0.043
+[INFO] [1791956761.599853279] [exploration_manager]: Navigation goal orientation=7.6 deg
+[INFO] [1791956761.604714287] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956766.565998641] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956766.566565516] [exploration_manager]: Reached frontier recorded: x=2.92, y=-2.53
+[INFO] [1791956771.086675605] [exploration_manager]: Updated frontier data received
+[INFO] [1791956771.683731669] [exploration_manager]: Using 5 forward-preferred frontier candidate(s)
+[INFO] [1791956771.684780652] [exploration_manager]: Selected frontier x=3.17, y=-2.23, distance=0.60 m, turn=28.7 deg, information=702, score=-0.042
+[INFO] [1791956771.686815970] [exploration_manager]: Navigation goal orientation=38.5 deg
+[INFO] [1791956771.693496854] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956773.952068434] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956773.952883977] [exploration_manager]: Reached frontier recorded: x=3.17, y=-2.23
+[INFO] [1791956776.054131686] [exploration_manager]: Updated frontier data received
+[INFO] [1791956776.622679052] [exploration_manager]: Using 16 forward-preferred frontier candidate(s)
+[INFO] [1791956776.623562316] [exploration_manager]: Selected frontier x=3.57, y=-1.03, distance=1.48 m, turn=18.8 deg, information=1085, score=0.164
+[INFO] [1791956776.624707442] [exploration_manager]: Navigation goal orientation=69.0 deg
+[INFO] [1791956776.627275479] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956782.244730792] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956782.245478943] [exploration_manager]: Reached frontier recorded: x=3.57, y=-1.03
+[INFO] [1791956789.535300463] [exploration_manager]: Updated frontier data received
+[INFO] [1791956790.591067559] [exploration_manager]: Using 11 forward-preferred frontier candidate(s)
+[INFO] [1791956790.591743685] [exploration_manager]: Selected frontier x=2.82, y=0.72, distance=2.03 m, turn=44.8 deg, information=1061, score=0.099
+[INFO] [1791956790.592967516] [exploration_manager]: Navigation goal orientation=106.9 deg
+[INFO] [1791956790.598133568] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956798.656615426] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956798.657675375] [exploration_manager]: Reached frontier recorded: x=2.82, y=0.72
+[INFO] [1791956801.057755929] [exploration_manager]: Updated frontier data received
+[INFO] [1791956801.591656763] [exploration_manager]: Using 33 forward-preferred frontier candidate(s)
+[INFO] [1791956801.592579147] [exploration_manager]: Selected frontier x=2.42, y=0.42, distance=0.46 m, turn=84.3 deg, information=1019, score=0.119
+[INFO] [1791956801.594081951] [exploration_manager]: Navigation goal orientation=-170.5 deg
+[INFO] [1791956801.599570013] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956805.059526085] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956805.060129895] [exploration_manager]: Reached frontier recorded: x=2.42, y=0.42
+[INFO] [1791956806.041587173] [exploration_manager]: Updated frontier data received
+[INFO] [1791956806.595058147] [exploration_manager]: Using 73 forward-preferred frontier candidate(s)
+[INFO] [1791956806.595833420] [exploration_manager]: Selected frontier x=1.62, y=0.02, distance=1.10 m, turn=10.6 deg, information=1032, score=0.247
+[INFO] [1791956806.597127276] [exploration_manager]: Navigation goal orientation=-146.4 deg
+[INFO] [1791956806.603510314] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956810.510470209] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956810.511130049] [exploration_manager]: Reached frontier recorded: x=1.62, y=0.02
+[INFO] [1791956811.049100531] [exploration_manager]: Updated frontier data received
+[INFO] [1791956811.595266664] [exploration_manager]: Using 71 forward-preferred frontier candidate(s)
+[INFO] [1791956811.596292650] [exploration_manager]: Selected frontier x=0.97, y=0.22, distance=0.83 m, turn=41.4 deg, information=965, score=0.176
+[INFO] [1791956811.598081802] [exploration_manager]: Navigation goal orientation=175.8 deg
+[INFO] [1791956811.603650218] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956815.162648902] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956815.163421892] [exploration_manager]: Reached frontier recorded: x=0.97, y=0.22
+[INFO] [1791956816.077310747] [exploration_manager]: Updated frontier data received
+[INFO] [1791956816.611582210] [exploration_manager]: Using 59 forward-preferred frontier candidate(s)
+[INFO] [1791956816.612618396] [exploration_manager]: Selected frontier x=0.97, y=0.12, distance=0.22 m, turn=23.7 deg, information=642, score=0.108
+[INFO] [1791956816.613829106] [exploration_manager]: Navigation goal orientation=-174.0 deg
+[INFO] [1791956816.618924955] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956817.676957697] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956817.677478361] [exploration_manager]: Reached frontier recorded: x=0.97, y=0.12
+[INFO] [1791956824.666409494] [exploration_manager]: Updated frontier data received
+[INFO] [1791956825.603985836] [exploration_manager]: Using 59 forward-preferred frontier candidate(s)
+[INFO] [1791956825.604993924] [exploration_manager]: Selected frontier x=0.27, y=0.77, distance=1.11 m, turn=27.0 deg, information=672, score=0.096
+[INFO] [1791956825.606983480] [exploration_manager]: Navigation goal orientation=145.6 deg
+[INFO] [1791956825.613208341] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956829.780390107] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956829.781043586] [exploration_manager]: Reached frontier recorded: x=0.27, y=0.77
+[INFO] [1791956831.090800351] [exploration_manager]: Updated frontier data received
+[INFO] [1791956831.598429913] [exploration_manager]: Using 47 forward-preferred frontier candidate(s)
+[INFO] [1791956831.599172232] [exploration_manager]: Selected frontier x=-1.13, y=1.57, distance=1.84 m, turn=12.4 deg, information=837, score=0.138
+[INFO] [1791956831.600114452] [exploration_manager]: Navigation goal orientation=149.1 deg
+[INFO] [1791956831.604685041] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956839.066812148] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956839.067490778] [exploration_manager]: Reached frontier recorded: x=-1.13, y=1.57
+[INFO] [1791956841.108505317] [exploration_manager]: Updated frontier data received
+[INFO] [1791956841.604776339] [exploration_manager]: Using 40 forward-preferred frontier candidate(s)
+[INFO] [1791956841.605421106] [exploration_manager]: Selected frontier x=-1.18, y=2.07, distance=0.63 m, turn=37.1 deg, information=927, score=0.169
+[INFO] [1791956841.606418946] [exploration_manager]: Navigation goal orientation=116.7 deg
+[INFO] [1791956841.609125457] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956843.879852742] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956843.880595544] [exploration_manager]: Reached frontier recorded: x=-1.18, y=2.07
+[INFO] [1791956846.086608477] [exploration_manager]: Updated frontier data received
+[INFO] [1791956846.630793662] [exploration_manager]: Using 11 forward-preferred frontier candidate(s)
+[INFO] [1791956846.631513155] [exploration_manager]: Selected frontier x=-6.13, y=1.32, distance=5.00 m, turn=84.7 deg, information=1149, score=-0.039
+[INFO] [1791956846.633622903] [exploration_manager]: Navigation goal orientation=-174.0 deg
+[INFO] [1791956846.635883197] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956890.922018069] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956890.924370689] [exploration_manager]: Reached frontier recorded: x=-6.13, y=1.32
+[INFO] [1791956891.213439975] [exploration_manager]: Updated frontier data received
+[INFO] [1791956891.616381283] [exploration_manager]: Using 13 forward-preferred frontier candidate(s)
+[INFO] [1791956891.618436904] [exploration_manager]: Selected frontier x=-6.20, y=1.53, distance=0.44 m, turn=73.5 deg, information=726, score=0.150
+[INFO] [1791956891.619670286] [exploration_manager]: Navigation goal orientation=99.1 deg
+[INFO] [1791956891.625530158] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956897.212382900] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956897.213030030] [exploration_manager]: Reached frontier recorded: x=-6.20, y=1.53
+[INFO] [1791956899.684264771] [exploration_manager]: Updated frontier data received
+[INFO] [1791956900.602381807] [exploration_manager]: Using 16 forward-preferred frontier candidate(s)
+[INFO] [1791956900.603311157] [exploration_manager]: Selected frontier x=-6.20, y=2.03, distance=0.71 m, turn=6.5 deg, information=766, score=0.184
+[INFO] [1791956900.604555964] [exploration_manager]: Navigation goal orientation=80.5 deg
+[INFO] [1791956900.607127181] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956902.968230855] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956902.969119084] [exploration_manager]: Reached frontier recorded: x=-6.20, y=2.03
+[INFO] [1791956906.027890003] [exploration_manager]: Updated frontier data received
+[INFO] [1791956906.625135168] [exploration_manager]: Using 18 forward-preferred frontier candidate(s)
+[INFO] [1791956906.625996436] [exploration_manager]: Selected frontier x=-5.78, y=3.53, distance=1.78 m, turn=3.5 deg, information=839, score=0.136
+[INFO] [1791956906.627136647] [exploration_manager]: Navigation goal orientation=74.5 deg
+[INFO] [1791956906.632402919] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956920.311614147] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956920.312510592] [exploration_manager]: Reached frontier recorded: x=-5.78, y=3.53
+[INFO] [1791956921.187796479] [exploration_manager]: Updated frontier data received
+[INFO] [1791956921.641388918] [exploration_manager]: Using 5 forward-preferred frontier candidate(s)
+[INFO] [1791956921.642291475] [exploration_manager]: Selected frontier x=-5.39, y=4.38, distance=1.08 m, turn=6.9 deg, information=939, score=-0.032
+[INFO] [1791956921.643510434] [exploration_manager]: Navigation goal orientation=81.1 deg
+[INFO] [1791956921.646392065] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956925.761361516] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956925.762132160] [exploration_manager]: Reached frontier recorded: x=-5.39, y=4.38
+[INFO] [1791956926.175275313] [exploration_manager]: Updated frontier data received
+[INFO] [1791956926.643933404] [exploration_manager]: Using 9 forward-preferred frontier candidate(s)
+[INFO] [1791956926.644669836] [exploration_manager]: Selected frontier x=-4.79, y=4.98, distance=0.98 m, turn=36.9 deg, information=508, score=-0.033
+[INFO] [1791956926.645939503] [exploration_manager]: Navigation goal orientation=57.2 deg
+[INFO] [1791956926.653185839] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956933.643565920] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956933.644030230] [exploration_manager]: Reached frontier recorded: x=-4.79, y=4.98
+[INFO] [1791956934.781979437] [exploration_manager]: Updated frontier data received
+[INFO] [1791956935.622920357] [exploration_manager]: Using 27 forward-preferred frontier candidate(s)
+[INFO] [1791956935.623582658] [exploration_manager]: Selected frontier x=-3.99, y=5.53, distance=1.20 m, turn=7.2 deg, information=637, score=0.097
+[INFO] [1791956935.624763960] [exploration_manager]: Navigation goal orientation=36.2 deg
+[INFO] [1791956935.632578450] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956939.552943744] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956939.553596657] [exploration_manager]: Reached frontier recorded: x=-3.99, y=5.53
+[INFO] [1791956941.207219304] [exploration_manager]: Updated frontier data received
+[INFO] [1791956941.706880255] [exploration_manager]: Using 33 forward-preferred frontier candidate(s)
+[INFO] [1791956941.707589445] [exploration_manager]: Selected frontier x=-3.84, y=5.08, distance=0.65 m, turn=66.2 deg, information=748, score=0.077
+[INFO] [1791956941.708854435] [exploration_manager]: Navigation goal orientation=-30.8 deg
+[INFO] [1791956941.716956050] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956945.426233559] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956945.426905089] [exploration_manager]: Reached frontier recorded: x=-3.84, y=5.08
+[INFO] [1791956946.181087663] [exploration_manager]: Updated frontier data received
+[INFO] [1791956946.645542998] [exploration_manager]: Using 81 forward-preferred frontier candidate(s)
+[INFO] [1791956946.646531765] [exploration_manager]: Selected frontier x=-1.29, y=2.13, distance=4.04 m, turn=2.7 deg, information=961, score=0.128
+[INFO] [1791956946.647698154] [exploration_manager]: Navigation goal orientation=-47.0 deg
+[INFO] [1791956946.654878654] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956963.232099962] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956963.232779467] [exploration_manager]: Reached frontier recorded: x=-1.29, y=2.13
+[INFO] [1791956969.569125572] [exploration_manager]: Updated frontier data received
+[INFO] [1791956970.629848195] [exploration_manager]: Using 55 forward-preferred frontier candidate(s)
+[INFO] [1791956970.630609983] [exploration_manager]: Selected frontier x=-0.89, y=1.78, distance=0.76 m, turn=10.6 deg, information=710, score=0.167
+[INFO] [1791956970.631851902] [exploration_manager]: Navigation goal orientation=-55.4 deg
+[INFO] [1791956970.642710217] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956987.226786973] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956987.227318419] [exploration_manager]: Reached frontier recorded: x=-0.89, y=1.78
+[INFO] [1791956991.162312109] [exploration_manager]: Updated frontier data received
+[INFO] [1791956991.630351315] [exploration_manager]: Using 56 forward-preferred frontier candidate(s)
+[INFO] [1791956991.631009616] [exploration_manager]: Selected frontier x=-0.49, y=1.43, distance=0.75 m, turn=15.1 deg, information=612, score=0.129
+[INFO] [1791956991.632277774] [exploration_manager]: Navigation goal orientation=-48.3 deg
+[INFO] [1791956991.634621715] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956994.247154586] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956994.248223292] [exploration_manager]: Reached frontier recorded: x=-0.49, y=1.43
+[INFO] [1791956996.142244994] [exploration_manager]: Updated frontier data received
+[INFO] [1791956996.670046020] [exploration_manager]: Using 49 forward-preferred frontier candidate(s)
+[INFO] [1791956996.670805506] [exploration_manager]: Selected frontier x=-0.04, y=1.03, distance=0.84 m, turn=4.1 deg, information=583, score=0.138
+[INFO] [1791956996.671794015] [exploration_manager]: Navigation goal orientation=-41.4 deg
+[INFO] [1791956996.674040418] [exploration_manager]: Navigation goal accepted
+[INFO] [1791956999.590023992] [exploration_manager]: Frontier reached successfully
+[INFO] [1791956999.590512347] [exploration_manager]: Reached frontier recorded: x=-0.04, y=1.03
+[INFO] [1791957004.582060375] [exploration_manager]: Updated frontier data received
+[INFO] [1791957005.646032220] [exploration_manager]: Using 37 forward-preferred frontier candidate(s)
+[INFO] [1791957005.646708343] [exploration_manager]: Selected frontier x=0.96, y=0.53, distance=1.35 m, turn=9.7 deg, information=649, score=0.143
+[INFO] [1791957005.647961455] [exploration_manager]: Navigation goal orientation=-27.0 deg
+[INFO] [1791957005.654646075] [exploration_manager]: Navigation goal accepted
+[INFO] [1791957011.414289982] [exploration_manager]: Frontier reached successfully
+[INFO] [1791957011.414864771] [exploration_manager]: Reached frontier recorded: x=0.96, y=0.53
+[INFO] [1791957016.107804609] [exploration_manager]: Updated frontier data received
+[INFO] [1791957016.788832865] [exploration_manager]: Using 30 forward-preferred frontier candidate(s)
+[INFO] [1791957016.790362451] [exploration_manager]: Selected frontier x=1.51, y=1.13, distance=0.97 m, turn=51.0 deg, information=833, score=0.053
+[INFO] [1791957016.793604452] [exploration_manager]: Navigation goal orientation=37.1 deg
+[INFO] [1791957016.801913792] [exploration_manager]: Navigation goal accepted
+[INFO] [1791957020.718833811] [exploration_manager]: Frontier reached successfully
+[INFO] [1791957020.720011167] [exploration_manager]: Reached frontier recorded: x=1.51, y=1.13
+[INFO] [1791957021.545317569] [exploration_manager]: Updated frontier data received
+[INFO] [1791957022.643164941] [exploration_manager]: Using 10 forward-preferred frontier candidate(s)
+[INFO] [1791957022.644067206] [exploration_manager]: Selected frontier x=2.91, y=1.18, distance=1.55 m, turn=39.7 deg, information=804, score=0.030
+[INFO] [1791957022.645333919] [exploration_manager]: Navigation goal orientation=9.1 deg
+[INFO] [1791957022.651591595] [exploration_manager]: Navigation goal accepted
+[INFO] [1791957028.509457596] [exploration_manager]: Frontier reached successfully
+[INFO] [1791957028.510294588] [exploration_manager]: Reached frontier recorded: x=2.91, y=1.18
+[INFO] [1791957031.274485720] [exploration_manager]: Updated frontier data received
+[INFO] [1791957031.660402985] [exploration_manager]: Using 9 forward-preferred frontier candidate(s)
+[INFO] [1791957031.662170296] [exploration_manager]: Selected frontier x=2.76, y=1.18, distance=0.13 m, turn=2.8 deg, information=708, score=0.150
+[INFO] [1791957031.663588277] [exploration_manager]: Navigation goal orientation=4.9 deg
+[INFO] [1791957031.669840992] [exploration_manager]: Navigation goal accepted
+[INFO] [1791957031.728171172] [exploration_manager]: Frontier reached successfully
+[INFO] [1791957031.729031098] [exploration_manager]: Reached frontier recorded: x=2.76, y=1.18
+[INFO] [1791957036.147458849] [exploration_manager]: Updated frontier data received
+[INFO] [1791957040.074743918] [exploration_manager]: Using 8 forward-preferred frontier candidate(s)
+[INFO] [1791957040.075468260] [exploration_manager]: Selected frontier x=5.16, y=-0.32, distance=2.94 m, turn=32.5 deg, information=1072, score=0.099
+[INFO] [1791957040.076600286] [exploration_manager]: Navigation goal orientation=-30.5 deg
+[INFO] [1791957040.084962089] [exploration_manager]: Navigation goal accepted
+[INFO] [1791957060.690606599] [exploration_manager]: Frontier reached successfully
+[INFO] [1791957060.692023230] [exploration_manager]: Reached frontier recorded: x=5.16, y=-0.32
+[INFO] [1791957061.275108516] [exploration_manager]: Updated frontier data received
+[INFO] [1791957061.704355566] [exploration_manager]: Using 2 forward-preferred frontier candidate(s)
+[INFO] [1791957061.705112470] [exploration_manager]: Selected frontier x=5.76, y=0.03, distance=0.91 m, turn=51.8 deg, information=799, score=-0.086
+[INFO] [1791957061.706456105] [exploration_manager]: Navigation goal orientation=35.3 deg
+[INFO] [1791957061.712273154] [exploration_manager]: Navigation goal accepted
+[INFO] [1791957064.570318570] [exploration_manager]: Frontier reached successfully
+[INFO] [1791957064.571477581] [exploration_manager]: Reached frontier recorded: x=5.76, y=0.03
+[INFO] [1791957066.313736036] [exploration_manager]: Updated frontier data received
+[INFO] [1791957066.711549419] [exploration_manager]: Using 4 forward-preferred frontier candidate(s)
+[INFO] [1791957066.712328519] [exploration_manager]: Selected frontier x=5.86, y=-0.07, distance=0.41 m, turn=14.4 deg, information=753, score=-0.024
+[INFO] [1791957066.713470484] [exploration_manager]: Navigation goal orientation=50.8 deg
+[INFO] [1791957066.721803655] [exploration_manager]: Navigation goal accepted
+[INFO] [1791957067.848007586] [exploration_manager]: Frontier reached successfully
+[INFO] [1791957067.848764977] [exploration_manager]: Reached frontier recorded: x=5.86, y=-0.07
+[INFO] [1791957071.347404274] [exploration_manager]: Updated frontier data received
+[INFO] [1791957076.038383935] [exploration_manager]: Using 3 forward-preferred frontier candidate(s)
+[INFO] [1791957076.039216489] [exploration_manager]: Selected frontier x=6.31, y=-0.82, distance=0.80 m, turn=73.8 deg, information=984, score=-0.041
+[INFO] [1791957076.040849779] [exploration_manager]: Navigation goal orientation=-36.4 deg
+[INFO] [1791957076.048755687] [exploration_manager]: Navigation goal accepted
+[INFO] [1791957081.608639667] [exploration_manager]: Frontier reached successfully
+[INFO] [1791957081.609170084] [exploration_manager]: Reached frontier recorded: x=6.31, y=-0.82
+[INFO] [1791957086.236643338] [exploration_manager]: Updated frontier data received
+[INFO] [1791957086.755623404] [exploration_manager]: Using 12 forward-preferred frontier candidate(s)
+[INFO] [1791957086.756332196] [exploration_manager]: Selected frontier x=7.26, y=-1.27, distance=1.22 m, turn=15.9 deg, information=777, score=0.156
+[INFO] [1791957086.757328074] [exploration_manager]: Navigation goal orientation=-34.0 deg
+[INFO] [1791957086.764857570] [exploration_manager]: Navigation goal accepted
+[INFO] [1791957091.221368290] [exploration_manager]: Frontier reached successfully
+[INFO] [1791957091.221949104] [exploration_manager]: Reached frontier recorded: x=7.26, y=-1.27
+[INFO] [1791957091.322139174] [exploration_manager]: Updated frontier data received
+[INFO] [1791957091.753534595] [exploration_manager]: Using 7 forward-preferred frontier candidate(s)
+[INFO] [1791957091.754430587] [exploration_manager]: Selected frontier x=7.51, y=-1.92, distance=0.89 m, turn=30.7 deg, information=699, score=0.051
+[INFO] [1791957091.755740681] [exploration_manager]: Navigation goal orientation=-61.2 deg
+[INFO] [1791957091.758487030] [exploration_manager]: Navigation goal accepted
+[INFO] [1791957095.024533611] [exploration_manager]: Frontier reached successfully
+[INFO] [1791957095.025437280] [exploration_manager]: Reached frontier recorded: x=7.51, y=-1.92
+[INFO] [1791957096.380195178] [exploration_manager]: Updated frontier data received
+[INFO] [1791957097.648684662] [exploration_manager]: Using 14 forward-preferred frontier candidate(s)
+[INFO] [1791957097.649923768] [exploration_manager]: Selected frontier x=5.51, y=-3.87, distance=2.92 m, turn=55.5 deg, information=1234, score=0.148
+[INFO] [1791957097.652378353] [exploration_manager]: Navigation goal orientation=-132.0 deg
+[INFO] [1791957097.658783819] [exploration_manager]: Navigation goal accepted
+[INFO] [1791957113.003482457] [exploration_manager]: Frontier reached successfully
+[INFO] [1791957113.004823277] [exploration_manager]: Reached frontier recorded: x=5.51, y=-3.87
+[INFO] [1791957114.725807742] [exploration_manager]: Updated frontier data received
+[INFO] [1791957115.737996279] [exploration_manager]: Using 57 forward-preferred frontier candidate(s)
+[INFO] [1791957115.739004899] [exploration_manager]: Selected frontier x=1.21, y=-4.82, distance=4.56 m, turn=40.1 deg, information=1081, score=0.169
+[INFO] [1791957115.740261303] [exploration_manager]: Navigation goal orientation=-165.3 deg
+[INFO] [1791957115.749253297] [exploration_manager]: Navigation goal accepted
+[INFO] [1791957154.292148780] [exploration_manager]: Frontier reached successfully
+[INFO] [1791957154.292975382] [exploration_manager]: Reached frontier recorded: x=1.21, y=-4.82
+[INFO] [1791957156.484898828] [exploration_manager]: Updated frontier data received
+[INFO] [1791957157.692260448] [exploration_manager]: Using 41 forward-preferred frontier candidate(s)
+[INFO] [1791957157.693292409] [exploration_manager]: Selected frontier x=1.11, y=-5.81, distance=1.17 m, turn=48.1 deg, information=1084, score=0.220
+[INFO] [1791957157.694555594] [exploration_manager]: Navigation goal orientation=-103.6 deg
+[INFO] [1791957157.703107200] [exploration_manager]: Navigation goal accepted
+[INFO] [1791957162.258392752] [exploration_manager]: Frontier reached successfully
+[INFO] [1791957162.258851595] [exploration_manager]: Reached frontier recorded: x=1.11, y=-5.81
+[INFO] [1791957166.470807531] [exploration_manager]: Updated frontier data received
+[INFO] [1791957167.682518223] [exploration_manager]: Using 11 forward-preferred frontier candidate(s)
+[INFO] [1791957167.683174119] [exploration_manager]: Selected frontier x=1.16, y=-7.35, distance=1.77 m, turn=3.7 deg, information=1214, score=0.227
+[INFO] [1791957167.684395443] [exploration_manager]: Navigation goal orientation=-90.7 deg
+[INFO] [1791957167.690194553] [exploration_manager]: Navigation goal accepted
+[INFO] [1791957176.898257304] [exploration_manager]: Frontier reached successfully
+[INFO] [1791957176.898774132] [exploration_manager]: Reached frontier recorded: x=1.16, y=-7.35
+[INFO] [1791957184.841038305] [exploration_manager]: Updated frontier data received
+[INFO] [1791957185.776855223] [exploration_manager]: Using 10 forward-preferred frontier candidate(s)
+[INFO] [1791957185.777916708] [exploration_manager]: Selected frontier x=0.51, y=-7.63, distance=0.92 m, turn=47.3 deg, information=702, score=0.168
+[INFO] [1791957185.779789027] [exploration_manager]: Navigation goal orientation=-151.6 deg
+[INFO] [1791957185.787038477] [exploration_manager]: Navigation goal accepted
+[INFO] [1791957189.746953188] [exploration_manager]: Frontier reached successfully
+[INFO] [1791957189.747627021] [exploration_manager]: Reached frontier recorded: x=0.51, y=-7.63
+[INFO] [1791957191.509505125] [exploration_manager]: Updated frontier data received
+[INFO] [1791957192.719745565] [exploration_manager]: Using 50 forward-preferred frontier candidate(s)
+[INFO] [1791957192.720463716] [exploration_manager]: Selected frontier x=0.11, y=-7.73, distance=0.64 m, turn=3.3 deg, information=642, score=0.181
+[INFO] [1791957192.721580890] [exploration_manager]: Navigation goal orientation=-168.8 deg
+[INFO] [1791957192.727862004] [exploration_manager]: Navigation goal accepted
+[INFO] [1791957194.845388221] [exploration_manager]: Frontier reached successfully
+[INFO] [1791957194.845935498] [exploration_manager]: Reached frontier recorded: x=0.11, y=-7.73
+[INFO] [1791957196.503457034] [exploration_manager]: Updated frontier data received
+[INFO] [1791957197.751936682] [exploration_manager]: Using 49 forward-preferred frontier candidate(s)
+[INFO] [1791957197.752793353] [exploration_manager]: Selected frontier x=-1.39, y=-8.28, distance=1.82 m, turn=8.4 deg, information=754, score=0.191
+[INFO] [1791957197.754801523] [exploration_manager]: Navigation goal orientation=-161.3 deg
+[INFO] [1791957197.757421187] [exploration_manager]: Navigation goal accepted
+[INFO] [1791957205.232357041] [exploration_manager]: Frontier reached successfully
+[INFO] [1791957205.233043971] [exploration_manager]: Reached frontier recorded: x=-1.39, y=-8.28
+[INFO] [1791957206.416613495] [exploration_manager]: Updated frontier data received
+[INFO] [1791957207.738572247] [exploration_manager]: Using 24 forward-preferred frontier candidate(s)
+[INFO] [1791957207.739635047] [exploration_manager]: Selected frontier x=-2.14, y=-8.08, distance=0.96 m, turn=22.1 deg, information=795, score=0.246
+[INFO] [1791957207.740892444] [exploration_manager]: Navigation goal orientation=-178.4 deg
+[INFO] [1791957207.750667069] [exploration_manager]: Navigation goal accepted
+[INFO] [1791957211.261274420] [exploration_manager]: Frontier reached successfully
+[INFO] [1791957211.261930714] [exploration_manager]: Reached frontier recorded: x=-2.14, y=-8.08
+[INFO] [1791957211.515719307] [exploration_manager]: Updated frontier data received
+[INFO] [1791957212.713142826] [exploration_manager]: Using 49 forward-preferred frontier candidate(s)
+[INFO] [1791957212.714017970] [exploration_manager]: Selected frontier x=-2.64, y=-8.23, distance=0.76 m, turn=15.2 deg, information=772, score=0.201
+[INFO] [1791957212.715318502] [exploration_manager]: Navigation goal orientation=-169.6 deg
+[INFO] [1791957212.723029926] [exploration_manager]: Navigation goal accepted
+[INFO] [1791957215.239571110] [exploration_manager]: Frontier reached successfully
+[INFO] [1791957215.240502501] [exploration_manager]: Reached frontier recorded: x=-2.64, y=-8.23
+[INFO] [1791957219.869610434] [exploration_manager]: Updated frontier data received
+[INFO] [1791957220.700904247] [exploration_manager]: Using 45 forward-preferred frontier candidate(s)
+[INFO] [1791957220.701510736] [exploration_manager]: Selected frontier x=-2.59, y=-8.13, distance=0.18 m, turn=12.9 deg, information=767, score=0.221
+[INFO] [1791957220.702447641] [exploration_manager]: Navigation goal orientation=-167.3 deg
+[INFO] [1791957220.708269645] [exploration_manager]: Navigation goal accepted
+[INFO] [1791957220.769134285] [exploration_manager]: Frontier reached successfully
+[INFO] [1791957220.769710869] [exploration_manager]: Reached frontier recorded: x=-2.59, y=-8.13
+[INFO] [1791957224.875103701] [exploration_manager]: Updated frontier data received
+[INFO] [1791957225.745409042] [exploration_manager]: Using 44 forward-preferred frontier candidate(s)
+[INFO] [1791957225.746123973] [exploration_manager]: Selected frontier x=-3.99, y=-8.23, distance=1.58 m, turn=5.2 deg, information=837, score=0.246
+[INFO] [1791957225.747340323] [exploration_manager]: Navigation goal orientation=-174.9 deg
+[INFO] [1791957225.755987085] [exploration_manager]: Navigation goal accepted
+[INFO] [1791957231.771117212] [exploration_manager]: Frontier reached successfully
+[INFO] [1791957231.771766612] [exploration_manager]: Reached frontier recorded: x=-3.99, y=-8.23
+[INFO] [1791957236.588254262] [exploration_manager]: Updated frontier data received
+[INFO] [1791957237.781235503] [exploration_manager]: Using 31 forward-preferred frontier candidate(s)
+[INFO] [1791957237.782238748] [exploration_manager]: Selected frontier x=-4.14, y=-8.08, distance=0.42 m, turn=2.4 deg, information=807, score=0.274
+[INFO] [1791957237.783937346] [exploration_manager]: Navigation goal orientation=-176.5 deg
+[INFO] [1791957237.792128455] [exploration_manager]: Navigation goal accepted
+[INFO] [1791957238.988417793] [exploration_manager]: Frontier reached successfully
+[INFO] [1791957238.989050617] [exploration_manager]: Reached frontier recorded: x=-4.14, y=-8.08
+[INFO] [1791957241.541397083] [exploration_manager]: Updated frontier data received
+[INFO] [1791957242.751370524] [exploration_manager]: Using 30 forward-preferred frontier candidate(s)
+[INFO] [1791957242.752234860] [exploration_manager]: Selected frontier x=-5.29, y=-8.18, distance=1.38 m, turn=6.0 deg, information=860, score=0.271
+[INFO] [1791957242.754650179] [exploration_manager]: Navigation goal orientation=-174.8 deg
+[INFO] [1791957242.761688786] [exploration_manager]: Navigation goal accepted
+[INFO] [1791957249.893382776] [exploration_manager]: Frontier reached successfully
+[INFO] [1791957249.894489770] [exploration_manager]: Reached frontier recorded: x=-5.29, y=-8.18
+[INFO] [1791957251.475422550] [exploration_manager]: Updated frontier data received
+[INFO] [1791957255.672457022] [exploration_manager]: Using 14 forward-preferred frontier candidate(s)
+[INFO] [1791957255.673551514] [exploration_manager]: Selected frontier x=-5.84, y=-8.23, distance=0.80 m, turn=7.0 deg, information=788, score=0.288
+[INFO] [1791957255.676507817] [exploration_manager]: Navigation goal orientation=-166.8 deg
+[INFO] [1791957255.685310550] [exploration_manager]: Navigation goal accepted
+[INFO] [1791957258.704876471] [exploration_manager]: Frontier reached successfully
+[INFO] [1791957258.705536332] [exploration_manager]: Reached frontier recorded: x=-5.84, y=-8.23
+[INFO] [1791957259.990973356] [exploration_manager]: Updated frontier data received
+[INFO] [1791957260.793712721] [exploration_manager]: Using 20 forward-preferred frontier candidate(s)
+[INFO] [1791957260.794840947] [exploration_manager]: Selected frontier x=-7.39, y=-7.98, distance=1.79 m, turn=2.9 deg, information=982, score=0.226
+[INFO] [1791957260.798718057] [exploration_manager]: Navigation goal orientation=177.6 deg
+[INFO] [1791957260.811427572] [exploration_manager]: Navigation goal accepted
+[INFO] [1791957271.073373120] [exploration_manager]: Frontier reached successfully
+[INFO] [1791957271.074749360] [exploration_manager]: Reached frontier recorded: x=-7.39, y=-7.98
+[INFO] [1791957271.551866353] [exploration_manager]: Updated frontier data received
+[INFO] [1791957272.738138156] [exploration_manager]: Using 2 forward-preferred frontier candidate(s)
+[INFO] [1791957272.739313682] [exploration_manager]: Selected frontier x=-7.69, y=-6.13, distance=1.74 m, turn=85.9 deg, information=540, score=0.157
+[INFO] [1791957272.740527844] [exploration_manager]: Navigation goal orientation=105.0 deg
+[INFO] [1791957272.748113984] [exploration_manager]: Navigation goal accepted
+[INFO] [1791957280.308620785] [exploration_manager]: Frontier reached successfully
+[INFO] [1791957280.309201346] [exploration_manager]: Reached frontier recorded: x=-7.69, y=-6.13
+[INFO] [1791957281.554852778] [exploration_manager]: Updated frontier data received
+[INFO] [1791957282.856354078] [exploration_manager]: Using 89 forward-preferred frontier candidate(s)
+[INFO] [1791957282.857791148] [exploration_manager]: Selected frontier x=-7.09, y=-5.83, distance=0.75 m, turn=55.8 deg, information=863, score=0.113
+[INFO] [1791957282.860005541] [exploration_manager]: Navigation goal orientation=43.6 deg
+[INFO] [1791957282.868353047] [exploration_manager]: Navigation goal accepted
+[INFO] [1791957286.775146096] [exploration_manager]: Frontier reached successfully
+[INFO] [1791957286.775800214] [exploration_manager]: Reached frontier recorded: x=-7.09, y=-5.83
+[INFO] [1791957295.021733634] [exploration_manager]: Updated frontier data received
+[INFO] [1791957295.769933368] [exploration_manager]: Using 123 forward-preferred frontier candidate(s)
+[INFO] [1791957295.770886117] [exploration_manager]: Selected frontier x=-6.74, y=-5.18, distance=0.91 m, turn=21.5 deg, information=635, score=0.090
+[INFO] [1791957295.772211655] [exploration_manager]: Navigation goal orientation=51.3 deg
+[INFO] [1791957295.781024631] [exploration_manager]: Navigation goal accepted
+[INFO] [1791957298.986034740] [exploration_manager]: Frontier reached successfully
+[INFO] [1791957298.986538106] [exploration_manager]: Reached frontier recorded: x=-6.74, y=-5.18
+[INFO] [1791957301.553981500] [exploration_manager]: Updated frontier data received
+[INFO] [1791957302.773271878] [exploration_manager]: Using 115 forward-preferred frontier candidate(s)
+[INFO] [1791957302.774567574] [exploration_manager]: Selected frontier x=-6.39, y=-4.78, distance=0.76 m, turn=3.3 deg, information=553, score=0.099
+[INFO] [1791957302.775661633] [exploration_manager]: Navigation goal orientation=53.0 deg
+[INFO] [1791957302.782874441] [exploration_manager]: Navigation goal accepted
+[INFO] [1791957305.290070747] [exploration_manager]: Frontier reached successfully
+[INFO] [1791957305.290620474] [exploration_manager]: Reached frontier recorded: x=-6.39, y=-4.78
+[INFO] [1791957306.517958674] [exploration_manager]: Updated frontier data received
+[INFO] [1791957307.721245456] [exploration_manager]: Using 113 forward-preferred frontier candidate(s)
+[INFO] [1791957307.722017663] [exploration_manager]: Selected frontier x=-4.74, y=-3.73, distance=2.18 m, turn=15.0 deg, information=570, score=0.077
+[INFO] [1791957307.723079343] [exploration_manager]: Navigation goal orientation=34.3 deg
+[INFO] [1791957307.729141517] [exploration_manager]: Navigation goal accepted
+[INFO] [1791957336.684015292] [exploration_manager]: Frontier reached successfully
+[INFO] [1791957336.684826407] [exploration_manager]: Reached frontier recorded: x=-4.74, y=-3.73
+[INFO] [1791957341.587580839] [exploration_manager]: Updated frontier data received
+[INFO] [1791957342.719739858] [exploration_manager]: Using 110 forward-preferred frontier candidate(s)
+[INFO] [1791957342.720835745] [exploration_manager]: Selected frontier x=-3.79, y=-3.78, distance=1.13 m, turn=39.8 deg, information=661, score=0.069
+[INFO] [1791957342.722032191] [exploration_manager]: Navigation goal orientation=5.0 deg
+[INFO] [1791957342.728904597] [exploration_manager]: Navigation goal accepted
+[INFO] [1791957346.945370274] [exploration_manager]: Frontier reached successfully
+[INFO] [1791957346.946273989] [exploration_manager]: Reached frontier recorded: x=-3.79, y=-3.78
+[INFO] [1791957351.642049579] [exploration_manager]: Updated frontier data received
+[INFO] [1791957352.785416443] [exploration_manager]: Using 90 forward-preferred frontier candidate(s)
+[INFO] [1791957352.786273531] [exploration_manager]: Selected frontier x=-3.54, y=-3.78, distance=0.49 m, turn=4.0 deg, information=621, score=0.131
+[INFO] [1791957352.787960138] [exploration_manager]: Navigation goal orientation=-0.9 deg
+[INFO] [1791957352.792190079] [exploration_manager]: Navigation goal accepted
+[INFO] [1791957354.206785854] [exploration_manager]: Frontier reached successfully
+[INFO] [1791957354.207661658] [exploration_manager]: Reached frontier recorded: x=-3.54, y=-3.78
+[INFO] [1791957356.491932178] [exploration_manager]: Updated frontier data received
+[INFO] [1791957357.709491414] [exploration_manager]: Using 91 forward-preferred frontier candidate(s)
+[INFO] [1791957357.710353551] [exploration_manager]: Selected frontier x=-1.74, y=-3.73, distance=2.04 m, turn=1.6 deg, information=817, score=0.152
+[INFO] [1791957357.711984786] [exploration_manager]: Navigation goal orientation=1.5 deg
+[INFO] [1791957357.721983361] [exploration_manager]: Navigation goal accepted
+[INFO] [1791957369.129072012] [exploration_manager]: Frontier reached successfully
+[INFO] [1791957369.130122857] [exploration_manager]: Reached frontier recorded: x=-1.74, y=-3.73
+[INFO] [1791957371.502598388] [exploration_manager]: Updated frontier data received
+[INFO] [1791957372.749064224] [exploration_manager]: Using 75 forward-preferred frontier candidate(s)
+[INFO] [1791957372.749794954] [exploration_manager]: Selected frontier x=-1.54, y=-4.13, distance=0.72 m, turn=2.8 deg, information=874, score=0.195
+[INFO] [1791957372.751017415] [exploration_manager]: Navigation goal orientation=-14.6 deg
+[INFO] [1791957372.757352101] [exploration_manager]: Navigation goal accepted
+[INFO] [1791957392.030502934] [exploration_manager]: Frontier reached successfully
+[INFO] [1791957392.031690192] [exploration_manager]: Reached frontier recorded: x=-1.54, y=-4.13
+[INFO] [1791957400.005457905] [exploration_manager]: Updated frontier data received
+[INFO] [1791957400.755744507] [exploration_manager]: Using 72 forward-preferred frontier candidate(s)
+[INFO] [1791957400.756434185] [exploration_manager]: Selected frontier x=0.11, y=-4.18, distance=1.89 m, turn=5.5 deg, information=1041, score=0.208
+[INFO] [1791957400.757764496] [exploration_manager]: Navigation goal orientation=-1.1 deg
+[INFO] [1791957400.766847089] [exploration_manager]: Navigation goal accepted
+[INFO] [1791957409.677690976] [exploration_manager]: Frontier reached successfully
+[INFO] [1791957409.678350846] [exploration_manager]: Reached frontier recorded: x=0.11, y=-4.18
+[INFO] [1791957411.510139085] [exploration_manager]: Updated frontier data received
+[INFO] [1791957412.740416407] [exploration_manager]: Using 61 forward-preferred frontier candidate(s)
+[INFO] [1791957412.741265855] [exploration_manager]: Selected frontier x=3.56, y=-4.78, distance=3.68 m, turn=20.3 deg, information=709, score=0.042
+[INFO] [1791957412.742435024] [exploration_manager]: Navigation goal orientation=-7.5 deg
+[INFO] [1791957412.749818233] [exploration_manager]: Navigation goal accepted
+[INFO] [1791957451.227861365] [exploration_manager]: Frontier reached successfully
+[INFO] [1791957451.228774649] [exploration_manager]: Reached frontier recorded: x=3.56, y=-4.78
+[INFO] [1791957451.599963070] [exploration_manager]: Updated frontier data received
+[INFO] [1791957452.701308386] [exploration_manager]: Using 20 forward-preferred frontier candidate(s)
+[INFO] [1791957452.702116291] [exploration_manager]: Selected frontier x=4.26, y=-4.78, distance=0.90 m, turn=17.0 deg, information=703, score=0.202
+[INFO] [1791957452.703422692] [exploration_manager]: Navigation goal orientation=23.2 deg
+[INFO] [1791957452.705757930] [exploration_manager]: Navigation goal accepted
+[INFO] [1791957455.825342670] [exploration_manager]: Frontier reached successfully
+[INFO] [1791957455.826314284] [exploration_manager]: Reached frontier recorded: x=4.26, y=-4.78
+[INFO] [1791957456.560262517] [exploration_manager]: Updated frontier data received
+[INFO] [1791957457.679112339] [exploration_manager]: Using 29 forward-preferred frontier candidate(s)
+[INFO] [1791957457.679939230] [exploration_manager]: Selected frontier x=5.91, y=-5.88, distance=2.02 m, turn=47.6 deg, information=1029, score=0.122
+[INFO] [1791957457.681933353] [exploration_manager]: Navigation goal orientation=-23.9 deg
+[INFO] [1791957457.689138082] [exploration_manager]: Navigation goal accepted
+[INFO] [1791957465.563086412] [exploration_manager]: Frontier reached successfully
+[INFO] [1791957465.564202017] [exploration_manager]: Reached frontier recorded: x=5.91, y=-5.88
+[INFO] [1791957466.635265702] [exploration_manager]: Updated frontier data received
+[INFO] [1791957471.330531322] [exploration_manager]: Using 4 forward-preferred frontier candidate(s)
+[INFO] [1791957471.331744429] [exploration_manager]: Selected frontier x=8.41, y=-5.38, distance=2.71 m, turn=39.3 deg, information=650, score=-0.042
+[INFO] [1791957471.333375868] [exploration_manager]: Navigation goal orientation=3.5 deg
+[INFO] [1791957471.339958089] [exploration_manager]: Navigation goal accepted
+[INFO] [1791957533.434279525] [exploration_manager]: Frontier reached successfully
+[INFO] [1791957533.435001485] [exploration_manager]: Reached frontier recorded: x=8.41, y=-5.38
+[INFO] [1791957536.651855504] [exploration_manager]: Updated frontier data received
+[INFO] [1791957537.686920303] [exploration_manager]: Using 2 forward-preferred frontier candidate(s)
+[INFO] [1791957537.688434769] [exploration_manager]: Selected frontier x=7.90, y=-5.99, distance=0.73 m, turn=81.0 deg, information=797, score=-0.135
+[INFO] [1791957537.691543570] [exploration_manager]: Navigation goal orientation=-90.8 deg
+[INFO] [1791957537.699883337] [exploration_manager]: Navigation goal accepted
+[INFO] [1791957545.534058637] [exploration_manager]: Frontier reached successfully
+[INFO] [1791957545.535536500] [exploration_manager]: Reached frontier recorded: x=7.90, y=-5.99
+[INFO] [1791957546.604488553] [exploration_manager]: Updated frontier data received
+[INFO] [1791957547.681797416] [exploration_manager]: Using 38 forward-preferred frontier candidate(s)
+[INFO] [1791957547.682649915] [exploration_manager]: Selected frontier x=7.65, y=-7.62, distance=1.86 m, turn=2.9 deg, information=1105, score=0.255
+[INFO] [1791957547.684303305] [exploration_manager]: Navigation goal orientation=-101.4 deg
+[INFO] [1791957547.693046229] [exploration_manager]: Navigation goal accepted
+[INFO] [1791957554.902210712] [exploration_manager]: Frontier reached successfully
+[INFO] [1791957554.902714950] [exploration_manager]: Reached frontier recorded: x=7.65, y=-7.62
+[INFO] [1791957556.634542506] [exploration_manager]: Updated frontier data received
+[INFO] [1791957557.690226415] [exploration_manager]: Using 17 forward-preferred frontier candidate(s)
+[INFO] [1791957557.690987908] [exploration_manager]: Selected frontier x=6.55, y=-8.12, distance=1.33 m, turn=55.2 deg, information=789, score=0.146
+[INFO] [1791957557.692117943] [exploration_manager]: Navigation goal orientation=-146.4 deg
+[INFO] [1791957557.694339928] [exploration_manager]: Navigation goal accepted
+[INFO] [1791957563.105515940] [exploration_manager]: Frontier reached successfully
+[INFO] [1791957563.106401843] [exploration_manager]: Reached frontier recorded: x=6.55, y=-8.12
+[INFO] [1791957566.596807630] [exploration_manager]: Updated frontier data received
+[INFO] [1791957567.726881006] [exploration_manager]: Using 98 forward-preferred frontier candidate(s)
+[INFO] [1791957567.727765598] [exploration_manager]: Selected frontier x=5.75, y=-8.07, distance=1.00 m, turn=22.5 deg, information=692, score=0.106
+[INFO] [1791957567.728802266] [exploration_manager]: Navigation goal orientation=-175.6 deg
+[INFO] [1791957567.731606326] [exploration_manager]: Navigation goal accepted
+[INFO] [1791957571.547970678] [exploration_manager]: Frontier reached successfully
+[INFO] [1791957571.549103737] [exploration_manager]: Reached frontier recorded: x=5.75, y=-8.07
+[INFO] [1791957571.662075832] [exploration_manager]: Updated frontier data received
+[INFO] [1791957572.726535256] [exploration_manager]: Using 99 forward-preferred frontier candidate(s)
+[INFO] [1791957572.727474300] [exploration_manager]: Selected frontier x=5.15, y=-8.22, distance=0.85 m, turn=9.0 deg, information=631, score=0.125
+[INFO] [1791957572.728616996] [exploration_manager]: Navigation goal orientation=-166.7 deg
+[INFO] [1791957572.734730121] [exploration_manager]: Navigation goal accepted
+[INFO] [1791957579.139727715] [exploration_manager]: Frontier reached successfully
+[INFO] [1791957579.140439952] [exploration_manager]: Reached frontier recorded: x=5.15, y=-8.22
+[INFO] [1791957579.923321407] [exploration_manager]: Updated frontier data received
+[INFO] [1791957580.700415478] [exploration_manager]: Using 95 forward-preferred frontier candidate(s)
+[INFO] [1791957580.701320415] [exploration_manager]: Selected frontier x=4.30, y=-8.22, distance=1.08 m, turn=10.2 deg, information=575, score=0.096
+[INFO] [1791957580.702556482] [exploration_manager]: Navigation goal orientation=-175.4 deg
+[INFO] [1791957580.708764077] [exploration_manager]: Navigation goal accepted
+[INFO] [1791957584.669682670] [exploration_manager]: Frontier reached successfully
+[INFO] [1791957584.670812119] [exploration_manager]: Reached frontier recorded: x=4.30, y=-8.22
+[INFO] [1791957584.999906535] [exploration_manager]: Updated frontier data received
+[INFO] [1791957585.757179232] [exploration_manager]: Using 92 forward-preferred frontier candidate(s)
+[INFO] [1791957585.759081138] [exploration_manager]: Selected frontier x=3.80, y=-8.17, distance=0.73 m, turn=4.0 deg, information=520, score=0.118
+[INFO] [1791957585.761714308] [exploration_manager]: Navigation goal orientation=177.1 deg
+[INFO] [1791957585.771627315] [exploration_manager]: Navigation goal accepted
+[INFO] [1791957588.275807396] [exploration_manager]: Frontier reached successfully
+[INFO] [1791957588.276650870] [exploration_manager]: Reached frontier recorded: x=3.80, y=-8.17
+[INFO] [1791957591.584714542] [exploration_manager]: Updated frontier data received
+[INFO] [1791957592.698938211] [exploration_manager]: Using 91 forward-preferred frontier candidate(s)
+[INFO] [1791957592.699727238] [exploration_manager]: Selected frontier x=3.50, y=-7.77, distance=0.67 m, turn=32.1 deg, information=458, score=0.055
+[INFO] [1791957592.700891480] [exploration_manager]: Navigation goal orientation=142.1 deg
+[INFO] [1791957592.707188704] [exploration_manager]: Navigation goal accepted
+[INFO] [1791957595.016013081] [exploration_manager]: Frontier reached successfully
+[INFO] [1791957595.017286435] [exploration_manager]: Reached frontier recorded: x=3.50, y=-7.77
+[INFO] [1791957596.543268552] [exploration_manager]: Updated frontier data received
+[INFO] [1791957597.655518085] [exploration_manager]: Using 100 forward-preferred frontier candidate(s)
+[INFO] [1791957597.656211369] [exploration_manager]: Selected frontier x=-0.29, y=-5.56, distance=3.66 m, turn=5.3 deg, information=598, score=0.118
+[INFO] [1791957597.657576606] [exploration_manager]: Navigation goal orientation=138.8 deg
+[INFO] [1791957597.665443863] [exploration_manager]: Navigation goal accepted
+Traceback (most recent call last):
+  File "/home/robing/turtlebot3_ws/install/exploration_manager/lib/exploration_manager/exploration_manager", line 33, in <module>
+    sys.exit(load_entry_point('exploration-manager==0.0.0', 'console_scripts', 'exploration_manager')())
+  File "/home/robing/turtlebot3_ws/install/exploration_manager/lib/python3.10/site-packages/exploration_manager/exploration_manager.py", line 1057, in main
+    rclpy.spin(
+  File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/__init__.py", line 229, in spin
+    executor.spin_once()
+  File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/executors.py", line 808, in spin_once
+    self._spin_once_impl(timeout_sec)
+  File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/executors.py", line 797, in _spin_once_impl
+    handler, entity, node = self.wait_for_ready_callbacks(timeout_sec=timeout_sec)
+  File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/executors.py", line 780, in wait_for_ready_callbacks
+    return next(self._cb_iter)
+  File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/executors.py", line 677, in _wait_for_ready_callbacks
+    wait_set.wait(timeout_nsec)
+KeyboardInterrupt
+[ros2run]: Interrupt
