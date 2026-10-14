@@ -1,0 +1,1576 @@
+[INFO] [1791941828.854605272] [exploration_manager]: Exploration manager started
+[INFO] [1791941836.014373408] [exploration_manager]: Exploration manager ready
+[INFO] [1791941836.851346855] [exploration_manager]: Using 3 forward-preferred frontier candidate(s)
+[INFO] [1791941836.851749706] [exploration_manager]: Selected frontier x=0.08, y=0.00, distance=0.09 m, turn=1.9 deg, information=920, score=-0.005
+[INFO] [1791941836.853506694] [exploration_manager]: Navigation goal accepted
+[INFO] [1791941836.914623777] [exploration_manager]: Frontier reached successfully
+[INFO] [1791941836.914954441] [exploration_manager]: Reached frontier recorded: x=0.08, y=0.00
+[INFO] [1791941841.002180086] [exploration_manager]: Updated frontier data received
+[INFO] [1791941841.857199610] [exploration_manager]: Using 2 forward-preferred frontier candidate(s)
+[INFO] [1791941841.857691986] [exploration_manager]: Selected frontier x=0.18, y=-0.75, distance=0.77 m, turn=75.5 deg, information=991, score=-0.210
+[INFO] [1791941841.859280286] [exploration_manager]: Navigation goal accepted
+[INFO] [1791941848.419963953] [exploration_manager]: Frontier reached successfully
+[INFO] [1791941848.420195253] [exploration_manager]: Reached frontier recorded: x=0.18, y=-0.75
+[INFO] [1791941851.016594200] [exploration_manager]: Updated frontier data received
+[INFO] [1791941851.868512553] [exploration_manager]: Using 11 forward-preferred frontier candidate(s)
+[INFO] [1791941851.868889127] [exploration_manager]: Selected frontier x=0.63, y=-1.05, distance=0.65 m, turn=40.8 deg, information=678, score=-0.095
+[INFO] [1791941851.870488224] [exploration_manager]: Navigation goal accepted
+[INFO] [1791941857.091045250] [exploration_manager]: Frontier reached successfully
+[INFO] [1791941857.091281679] [exploration_manager]: Reached frontier recorded: x=0.63, y=-1.05
+[INFO] [1791941863.800891316] [exploration_manager]: Updated frontier data received
+[INFO] [1791941863.882878137] [exploration_manager]: Using 14 forward-preferred frontier candidate(s)
+[INFO] [1791941863.883255727] [exploration_manager]: Selected frontier x=1.44, y=-0.15, distance=1.07 m, turn=51.8 deg, information=882, score=-0.050
+[INFO] [1791941863.884787194] [exploration_manager]: Navigation goal accepted
+[INFO] [1791941870.195221344] [exploration_manager]: Frontier reached successfully
+[INFO] [1791941870.195521691] [exploration_manager]: Reached frontier recorded: x=1.44, y=-0.15
+[INFO] [1791941871.024783887] [exploration_manager]: Updated frontier data received
+[INFO] [1791941871.872340772] [exploration_manager]: Using 6 forward-preferred frontier candidate(s)
+[INFO] [1791941871.872682449] [exploration_manager]: Selected frontier x=2.04, y=-0.30, distance=0.73 m, turn=11.0 deg, information=720, score=-0.097
+[INFO] [1791941871.874170955] [exploration_manager]: Navigation goal accepted
+[INFO] [1791941874.234415598] [exploration_manager]: Frontier reached successfully
+[INFO] [1791941874.234643579] [exploration_manager]: Reached frontier recorded: x=2.04, y=-0.30
+[INFO] [1791941876.024481947] [exploration_manager]: Updated frontier data received
+[INFO] [1791941876.870063487] [exploration_manager]: Using 8 forward-preferred frontier candidate(s)
+[INFO] [1791941876.870470159] [exploration_manager]: Selected frontier x=2.54, y=-0.25, distance=0.72 m, turn=1.8 deg, information=588, score=-0.082
+[INFO] [1791941876.873181213] [exploration_manager]: Navigation goal accepted
+[INFO] [1791941879.132499399] [exploration_manager]: Frontier reached successfully
+[INFO] [1791941879.132842118] [exploration_manager]: Reached frontier recorded: x=2.54, y=-0.25
+[INFO] [1791941881.025744495] [exploration_manager]: Updated frontier data received
+[INFO] [1791941881.880583775] [exploration_manager]: Using 5 forward-preferred frontier candidate(s)
+[INFO] [1791941881.880944566] [exploration_manager]: Selected frontier x=3.19, y=-0.20, distance=0.88 m, turn=0.6 deg, information=774, score=0.059
+[INFO] [1791941881.882926972] [exploration_manager]: Navigation goal accepted
+[INFO] [1791941884.842851834] [exploration_manager]: Frontier reached successfully
+[INFO] [1791941884.843071004] [exploration_manager]: Reached frontier recorded: x=3.19, y=-0.20
+[INFO] [1791941886.026967227] [exploration_manager]: Updated frontier data received
+[INFO] [1791941886.875457417] [exploration_manager]: Using 4 forward-preferred frontier candidate(s)
+[INFO] [1791941886.875830553] [exploration_manager]: Selected frontier x=3.04, y=-0.22, distance=0.08 m, turn=11.6 deg, information=599, score=-0.017
+[INFO] [1791941886.878174969] [exploration_manager]: Navigation goal accepted
+[INFO] [1791941886.938811583] [exploration_manager]: Frontier reached successfully
+[INFO] [1791941886.939125302] [exploration_manager]: Reached frontier recorded: x=3.04, y=-0.22
+[INFO] [1791941891.026691720] [exploration_manager]: Updated frontier data received
+[INFO] [1791941891.875802792] [exploration_manager]: Using 3 forward-preferred frontier candidate(s)
+[INFO] [1791941891.876150779] [exploration_manager]: Selected frontier x=3.54, y=-0.22, distance=0.58 m, turn=5.3 deg, information=704, score=0.031
+[INFO] [1791941891.877832823] [exploration_manager]: Navigation goal accepted
+[INFO] [1791941893.588293905] [exploration_manager]: Frontier reached successfully
+[INFO] [1791941893.588614483] [exploration_manager]: Reached frontier recorded: x=3.54, y=-0.22
+[INFO] [1791941898.834233072] [exploration_manager]: Updated frontier data received
+[INFO] [1791941898.877919963] [exploration_manager]: Using 1 forward-preferred frontier candidate(s)
+[INFO] [1791941898.878317873] [exploration_manager]: Selected frontier x=4.04, y=-0.22, distance=0.73 m, turn=2.2 deg, information=546, score=0.094
+[INFO] [1791941898.880648831] [exploration_manager]: Navigation goal accepted
+[INFO] [1791941901.140859048] [exploration_manager]: Frontier reached successfully
+[INFO] [1791941901.141203311] [exploration_manager]: Reached frontier recorded: x=4.04, y=-0.22
+[INFO] [1791941906.027223344] [exploration_manager]: Updated frontier data received
+[INFO] [1791941906.876815040] [exploration_manager]: Using 1 forward-preferred frontier candidate(s)
+[INFO] [1791941906.877245710] [exploration_manager]: Selected frontier x=3.99, y=-0.22, distance=0.28 m, turn=3.9 deg, information=550, score=0.089
+[INFO] [1791941906.878811589] [exploration_manager]: Navigation goal accepted
+[INFO] [1791941906.939438130] [exploration_manager]: Frontier reached successfully
+[INFO] [1791941906.939692676] [exploration_manager]: Reached frontier recorded: x=3.99, y=-0.22
+[INFO] [1791941911.025104891] [exploration_manager]: Updated frontier data received
+[INFO] [1791941911.876449974] [exploration_manager]: No forward-preferred frontier available; allowing larger turns
+[INFO] [1791941911.876968343] [exploration_manager]: Selected frontier x=3.04, y=1.03, distance=1.42 m, turn=122.1 deg, information=891, score=-0.332
+[INFO] [1791941911.880573600] [exploration_manager]: Navigation goal accepted
+[WARN] [1791941920.839705582] [exploration_manager]: Robot appears stuck: translation=0.01 m, rotation=6.3 deg, time=4.0 s
+[WARN] [1791941920.840094560] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791941920.842613978] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791941920.854077745] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791941920.854534081] [exploration_manager]: Failed frontier recorded: x=3.04, y=1.03
+[INFO] [1791941921.877650137] [exploration_manager]: Using 5 forward-preferred frontier candidate(s)
+[INFO] [1791941921.878032307] [exploration_manager]: Selected frontier x=2.44, y=0.68, distance=1.55 m, turn=64.9 deg, information=618, score=-0.157
+[INFO] [1791941921.880444183] [exploration_manager]: Navigation goal accepted
+[WARN] [1791941927.840505847] [exploration_manager]: Robot appears stuck: translation=0.03 m, rotation=2.7 deg, time=5.0 s
+[WARN] [1791941927.841115392] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791941927.843184956] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791941927.851632958] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791941927.852052875] [exploration_manager]: Failed frontier recorded: x=2.44, y=0.68
+[INFO] [1791941928.877288143] [exploration_manager]: Using 6 forward-preferred frontier candidate(s)
+[INFO] [1791941928.877635838] [exploration_manager]: Selected frontier x=1.94, y=0.48, distance=1.89 m, turn=77.0 deg, information=645, score=-0.156
+[INFO] [1791941928.879233044] [exploration_manager]: Navigation goal accepted
+[WARN] [1791941936.839397872] [exploration_manager]: Robot appears stuck: translation=0.04 m, rotation=2.8 deg, time=4.6 s
+[WARN] [1791941936.839731114] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791941936.844298192] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791941936.860570239] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791941936.860813381] [exploration_manager]: Failed frontier recorded: x=1.94, y=0.48
+[INFO] [1791941937.875151234] [exploration_manager]: Using 5 forward-preferred frontier candidate(s)
+[INFO] [1791941937.875751747] [exploration_manager]: Selected frontier x=0.99, y=0.18, distance=2.75 m, turn=87.6 deg, information=665, score=-0.233
+[INFO] [1791941937.877480584] [exploration_manager]: Navigation goal accepted
+[WARN] [1791941942.839305915] [exploration_manager]: Robot appears stuck: translation=0.00 m, rotation=1.0 deg, time=4.0 s
+[WARN] [1791941942.839595088] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791941942.840932259] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791941942.849370471] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791941942.849696480] [exploration_manager]: Failed frontier recorded: x=0.99, y=0.18
+[INFO] [1791941943.869229072] [exploration_manager]: Using 5 forward-preferred frontier candidate(s)
+[INFO] [1791941943.869535966] [exploration_manager]: Selected frontier x=1.49, y=0.13, distance=2.25 m, turn=86.4 deg, information=587, score=-0.218
+[INFO] [1791941943.870584323] [exploration_manager]: Navigation goal accepted
+[WARN] [1791941949.839385745] [exploration_manager]: Robot appears stuck: translation=0.00 m, rotation=0.4 deg, time=5.0 s
+[WARN] [1791941949.839672163] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791941949.840892971] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791941949.841747474] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791941949.841965220] [exploration_manager]: Failed frontier recorded: x=1.49, y=0.13
+[INFO] [1791941950.870449226] [exploration_manager]: Using 4 forward-preferred frontier candidate(s)
+[INFO] [1791941950.870941319] [exploration_manager]: Selected frontier x=0.44, y=0.08, distance=3.29 m, turn=89.4 deg, information=558, score=-0.248
+[INFO] [1791941950.873065084] [exploration_manager]: Navigation goal accepted
+[WARN] [1791941959.839663220] [exploration_manager]: Robot appears stuck: translation=0.00 m, rotation=0.0 deg, time=4.0 s
+[WARN] [1791941959.840038382] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791941959.842628168] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791941959.864629628] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791941959.864904013] [exploration_manager]: Failed frontier recorded: x=0.44, y=0.08
+[INFO] [1791941960.866915341] [exploration_manager]: Using 20 forward-preferred frontier candidate(s)
+[INFO] [1791941960.867263327] [exploration_manager]: Selected frontier x=2.99, y=-0.22, distance=0.74 m, turn=6.7 deg, information=573, score=-0.005
+[INFO] [1791941960.869986434] [exploration_manager]: Navigation goal accepted
+[INFO] [1791941970.357113971] [exploration_manager]: Frontier reached successfully
+[INFO] [1791941970.357691735] [exploration_manager]: Reached frontier recorded: x=2.99, y=-0.22
+[INFO] [1791941971.027222318] [exploration_manager]: Updated frontier data received
+[INFO] [1791941971.867642423] [exploration_manager]: Using 1 forward-preferred frontier candidate(s)
+[INFO] [1791941971.868058594] [exploration_manager]: Selected frontier x=3.49, y=-0.32, distance=0.30 m, turn=13.9 deg, information=714, score=0.061
+[INFO] [1791941971.870306215] [exploration_manager]: Navigation goal accepted
+[INFO] [1791941973.230647512] [exploration_manager]: Frontier reached successfully
+[INFO] [1791941973.230935046] [exploration_manager]: Reached frontier recorded: x=3.49, y=-0.32
+[INFO] [1791941976.036530584] [exploration_manager]: Updated frontier data received
+[INFO] [1791941976.866672427] [exploration_manager]: No forward-preferred frontier available; allowing larger turns
+[INFO] [1791941976.867062823] [exploration_manager]: Selected frontier x=2.29, y=-1.17, distance=1.39 m, turn=122.1 deg, information=924, score=-0.295
+[INFO] [1791941976.868961433] [exploration_manager]: Navigation goal accepted
+[INFO] [1791941988.289000189] [exploration_manager]: Frontier reached successfully
+[INFO] [1791941988.289295265] [exploration_manager]: Reached frontier recorded: x=2.29, y=-1.17
+[INFO] [1791941991.036412747] [exploration_manager]: Updated frontier data received
+[INFO] [1791941991.876064576] [exploration_manager]: Using 6 forward-preferred frontier candidate(s)
+[INFO] [1791941991.876444272] [exploration_manager]: Selected frontier x=2.74, y=-1.47, distance=0.38 m, turn=38.1 deg, information=755, score=-0.007
+[INFO] [1791941991.878882415] [exploration_manager]: Navigation goal accepted
+[INFO] [1791941995.190076039] [exploration_manager]: Frontier reached successfully
+[INFO] [1791941995.190508701] [exploration_manager]: Reached frontier recorded: x=2.74, y=-1.47
+[INFO] [1791941996.028212603] [exploration_manager]: Updated frontier data received
+[INFO] [1791941996.873684243] [exploration_manager]: Using 4 forward-preferred frontier candidate(s)
+[INFO] [1791941996.874011433] [exploration_manager]: Selected frontier x=2.64, y=-1.97, distance=0.72 m, turn=78.2 deg, information=758, score=-0.117
+[INFO] [1791941996.875171314] [exploration_manager]: Navigation goal accepted
+[INFO] [1791942006.791673950] [exploration_manager]: Frontier reached successfully
+[INFO] [1791942006.791915111] [exploration_manager]: Reached frontier recorded: x=2.64, y=-1.97
+[INFO] [1791942011.030286416] [exploration_manager]: Updated frontier data received
+[INFO] [1791942011.871826909] [exploration_manager]: Using 2 forward-preferred frontier candidate(s)
+[INFO] [1791942011.872160526] [exploration_manager]: Selected frontier x=3.54, y=-0.86, distance=1.22 m, turn=65.1 deg, information=649, score=-0.081
+[INFO] [1791942011.874293929] [exploration_manager]: Navigation goal accepted
+[INFO] [1791942019.335316971] [exploration_manager]: Frontier reached successfully
+[INFO] [1791942019.335849647] [exploration_manager]: Reached frontier recorded: x=3.54, y=-0.86
+[INFO] [1791942021.032482943] [exploration_manager]: Updated frontier data received
+[INFO] [1791942021.873839397] [exploration_manager]: Using 2 forward-preferred frontier candidate(s)
+[INFO] [1791942021.874217016] [exploration_manager]: Selected frontier x=3.99, y=-0.76, distance=0.64 m, turn=14.1 deg, information=558, score=0.061
+[INFO] [1791942021.875428225] [exploration_manager]: Navigation goal accepted
+[INFO] [1791942025.686036913] [exploration_manager]: Frontier reached successfully
+[INFO] [1791942025.686261965] [exploration_manager]: Reached frontier recorded: x=3.99, y=-0.76
+[INFO] [1791942026.031204578] [exploration_manager]: Updated frontier data received
+[INFO] [1791942026.885285371] [exploration_manager]: Using 1 forward-preferred frontier candidate(s)
+[INFO] [1791942026.885661380] [exploration_manager]: Selected frontier x=4.29, y=-0.56, distance=0.59 m, turn=21.4 deg, information=516, score=0.041
+[INFO] [1791942026.887498422] [exploration_manager]: Navigation goal accepted
+[INFO] [1791942030.647917455] [exploration_manager]: Frontier reached successfully
+[INFO] [1791942030.648196627] [exploration_manager]: Reached frontier recorded: x=4.29, y=-0.56
+[INFO] [1791942031.030915630] [exploration_manager]: Updated frontier data received
+[INFO] [1791942031.890309709] [exploration_manager]: No forward-preferred frontier available; allowing larger turns
+[INFO] [1791942031.890704429] [exploration_manager]: Selected frontier x=3.59, y=-1.11, distance=0.67 m, turn=159.7 deg, information=621, score=-0.394
+[INFO] [1791942031.891799139] [exploration_manager]: Navigation goal accepted
+[INFO] [1791942044.055628686] [exploration_manager]: Frontier reached successfully
+[INFO] [1791942044.055904311] [exploration_manager]: Reached frontier recorded: x=3.59, y=-1.11
+[INFO] [1791942046.032616171] [exploration_manager]: Updated frontier data received
+[INFO] [1791942046.871077174] [exploration_manager]: No forward-preferred frontier available; allowing larger turns
+[INFO] [1791942046.871489807] [exploration_manager]: Selected frontier x=2.54, y=0.74, distance=2.30 m, turn=109.8 deg, information=661, score=-0.356
+[INFO] [1791942046.873814735] [exploration_manager]: Navigation goal accepted
+[INFO] [1791942060.583514816] [exploration_manager]: Frontier reached successfully
+[INFO] [1791942060.583794182] [exploration_manager]: Reached frontier recorded: x=2.54, y=0.74
+[INFO] [1791942061.035678555] [exploration_manager]: Updated frontier data received
+[INFO] [1791942061.883732221] [exploration_manager]: No forward-preferred frontier available; allowing larger turns
+[INFO] [1791942061.884170568] [exploration_manager]: Selected frontier x=2.74, y=-0.36, distance=0.89 m, turn=91.5 deg, information=205, score=-0.254
+[INFO] [1791942061.887544184] [exploration_manager]: Navigation goal accepted
+[INFO] [1791942069.346725911] [exploration_manager]: Frontier reached successfully
+[INFO] [1791942069.346985702] [exploration_manager]: Reached frontier recorded: x=2.74, y=-0.36
+[INFO] [1791942073.569235444] [exploration_manager]: Updated frontier data received
+[INFO] [1791942073.881649118] [exploration_manager]: Using 4 forward-preferred frontier candidate(s)
+[INFO] [1791942073.882099740] [exploration_manager]: Selected frontier x=2.64, y=-1.26, distance=1.12 m, turn=84.9 deg, information=398, score=-0.236
+[INFO] [1791942073.884629343] [exploration_manager]: Navigation goal accepted
+[INFO] [1791942082.394682548] [exploration_manager]: Frontier reached successfully
+[INFO] [1791942082.394988628] [exploration_manager]: Reached frontier recorded: x=2.64, y=-1.26
+[INFO] [1791942086.032412142] [exploration_manager]: Updated frontier data received
+[INFO] [1791942086.894740157] [exploration_manager]: Using 2 forward-preferred frontier candidate(s)
+[INFO] [1791942086.895183691] [exploration_manager]: Selected frontier x=2.54, y=-2.81, distance=1.75 m, turn=83.9 deg, information=590, score=-0.233
+[INFO] [1791942086.898699346] [exploration_manager]: Navigation goal accepted
+[INFO] [1791942097.607216859] [exploration_manager]: Frontier reached successfully
+[INFO] [1791942097.607577564] [exploration_manager]: Reached frontier recorded: x=2.54, y=-2.81
+[INFO] [1791942101.043509876] [exploration_manager]: Updated frontier data received
+[INFO] [1791942101.872685750] [exploration_manager]: Using 6 forward-preferred frontier candidate(s)
+[INFO] [1791942101.873042550] [exploration_manager]: Selected frontier x=2.59, y=-3.12, distance=0.51 m, turn=82.4 deg, information=700, score=-0.129
+[INFO] [1791942101.875921377] [exploration_manager]: Navigation goal accepted
+[INFO] [1791942110.590432787] [exploration_manager]: Frontier reached successfully
+[INFO] [1791942110.590669544] [exploration_manager]: Reached frontier recorded: x=2.59, y=-3.12
+[INFO] [1791942111.035164234] [exploration_manager]: Updated frontier data received
+[INFO] [1791942111.870729717] [exploration_manager]: Using 5 forward-preferred frontier candidate(s)
+[INFO] [1791942111.871061860] [exploration_manager]: Selected frontier x=3.04, y=-2.02, distance=0.98 m, turn=87.4 deg, information=597, score=-0.167
+[INFO] [1791942111.874247287] [exploration_manager]: Navigation goal accepted
+[INFO] [1791942119.633324979] [exploration_manager]: Frontier reached successfully
+[INFO] [1791942119.633681650] [exploration_manager]: Reached frontier recorded: x=3.04, y=-2.02
+[INFO] [1791942121.047166484] [exploration_manager]: Updated frontier data received
+[INFO] [1791942121.886809253] [exploration_manager]: Using 6 forward-preferred frontier candidate(s)
+[INFO] [1791942121.887258342] [exploration_manager]: Selected frontier x=3.19, y=-2.19, distance=0.08 m, turn=14.1 deg, information=546, score=0.016
+[INFO] [1791942121.889617501] [exploration_manager]: Navigation goal accepted
+[INFO] [1791942121.949485645] [exploration_manager]: Frontier reached successfully
+[INFO] [1791942121.950038518] [exploration_manager]: Reached frontier recorded: x=3.19, y=-2.19
+[INFO] [1791942126.040900641] [exploration_manager]: Updated frontier data received
+[INFO] [1791942126.891066716] [exploration_manager]: Using 5 forward-preferred frontier candidate(s)
+[INFO] [1791942126.891629204] [exploration_manager]: Selected frontier x=3.59, y=-1.74, distance=0.68 m, turn=32.4 deg, information=694, score=-0.011
+[INFO] [1791942126.892882074] [exploration_manager]: Navigation goal accepted
+[INFO] [1791942131.853257503] [exploration_manager]: Frontier reached successfully
+[INFO] [1791942131.853501460] [exploration_manager]: Reached frontier recorded: x=3.59, y=-1.74
+[INFO] [1791942136.046398225] [exploration_manager]: Updated frontier data received
+[INFO] [1791942136.909879393] [exploration_manager]: Using 4 forward-preferred frontier candidate(s)
+[INFO] [1791942136.910315396] [exploration_manager]: Selected frontier x=3.59, y=-1.89, distance=0.12 m, turn=13.5 deg, information=651, score=0.021
+[INFO] [1791942136.912977238] [exploration_manager]: Navigation goal accepted
+[INFO] [1791942136.974475825] [exploration_manager]: Frontier reached successfully
+[INFO] [1791942136.974870318] [exploration_manager]: Reached frontier recorded: x=3.59, y=-1.89
+[INFO] [1791942141.068325618] [exploration_manager]: Updated frontier data received
+[INFO] [1791942143.926541182] [exploration_manager]: Using 3 forward-preferred frontier candidate(s)
+[INFO] [1791942143.927197359] [exploration_manager]: Selected frontier x=4.24, y=-0.84, distance=1.34 m, turn=42.2 deg, information=462, score=-0.102
+[INFO] [1791942143.930541896] [exploration_manager]: Navigation goal accepted
+[INFO] [1791942151.539023969] [exploration_manager]: Frontier reached successfully
+[INFO] [1791942151.539278832] [exploration_manager]: Reached frontier recorded: x=4.24, y=-0.84
+[INFO] [1791942156.046215982] [exploration_manager]: Updated frontier data received
+[INFO] [1791942156.879489168] [exploration_manager]: Using 1 forward-preferred frontier candidate(s)
+[INFO] [1791942156.879932429] [exploration_manager]: Selected frontier x=4.49, y=-0.54, distance=0.62 m, turn=39.8 deg, information=352, score=-0.011
+[INFO] [1791942156.884733232] [exploration_manager]: Navigation goal accepted
+[INFO] [1791942162.101904187] [exploration_manager]: Frontier reached successfully
+[INFO] [1791942162.102402968] [exploration_manager]: Reached frontier recorded: x=4.49, y=-0.54
+[INFO] [1791942166.042219930] [exploration_manager]: Updated frontier data received
+[INFO] [1791942166.876766389] [exploration_manager]: No forward-preferred frontier available; allowing larger turns
+[INFO] [1791942166.877132172] [exploration_manager]: Selected frontier x=3.84, y=-1.54, distance=1.00 m, turn=141.8 deg, information=607, score=-0.347
+[INFO] [1791942166.879683847] [exploration_manager]: Navigation goal accepted
+[INFO] [1791942179.215570214] [exploration_manager]: Frontier reached successfully
+[INFO] [1791942179.215810696] [exploration_manager]: Reached frontier recorded: x=3.84, y=-1.54
+[INFO] [1791942183.780278561] [exploration_manager]: Updated frontier data received
+[INFO] [1791942183.883030781] [exploration_manager]: Using 4 forward-preferred frontier candidate(s)
+[INFO] [1791942183.883440954] [exploration_manager]: Selected frontier x=4.34, y=-1.29, distance=0.33 m, turn=41.2 deg, information=739, score=-0.114
+[INFO] [1791942183.884916993] [exploration_manager]: Navigation goal accepted
+[INFO] [1791942184.696367241] [exploration_manager]: Frontier reached successfully
+[INFO] [1791942184.696640763] [exploration_manager]: Reached frontier recorded: x=4.34, y=-1.29
+[INFO] [1791942186.050903587] [exploration_manager]: Updated frontier data received
+[INFO] [1791942186.881111317] [exploration_manager]: Using 3 forward-preferred frontier candidate(s)
+[INFO] [1791942186.881453372] [exploration_manager]: Selected frontier x=4.69, y=-0.79, distance=0.84 m, turn=34.7 deg, information=823, score=-0.096
+[INFO] [1791942186.883713874] [exploration_manager]: Navigation goal accepted
+[INFO] [1791942192.793001304] [exploration_manager]: Frontier reached successfully
+[INFO] [1791942192.793228236] [exploration_manager]: Reached frontier recorded: x=4.69, y=-0.79
+[INFO] [1791942196.039361561] [exploration_manager]: Updated frontier data received
+[INFO] [1791942196.905431514] [exploration_manager]: Using 2 forward-preferred frontier candidate(s)
+[INFO] [1791942196.905796933] [exploration_manager]: Selected frontier x=4.99, y=0.01, distance=1.09 m, turn=55.8 deg, information=1004, score=-0.155
+[INFO] [1791942196.907839977] [exploration_manager]: Navigation goal accepted
+[INFO] [1791942204.567313195] [exploration_manager]: Frontier reached successfully
+[INFO] [1791942204.567525824] [exploration_manager]: Reached frontier recorded: x=4.99, y=0.01
+[INFO] [1791942206.061763883] [exploration_manager]: Updated frontier data received
+[INFO] [1791942206.880044756] [exploration_manager]: Using 4 forward-preferred frontier candidate(s)
+[INFO] [1791942206.880421405] [exploration_manager]: Selected frontier x=5.09, y=0.01, distance=0.22 m, turn=63.1 deg, information=832, score=-0.109
+[INFO] [1791942206.882358525] [exploration_manager]: Navigation goal accepted
+[INFO] [1791942206.942145235] [exploration_manager]: Frontier reached successfully
+[INFO] [1791942206.942397861] [exploration_manager]: Reached frontier recorded: x=5.09, y=0.01
+[INFO] [1791942211.057673706] [exploration_manager]: Updated frontier data received
+[INFO] [1791942214.434613758] [exploration_manager]: Using 3 forward-preferred frontier candidate(s)
+[INFO] [1791942214.434958776] [exploration_manager]: Selected frontier x=5.74, y=0.56, distance=1.04 m, turn=34.1 deg, information=966, score=0.005
+[INFO] [1791942214.436473402] [exploration_manager]: Navigation goal accepted
+[INFO] [1791942220.748641152] [exploration_manager]: Frontier reached successfully
+[INFO] [1791942220.748924962] [exploration_manager]: Reached frontier recorded: x=5.74, y=0.56
+[INFO] [1791942221.087244653] [exploration_manager]: Updated frontier data received
+[INFO] [1791942221.897890122] [exploration_manager]: Using 7 forward-preferred frontier candidate(s)
+[INFO] [1791942221.898259914] [exploration_manager]: Selected frontier x=6.59, y=0.41, distance=0.96 m, turn=10.2 deg, information=727, score=-0.070
+[INFO] [1791942221.900613624] [exploration_manager]: Navigation goal accepted
+[INFO] [1791942225.210058178] [exploration_manager]: Frontier reached successfully
+[INFO] [1791942225.210302382] [exploration_manager]: Reached frontier recorded: x=6.59, y=0.41
+[INFO] [1791942226.079494126] [exploration_manager]: Updated frontier data received
+[INFO] [1791942226.909012879] [exploration_manager]: Using 11 forward-preferred frontier candidate(s)
+[INFO] [1791942226.909413073] [exploration_manager]: Selected frontier x=7.19, y=0.96, distance=0.99 m, turn=35.6 deg, information=674, score=-0.118
+[INFO] [1791942226.911802395] [exploration_manager]: Navigation goal accepted
+[INFO] [1791942232.671190506] [exploration_manager]: Frontier reached successfully
+[INFO] [1791942232.671494897] [exploration_manager]: Reached frontier recorded: x=7.19, y=0.96
+[INFO] [1791942236.075871239] [exploration_manager]: Updated frontier data received
+[INFO] [1791942236.897434808] [exploration_manager]: Using 6 forward-preferred frontier candidate(s)
+[INFO] [1791942236.897969577] [exploration_manager]: Selected frontier x=7.69, y=1.56, distance=1.01 m, turn=36.0 deg, information=672, score=-0.041
+[INFO] [1791942236.900350733] [exploration_manager]: Navigation goal accepted
+[INFO] [1791942243.409701850] [exploration_manager]: Frontier reached successfully
+[INFO] [1791942243.409973919] [exploration_manager]: Reached frontier recorded: x=7.69, y=1.56
+[INFO] [1791942246.076126355] [exploration_manager]: Updated frontier data received
+[INFO] [1791942249.569994548] [exploration_manager]: Using 4 forward-preferred frontier candidate(s)
+[INFO] [1791942249.570578731] [exploration_manager]: Selected frontier x=7.94, y=2.31, distance=1.02 m, turn=57.4 deg, information=624, score=-0.059
+[INFO] [1791942249.572453987] [exploration_manager]: Navigation goal accepted
+[INFO] [1791942256.732856065] [exploration_manager]: Frontier reached successfully
+[INFO] [1791942256.733112589] [exploration_manager]: Reached frontier recorded: x=7.94, y=2.31
+[INFO] [1791942261.072564281] [exploration_manager]: Updated frontier data received
+[INFO] [1791942261.897385504] [exploration_manager]: Using 3 forward-preferred frontier candidate(s)
+[INFO] [1791942261.897716545] [exploration_manager]: Selected frontier x=8.14, y=2.91, distance=0.85 m, turn=63.2 deg, information=541, score=-0.176
+[INFO] [1791942261.899990655] [exploration_manager]: Navigation goal accepted
+[INFO] [1791942268.510369299] [exploration_manager]: Frontier reached successfully
+[INFO] [1791942268.510610349] [exploration_manager]: Reached frontier recorded: x=8.14, y=2.91
+[INFO] [1791942271.086710943] [exploration_manager]: Updated frontier data received
+[INFO] [1791942271.903452610] [exploration_manager]: Using 2 forward-preferred frontier candidate(s)
+[INFO] [1791942271.903775961] [exploration_manager]: Selected frontier x=8.39, y=3.36, distance=0.70 m, turn=60.3 deg, information=565, score=-0.167
+[INFO] [1791942271.905863406] [exploration_manager]: Navigation goal accepted
+[INFO] [1791942278.267888998] [exploration_manager]: Frontier reached successfully
+[INFO] [1791942278.268385381] [exploration_manager]: Reached frontier recorded: x=8.39, y=3.36
+[INFO] [1791942281.078389391] [exploration_manager]: Updated frontier data received
+[INFO] [1791942281.912993929] [exploration_manager]: Using 2 forward-preferred frontier candidate(s)
+[INFO] [1791942281.913304713] [exploration_manager]: Selected frontier x=8.34, y=3.66, distance=0.52 m, turn=71.6 deg, information=474, score=-0.199
+[INFO] [1791942281.914771535] [exploration_manager]: Navigation goal accepted
+[INFO] [1791942291.343445251] [exploration_manager]: Frontier reached successfully
+[INFO] [1791942291.343818449] [exploration_manager]: Reached frontier recorded: x=8.34, y=3.66
+[INFO] [1791942296.087666957] [exploration_manager]: Updated frontier data received
+[INFO] [1791942296.896130916] [exploration_manager]: Using 4 forward-preferred frontier candidate(s)
+[INFO] [1791942296.896463642] [exploration_manager]: Selected frontier x=8.34, y=3.56, distance=0.13 m, turn=52.8 deg, information=237, score=-0.147
+[INFO] [1791942296.898973143] [exploration_manager]: Navigation goal accepted
+[INFO] [1791942296.958200623] [exploration_manager]: Frontier reached successfully
+[INFO] [1791942296.958453649] [exploration_manager]: Reached frontier recorded: x=8.34, y=3.56
+[INFO] [1791942301.087820576] [exploration_manager]: Updated frontier data received
+[INFO] [1791942301.897529297] [exploration_manager]: Using 3 forward-preferred frontier candidate(s)
+[INFO] [1791942301.897896567] [exploration_manager]: Selected frontier x=8.39, y=4.06, distance=0.62 m, turn=67.4 deg, information=431, score=-0.187
+[INFO] [1791942301.900331789] [exploration_manager]: Navigation goal accepted
+[INFO] [1791942308.710957025] [exploration_manager]: Frontier reached successfully
+[INFO] [1791942308.711234871] [exploration_manager]: Reached frontier recorded: x=8.39, y=4.06
+[INFO] [1791942311.101930542] [exploration_manager]: Updated frontier data received
+[INFO] [1791942311.907968545] [exploration_manager]: Using 2 forward-preferred frontier candidate(s)
+[INFO] [1791942311.908903558] [exploration_manager]: Selected frontier x=8.49, y=4.61, distance=0.79 m, turn=62.0 deg, information=586, score=-0.172
+[INFO] [1791942311.910564377] [exploration_manager]: Navigation goal accepted
+[INFO] [1791942322.189685948] [exploration_manager]: Frontier reached successfully
+[INFO] [1791942322.190000977] [exploration_manager]: Reached frontier recorded: x=8.49, y=4.61
+[INFO] [1791942323.880536649] [exploration_manager]: Updated frontier data received
+[INFO] [1791942324.903866427] [exploration_manager]: Using 4 forward-preferred frontier candidate(s)
+[INFO] [1791942324.904426831] [exploration_manager]: Selected frontier x=8.39, y=4.76, distance=0.39 m, turn=59.4 deg, information=445, score=-0.197
+[INFO] [1791942324.906841334] [exploration_manager]: Navigation goal accepted
+[INFO] [1791942330.717993919] [exploration_manager]: Frontier reached successfully
+[INFO] [1791942330.718244094] [exploration_manager]: Reached frontier recorded: x=8.39, y=4.76
+[INFO] [1791942331.104939473] [exploration_manager]: Updated frontier data received
+[INFO] [1791942331.902487662] [exploration_manager]: Using 2 forward-preferred frontier candidate(s)
+[INFO] [1791942331.902859420] [exploration_manager]: Selected frontier x=8.54, y=5.26, distance=0.76 m, turn=58.7 deg, information=550, score=-0.163
+[INFO] [1791942331.905171832] [exploration_manager]: Navigation goal accepted
+[WARN] [1791942339.839396791] [exploration_manager]: Robot appears stuck: translation=0.00 m, rotation=7.0 deg, time=5.0 s
+[WARN] [1791942339.839810875] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791942339.842013025] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791942339.865057087] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791942339.865286608] [exploration_manager]: Failed frontier recorded: x=8.54, y=5.26
+[INFO] [1791942340.902769044] [exploration_manager]: Using 2 forward-preferred frontier candidate(s)
+[INFO] [1791942340.903132045] [exploration_manager]: Selected frontier x=8.49, y=5.76, distance=1.24 m, turn=21.3 deg, information=639, score=-0.059
+[INFO] [1791942340.906721933] [exploration_manager]: Navigation goal accepted
+[INFO] [1791942349.615060033] [exploration_manager]: Frontier reached successfully
+[INFO] [1791942349.615276363] [exploration_manager]: Reached frontier recorded: x=8.49, y=5.76
+[INFO] [1791942351.097728443] [exploration_manager]: Updated frontier data received
+[INFO] [1791942351.902350834] [exploration_manager]: Using 3 forward-preferred frontier candidate(s)
+[INFO] [1791942351.902709158] [exploration_manager]: Selected frontier x=8.24, y=5.96, distance=0.42 m, turn=67.8 deg, information=603, score=-0.161
+[INFO] [1791942351.905108959] [exploration_manager]: Navigation goal accepted
+[INFO] [1791942359.237770154] [exploration_manager]: Frontier reached successfully
+[INFO] [1791942359.237979583] [exploration_manager]: Reached frontier recorded: x=8.24, y=5.96
+[INFO] [1791942361.100368266] [exploration_manager]: Updated frontier data received
+[INFO] [1791942361.899456535] [exploration_manager]: Using 1 forward-preferred frontier candidate(s)
+[INFO] [1791942361.899773434] [exploration_manager]: Selected frontier x=8.54, y=6.41, distance=0.70 m, turn=56.5 deg, information=490, score=-0.057
+[INFO] [1791942361.902648382] [exploration_manager]: Navigation goal accepted
+[WARN] [1791942370.839259591] [exploration_manager]: Robot appears stuck: translation=0.00 m, rotation=0.0 deg, time=5.0 s
+[WARN] [1791942370.839469902] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791942370.841848938] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791942370.862228172] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791942370.862440169] [exploration_manager]: Failed frontier recorded: x=8.54, y=6.41
+[INFO] [1791942371.905790017] [exploration_manager]: Using 1 forward-preferred frontier candidate(s)
+[INFO] [1791942371.906243237] [exploration_manager]: Selected frontier x=7.99, y=6.41, distance=0.73 m, turn=80.4 deg, information=907, score=-0.123
+[INFO] [1791942371.908979128] [exploration_manager]: Navigation goal accepted
+[INFO] [1791942379.118946563] [exploration_manager]: Frontier reached successfully
+[INFO] [1791942379.119225463] [exploration_manager]: Reached frontier recorded: x=7.99, y=6.41
+[INFO] [1791942381.111719660] [exploration_manager]: Updated frontier data received
+[INFO] [1791942381.908451264] [exploration_manager]: Using 1 forward-preferred frontier candidate(s)
+[INFO] [1791942381.908837393] [exploration_manager]: Selected frontier x=8.14, y=8.06, distance=1.82 m, turn=76.4 deg, information=90, score=-0.112
+[INFO] [1791942381.911091410] [exploration_manager]: Navigation goal accepted
+[INFO] [1791942394.122075535] [exploration_manager]: Frontier reached successfully
+[INFO] [1791942394.122414867] [exploration_manager]: Reached frontier recorded: x=8.14, y=8.06
+[INFO] [1791942396.122284281] [exploration_manager]: Updated frontier data received
+[INFO] [1791942396.905596477] [exploration_manager]: No forward-preferred frontier available; allowing larger turns
+[INFO] [1791942396.905994946] [exploration_manager]: Selected frontier x=8.14, y=5.06, distance=2.66 m, turn=100.8 deg, information=40, score=-0.328
+[INFO] [1791942396.907095106] [exploration_manager]: Navigation goal accepted
+[INFO] [1791942410.917533915] [exploration_manager]: Frontier reached successfully
+[INFO] [1791942410.917982567] [exploration_manager]: Reached frontier recorded: x=8.14, y=5.06
+[INFO] [1791942411.112214149] [exploration_manager]: Updated frontier data received
+[INFO] [1791942411.903486590] [exploration_manager]: Using 8 forward-preferred frontier candidate(s)
+[INFO] [1791942411.903817163] [exploration_manager]: Selected frontier x=8.19, y=4.36, distance=0.91 m, turn=64.6 deg, information=40, score=-0.179
+[INFO] [1791942411.906145790] [exploration_manager]: Navigation goal accepted
+[INFO] [1791942418.715415173] [exploration_manager]: Frontier reached successfully
+[INFO] [1791942418.715625865] [exploration_manager]: Reached frontier recorded: x=8.19, y=4.36
+[INFO] [1791942421.106495620] [exploration_manager]: Updated frontier data received
+[INFO] [1791942421.899054455] [exploration_manager]: Using 5 forward-preferred frontier candidate(s)
+[INFO] [1791942421.899533730] [exploration_manager]: Selected frontier x=8.09, y=3.71, distance=0.89 m, turn=86.3 deg, information=36, score=-0.240
+[INFO] [1791942421.902205899] [exploration_manager]: Navigation goal accepted
+[INFO] [1791942431.796054312] [exploration_manager]: Frontier reached successfully
+[INFO] [1791942431.796399425] [exploration_manager]: Reached frontier recorded: x=8.09, y=3.71
+[INFO] [1791942436.105054347] [exploration_manager]: Updated frontier data received
+[INFO] [1791942436.904568496] [exploration_manager]: Using 4 forward-preferred frontier candidate(s)
+[INFO] [1791942436.904901757] [exploration_manager]: Selected frontier x=7.89, y=2.21, distance=1.74 m, turn=84.3 deg, information=36, score=-0.234
+[INFO] [1791942436.906315141] [exploration_manager]: Navigation goal accepted
+[INFO] [1791942447.418486015] [exploration_manager]: Frontier reached successfully
+[INFO] [1791942447.419101705] [exploration_manager]: Reached frontier recorded: x=7.89, y=2.21
+[INFO] [1791942451.161467454] [exploration_manager]: Updated frontier data received
+[INFO] [1791942451.915981743] [exploration_manager]: Using 3 forward-preferred frontier candidate(s)
+[INFO] [1791942451.916440659] [exploration_manager]: Selected frontier x=7.59, y=-0.89, distance=3.34 m, turn=81.5 deg, information=666, score=-0.126
+[INFO] [1791942451.918319033] [exploration_manager]: Navigation goal accepted
+[INFO] [1791942471.595213335] [exploration_manager]: Frontier reached successfully
+[INFO] [1791942471.595689391] [exploration_manager]: Reached frontier recorded: x=7.59, y=-0.89
+[INFO] [1791942476.119980487] [exploration_manager]: Updated frontier data received
+[INFO] [1791942476.899347205] [exploration_manager]: Using 1 forward-preferred frontier candidate(s)
+[INFO] [1791942476.899803623] [exploration_manager]: Selected frontier x=8.34, y=-1.74, distance=1.29 m, turn=43.2 deg, information=587, score=-0.020
+[INFO] [1791942476.904346692] [exploration_manager]: Navigation goal accepted
+[INFO] [1791942484.173739442] [exploration_manager]: Frontier reached successfully
+[INFO] [1791942484.174048282] [exploration_manager]: Reached frontier recorded: x=8.34, y=-1.74
+[INFO] [1791942486.128656445] [exploration_manager]: Updated frontier data received
+[INFO] [1791942486.898578570] [exploration_manager]: Using 1 forward-preferred frontier candidate(s)
+[INFO] [1791942486.898941147] [exploration_manager]: Selected frontier x=8.39, y=-2.49, distance=0.98 m, turn=58.8 deg, information=619, score=-0.063
+[INFO] [1791942486.901921969] [exploration_manager]: Navigation goal accepted
+[INFO] [1791942496.763678984] [exploration_manager]: Frontier reached successfully
+[INFO] [1791942496.764104726] [exploration_manager]: Reached frontier recorded: x=8.39, y=-2.49
+[INFO] [1791942498.918316518] [exploration_manager]: Updated frontier data received
+[INFO] [1791942499.907944141] [exploration_manager]: Using 3 forward-preferred frontier candidate(s)
+[INFO] [1791942499.908333432] [exploration_manager]: Selected frontier x=8.39, y=-2.64, distance=0.40 m, turn=58.0 deg, information=576, score=-0.161
+[INFO] [1791942499.911613434] [exploration_manager]: Navigation goal accepted
+[INFO] [1791942505.721596678] [exploration_manager]: Frontier reached successfully
+[INFO] [1791942505.721828699] [exploration_manager]: Reached frontier recorded: x=8.39, y=-2.64
+[INFO] [1791942506.117692744] [exploration_manager]: Updated frontier data received
+[INFO] [1791942506.912017317] [exploration_manager]: Using 2 forward-preferred frontier candidate(s)
+[INFO] [1791942506.912506377] [exploration_manager]: Selected frontier x=8.44, y=-3.14, distance=0.74 m, turn=64.7 deg, information=622, score=-0.080
+[INFO] [1791942506.915475785] [exploration_manager]: Navigation goal accepted
+[INFO] [1791942514.730547730] [exploration_manager]: Frontier reached successfully
+[INFO] [1791942514.731556135] [exploration_manager]: Reached frontier recorded: x=8.44, y=-3.14
+[INFO] [1791942516.116720096] [exploration_manager]: Updated frontier data received
+[INFO] [1791942516.910080139] [exploration_manager]: Using 1 forward-preferred frontier candidate(s)
+[INFO] [1791942516.910452972] [exploration_manager]: Selected frontier x=8.39, y=-3.44, distance=0.55 m, turn=60.3 deg, information=569, score=-0.067
+[INFO] [1791942516.914153430] [exploration_manager]: Navigation goal accepted
+[INFO] [1791942523.322927893] [exploration_manager]: Frontier reached successfully
+[INFO] [1791942523.323230169] [exploration_manager]: Reached frontier recorded: x=8.39, y=-3.44
+[INFO] [1791942526.110620277] [exploration_manager]: Updated frontier data received
+[INFO] [1791942526.898229557] [exploration_manager]: No forward-preferred frontier available; allowing larger turns
+[INFO] [1791942526.898564624] [exploration_manager]: Selected frontier x=8.19, y=-2.79, distance=0.44 m, turn=115.5 deg, information=635, score=-0.275
+[INFO] [1791942526.900803928] [exploration_manager]: Navigation goal accepted
+[INFO] [1791942536.431467297] [exploration_manager]: Frontier reached successfully
+[INFO] [1791942536.432139514] [exploration_manager]: Reached frontier recorded: x=8.19, y=-2.79
+[INFO] [1791942541.108852853] [exploration_manager]: Updated frontier data received
+[INFO] [1791942541.896951948] [exploration_manager]: Using 6 forward-preferred frontier candidate(s)
+[INFO] [1791942541.897296806] [exploration_manager]: Selected frontier x=8.09, y=-2.09, distance=0.92 m, turn=87.3 deg, information=643, score=-0.163
+[INFO] [1791942541.900833000] [exploration_manager]: Navigation goal accepted
+[INFO] [1791942549.563107519] [exploration_manager]: Frontier reached successfully
+[INFO] [1791942549.563548167] [exploration_manager]: Reached frontier recorded: x=8.09, y=-2.09
+[INFO] [1791942551.116489071] [exploration_manager]: Updated frontier data received
+[INFO] [1791942551.903101374] [exploration_manager]: Using 4 forward-preferred frontier candidate(s)
+[INFO] [1791942551.903430822] [exploration_manager]: Selected frontier x=8.04, y=-1.54, distance=0.77 m, turn=83.7 deg, information=570, score=-0.179
+[INFO] [1791942551.904603412] [exploration_manager]: Navigation goal accepted
+[INFO] [1791942558.965521970] [exploration_manager]: Frontier reached successfully
+[INFO] [1791942558.965973912] [exploration_manager]: Reached frontier recorded: x=8.04, y=-1.54
+[INFO] [1791942561.126035837] [exploration_manager]: Updated frontier data received
+[INFO] [1791942561.917365527] [exploration_manager]: Using 3 forward-preferred frontier candidate(s)
+[INFO] [1791942561.917698427] [exploration_manager]: Selected frontier x=6.59, y=6.56, distance=8.45 m, turn=86.9 deg, information=702, score=-0.141
+[INFO] [1791942561.920450303] [exploration_manager]: Navigation goal accepted
+[INFO] [1791942609.873334132] [exploration_manager]: Frontier reached successfully
+[INFO] [1791942609.873623430] [exploration_manager]: Reached frontier recorded: x=6.59, y=6.56
+[INFO] [1791942611.108058708] [exploration_manager]: Updated frontier data received
+[INFO] [1791942611.913340148] [exploration_manager]: Using 21 forward-preferred frontier candidate(s)
+[INFO] [1791942611.913792594] [exploration_manager]: Selected frontier x=6.04, y=2.60, distance=4.22 m, turn=86.3 deg, information=909, score=-0.151
+[INFO] [1791942611.917229759] [exploration_manager]: Navigation goal accepted
+[INFO] [1791942651.352195613] [exploration_manager]: Frontier reached successfully
+[INFO] [1791942651.352484561] [exploration_manager]: Reached frontier recorded: x=6.04, y=2.60
+[INFO] [1791942656.117854960] [exploration_manager]: Updated frontier data received
+[INFO] [1791942656.910408321] [exploration_manager]: Using 16 forward-preferred frontier candidate(s)
+[INFO] [1791942656.910854163] [exploration_manager]: Selected frontier x=5.89, y=2.56, distance=0.21 m, turn=42.4 deg, information=905, score=-0.021
+[INFO] [1791942656.914457454] [exploration_manager]: Navigation goal accepted
+[INFO] [1791942656.974451416] [exploration_manager]: Frontier reached successfully
+[INFO] [1791942656.974852484] [exploration_manager]: Reached frontier recorded: x=5.89, y=2.56
+[INFO] [1791942661.119803623] [exploration_manager]: Updated frontier data received
+[INFO] [1791942661.914147875] [exploration_manager]: Using 15 forward-preferred frontier candidate(s)
+[INFO] [1791942661.914534651] [exploration_manager]: Selected frontier x=6.04, y=3.11, distance=0.77 m, turn=56.2 deg, information=924, score=-0.056
+[INFO] [1791942661.916045611] [exploration_manager]: Navigation goal accepted
+[INFO] [1791942669.126259764] [exploration_manager]: Frontier reached successfully
+[INFO] [1791942669.126501026] [exploration_manager]: Reached frontier recorded: x=6.04, y=3.11
+[INFO] [1791942673.920315300] [exploration_manager]: Updated frontier data received
+[INFO] [1791942674.922462683] [exploration_manager]: Using 17 forward-preferred frontier candidate(s)
+[INFO] [1791942674.922822909] [exploration_manager]: Selected frontier x=5.99, y=3.56, distance=0.59 m, turn=60.8 deg, information=936, score=-0.088
+[INFO] [1791942674.925701603] [exploration_manager]: Navigation goal accepted
+[INFO] [1791942682.684695242] [exploration_manager]: Frontier reached successfully
+[INFO] [1791942682.684926146] [exploration_manager]: Reached frontier recorded: x=5.99, y=3.56
+[INFO] [1791942686.134811511] [exploration_manager]: Updated frontier data received
+[INFO] [1791942686.933110516] [exploration_manager]: Using 17 forward-preferred frontier candidate(s)
+[INFO] [1791942686.933566702] [exploration_manager]: Selected frontier x=5.89, y=3.41, distance=0.03 m, turn=36.0 deg, information=883, score=-0.012
+[INFO] [1791942686.934937971] [exploration_manager]: Navigation goal accepted
+[INFO] [1791942686.995652819] [exploration_manager]: Frontier reached successfully
+[INFO] [1791942686.995885889] [exploration_manager]: Reached frontier recorded: x=5.89, y=3.41
+[INFO] [1791942691.132127935] [exploration_manager]: Updated frontier data received
+[INFO] [1791942691.918941164] [exploration_manager]: Using 16 forward-preferred frontier candidate(s)
+[INFO] [1791942691.919315387] [exploration_manager]: Selected frontier x=5.99, y=3.91, distance=0.50 m, turn=61.9 deg, information=911, score=-0.079
+[INFO] [1791942691.922743385] [exploration_manager]: Navigation goal accepted
+[WARN] [1791942701.839828488] [exploration_manager]: Robot appears stuck: translation=0.00 m, rotation=0.0 deg, time=4.0 s
+[WARN] [1791942701.840199312] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791942701.842371874] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791942701.864996790] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791942701.865246633] [exploration_manager]: Failed frontier recorded: x=5.99, y=3.91
+[INFO] [1791942702.921750685] [exploration_manager]: Using 11 forward-preferred frontier candidate(s)
+[INFO] [1791942702.922070563] [exploration_manager]: Selected frontier x=6.04, y=4.51, distance=1.07 m, turn=39.7 deg, information=951, score=-0.010
+[INFO] [1791942702.924616946] [exploration_manager]: Navigation goal accepted
+[INFO] [1791942712.638047494] [exploration_manager]: Frontier reached successfully
+[INFO] [1791942712.638290413] [exploration_manager]: Reached frontier recorded: x=6.04, y=4.51
+[INFO] [1791942716.122427421] [exploration_manager]: Updated frontier data received
+[INFO] [1791942716.923304868] [exploration_manager]: Using 17 forward-preferred frontier candidate(s)
+[INFO] [1791942716.923618272] [exploration_manager]: Selected frontier x=5.99, y=4.26, distance=0.21 m, turn=24.2 deg, information=927, score=0.030
+[INFO] [1791942716.925476975] [exploration_manager]: Navigation goal accepted
+[INFO] [1791942716.986078030] [exploration_manager]: Frontier reached successfully
+[INFO] [1791942716.986360657] [exploration_manager]: Reached frontier recorded: x=5.99, y=4.26
+[INFO] [1791942721.132525170] [exploration_manager]: Updated frontier data received
+[INFO] [1791942721.916140999] [exploration_manager]: Using 16 forward-preferred frontier candidate(s)
+[INFO] [1791942721.916478220] [exploration_manager]: Selected frontier x=6.09, y=5.06, distance=0.82 m, turn=54.1 deg, information=942, score=-0.060
+[INFO] [1791942721.919395138] [exploration_manager]: Navigation goal accepted
+[INFO] [1791942729.079536042] [exploration_manager]: Frontier reached successfully
+[INFO] [1791942729.079753418] [exploration_manager]: Reached frontier recorded: x=6.09, y=5.06
+[INFO] [1791942731.122823257] [exploration_manager]: Updated frontier data received
+[INFO] [1791942731.935220754] [exploration_manager]: Using 12 forward-preferred frontier candidate(s)
+[INFO] [1791942731.935592716] [exploration_manager]: Selected frontier x=5.99, y=5.01, distance=0.22 m, turn=42.0 deg, information=909, score=-0.017
+[INFO] [1791942731.939031472] [exploration_manager]: Navigation goal accepted
+[INFO] [1791942731.999748757] [exploration_manager]: Frontier reached successfully
+[INFO] [1791942732.000103518] [exploration_manager]: Reached frontier recorded: x=5.99, y=5.01
+[INFO] [1791942736.123836307] [exploration_manager]: Updated frontier data received
+[INFO] [1791942736.918072625] [exploration_manager]: Using 11 forward-preferred frontier candidate(s)
+[INFO] [1791942736.918413651] [exploration_manager]: Selected frontier x=6.09, y=5.51, distance=0.72 m, turn=58.3 deg, information=912, score=-0.062
+[INFO] [1791942736.920808527] [exploration_manager]: Navigation goal accepted
+[WARN] [1791942743.634978818] [exploration_manager]: Robot appears stuck: translation=0.02 m, rotation=10.1 deg, time=4.8 s
+[WARN] [1791942743.635214843] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791942743.637737317] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791942743.648008755] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791942743.648243810] [exploration_manager]: Failed frontier recorded: x=6.09, y=5.51
+[INFO] [1791942743.929401712] [exploration_manager]: Using 4 forward-preferred frontier candidate(s)
+[INFO] [1791942743.929787227] [exploration_manager]: Selected frontier x=6.39, y=6.56, distance=1.76 m, turn=7.5 deg, information=649, score=0.078
+[INFO] [1791942743.935442559] [exploration_manager]: Navigation goal accepted
+[INFO] [1791942759.374178140] [exploration_manager]: Frontier reached successfully
+[INFO] [1791942759.374581059] [exploration_manager]: Reached frontier recorded: x=6.39, y=6.56
+[INFO] [1791942761.167791273] [exploration_manager]: Updated frontier data received
+[INFO] [1791942761.953608190] [exploration_manager]: Using 20 forward-preferred frontier candidate(s)
+[INFO] [1791942761.954335010] [exploration_manager]: Selected frontier x=8.47, y=6.85, distance=1.77 m, turn=17.8 deg, information=707, score=-0.005
+[INFO] [1791942761.958168210] [exploration_manager]: Navigation goal accepted
+[WARN] [1791942785.839402541] [exploration_manager]: Robot appears stuck: translation=0.00 m, rotation=0.1 deg, time=5.0 s
+[WARN] [1791942785.839701794] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791942785.841728222] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791942785.867392141] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791942785.867705125] [exploration_manager]: Failed frontier recorded: x=8.47, y=6.85
+[INFO] [1791942786.925024932] [exploration_manager]: Using 5 forward-preferred frontier candidate(s)
+[INFO] [1791942786.925426978] [exploration_manager]: Selected frontier x=8.27, y=7.40, distance=4.07 m, turn=53.2 deg, information=427, score=-0.174
+[INFO] [1791942786.928957097] [exploration_manager]: Navigation goal accepted
+[WARN] [1791942795.839347555] [exploration_manager]: Robot appears stuck: translation=0.00 m, rotation=3.6 deg, time=5.0 s
+[WARN] [1791942795.839654910] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791942795.842374064] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791942795.870294698] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791942795.870759320] [exploration_manager]: Failed frontier recorded: x=8.27, y=7.40
+[INFO] [1791942796.918111667] [exploration_manager]: Using 14 forward-preferred frontier candidate(s)
+[INFO] [1791942796.918477543] [exploration_manager]: Selected frontier x=5.97, y=7.15, distance=3.98 m, turn=6.6 deg, information=523, score=-0.008
+[INFO] [1791942796.920687542] [exploration_manager]: Navigation goal accepted
+[WARN] [1791942805.839434457] [exploration_manager]: Robot appears stuck: translation=0.00 m, rotation=5.3 deg, time=5.0 s
+[WARN] [1791942805.839695379] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791942805.842488190] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791942805.870986930] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791942805.871271189] [exploration_manager]: Failed frontier recorded: x=5.97, y=7.15
+[INFO] [1791942806.915414930] [exploration_manager]: Using 52 forward-preferred frontier candidate(s)
+[INFO] [1791942806.915817271] [exploration_manager]: Selected frontier x=6.12, y=2.55, distance=1.54 m, turn=4.2 deg, information=502, score=0.022
+[INFO] [1791942806.918569466] [exploration_manager]: Navigation goal accepted
+[WARN] [1791942815.839336934] [exploration_manager]: Robot appears stuck: translation=0.00 m, rotation=6.2 deg, time=5.0 s
+[WARN] [1791942815.839637008] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791942815.842210504] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791942815.873559682] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791942815.874169337] [exploration_manager]: Failed frontier recorded: x=6.12, y=2.55
+[INFO] [1791942816.921877472] [exploration_manager]: Using 36 forward-preferred frontier candidate(s)
+[INFO] [1791942816.922335200] [exploration_manager]: Selected frontier x=7.27, y=-0.60, distance=4.03 m, turn=36.1 deg, information=528, score=-0.155
+[INFO] [1791942816.926326694] [exploration_manager]: Navigation goal accepted
+[WARN] [1791942825.839323131] [exploration_manager]: Robot appears stuck: translation=0.00 m, rotation=0.1 deg, time=5.0 s
+[WARN] [1791942825.839557189] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791942825.841634513] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791942825.864575066] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791942825.864814517] [exploration_manager]: Failed frontier recorded: x=7.27, y=-0.60
+[INFO] [1791942826.906493530] [exploration_manager]: Using 5 forward-preferred frontier candidate(s)
+[INFO] [1791942826.906824786] [exploration_manager]: Selected frontier x=8.67, y=7.70, distance=4.46 m, turn=35.5 deg, information=613, score=-0.037
+[INFO] [1791942826.910012961] [exploration_manager]: Navigation goal accepted
+[WARN] [1791942834.839564647] [exploration_manager]: Robot appears stuck: translation=0.00 m, rotation=0.1 deg, time=4.0 s
+[WARN] [1791942834.840028985] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791942834.844229600] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791942834.869267373] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791942834.869526081] [exploration_manager]: Failed frontier recorded: x=8.67, y=7.70
+[INFO] [1791942835.916954674] [exploration_manager]: Using 30 forward-preferred frontier candidate(s)
+[INFO] [1791942835.917466864] [exploration_manager]: Selected frontier x=5.27, y=7.85, distance=4.90 m, turn=15.5 deg, information=618, score=-0.113
+[INFO] [1791942835.923644297] [exploration_manager]: Navigation goal accepted
+[WARN] [1791942843.839426084] [exploration_manager]: Robot appears stuck: translation=0.00 m, rotation=0.1 deg, time=4.0 s
+[WARN] [1791942843.839690423] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791942843.842246938] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791942843.862378103] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791942843.862675912] [exploration_manager]: Failed frontier recorded: x=5.27, y=7.85
+[INFO] [1791942844.918766664] [exploration_manager]: Using 50 forward-preferred frontier candidate(s)
+[INFO] [1791942844.919121953] [exploration_manager]: Selected frontier x=5.72, y=2.15, distance=2.09 m, turn=6.8 deg, information=580, score=0.022
+[INFO] [1791942844.923033467] [exploration_manager]: Navigation goal accepted
+[WARN] [1791942856.839618281] [exploration_manager]: Robot appears stuck: translation=0.00 m, rotation=0.0 deg, time=5.0 s
+[WARN] [1791942856.839965338] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791942856.843570112] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791942856.869579876] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791942856.869884198] [exploration_manager]: Failed frontier recorded: x=5.72, y=2.15
+[INFO] [1791942857.913957306] [exploration_manager]: Using 21 forward-preferred frontier candidate(s)
+[INFO] [1791942857.914354669] [exploration_manager]: Selected frontier x=7.97, y=-1.40, distance=4.86 m, turn=40.6 deg, information=663, score=-0.157
+[INFO] [1791942857.915842134] [exploration_manager]: Navigation goal accepted
+[WARN] [1791942867.839782616] [exploration_manager]: Robot appears stuck: translation=0.10 m, rotation=1.1 deg, time=5.0 s
+[WARN] [1791942867.840041030] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791942867.843182561] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791942867.867727792] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791942867.868163873] [exploration_manager]: Failed frontier recorded: x=7.97, y=-1.40
+[INFO] [1791942868.908754690] [exploration_manager]: Using 19 forward-preferred frontier candidate(s)
+[INFO] [1791942868.909107705] [exploration_manager]: Selected frontier x=6.02, y=-0.35, distance=4.14 m, turn=74.7 deg, information=582, score=-0.207
+[INFO] [1791942868.913566866] [exploration_manager]: Navigation goal accepted
+[WARN] [1791942877.839374774] [exploration_manager]: Robot appears stuck: translation=0.00 m, rotation=0.0 deg, time=4.0 s
+[WARN] [1791942877.839707757] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791942877.842118408] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791942877.863864849] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791942877.864152497] [exploration_manager]: Failed frontier recorded: x=6.02, y=-0.35
+[INFO] [1791942878.910825845] [exploration_manager]: Using 3 forward-preferred frontier candidate(s)
+[INFO] [1791942878.911255292] [exploration_manager]: Selected frontier x=8.92, y=8.15, distance=4.85 m, turn=6.6 deg, information=544, score=-0.018
+[INFO] [1791942878.914891423] [exploration_manager]: Navigation goal accepted
+[WARN] [1791942884.722956918] [exploration_manager]: Robot appears stuck: translation=0.00 m, rotation=4.4 deg, time=4.9 s
+[WARN] [1791942884.723380711] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791942884.726556979] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791942884.754446059] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791942884.754695825] [exploration_manager]: Failed frontier recorded: x=8.92, y=8.15
+[INFO] [1791942884.912268939] [exploration_manager]: Using 2 forward-preferred frontier candidate(s)
+[INFO] [1791942884.912640826] [exploration_manager]: Selected frontier x=4.82, y=8.15, distance=5.09 m, turn=36.3 deg, information=656, score=-0.001
+[INFO] [1791942884.916345975] [exploration_manager]: Navigation goal accepted
+[WARN] [1791942894.839422417] [exploration_manager]: Robot appears stuck: translation=0.00 m, rotation=0.0 deg, time=5.0 s
+[WARN] [1791942894.839729681] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791942894.844027155] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791942894.868934599] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791942894.869640501] [exploration_manager]: Failed frontier recorded: x=4.82, y=8.15
+[INFO] [1791942895.912711773] [exploration_manager]: Using 37 forward-preferred frontier candidate(s)
+[INFO] [1791942895.913120092] [exploration_manager]: Selected frontier x=5.27, y=1.90, distance=2.56 m, turn=48.0 deg, information=672, score=-0.079
+[INFO] [1791942895.916552165] [exploration_manager]: Navigation goal accepted
+[WARN] [1791942913.839332517] [exploration_manager]: Robot appears stuck: translation=0.00 m, rotation=0.0 deg, time=5.0 s
+[WARN] [1791942913.839607336] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791942913.842108762] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791942913.867137489] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791942913.867376622] [exploration_manager]: Failed frontier recorded: x=5.27, y=1.90
+[INFO] [1791942914.915472728] [exploration_manager]: Using 6 forward-preferred frontier candidate(s)
+[INFO] [1791942914.915821140] [exploration_manager]: Selected frontier x=9.42, y=8.40, distance=5.52 m, turn=62.0 deg, information=573, score=-0.198
+[INFO] [1791942914.920093857] [exploration_manager]: Navigation goal accepted
+[WARN] [1791942919.882846467] [exploration_manager]: Robot appears stuck: translation=0.07 m, rotation=0.0 deg, time=4.0 s
+[WARN] [1791942919.883617542] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791942919.888054014] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791942919.914764510] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791942919.915422839] [exploration_manager]: Failed frontier recorded: x=9.42, y=8.40
+[INFO] [1791942920.908198855] [exploration_manager]: Using 5 forward-preferred frontier candidate(s)
+[INFO] [1791942920.909123360] [exploration_manager]: Selected frontier x=7.87, y=-2.00, distance=5.36 m, turn=87.3 deg, information=734, score=-0.237
+[INFO] [1791942920.912267857] [exploration_manager]: Navigation goal accepted
+[WARN] [1791942928.839306940] [exploration_manager]: Robot appears stuck: translation=0.00 m, rotation=3.8 deg, time=4.0 s
+[WARN] [1791942928.839543002] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791942928.841376453] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791942928.863006205] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791942928.863296166] [exploration_manager]: Failed frontier recorded: x=7.87, y=-2.00
+[INFO] [1791942929.897890272] [exploration_manager]: No forward-preferred frontier available; allowing larger turns
+[INFO] [1791942929.898215808] [exploration_manager]: Selected frontier x=4.72, y=1.45, distance=3.07 m, turn=119.1 deg, information=616, score=-0.286
+[INFO] [1791942929.901016739] [exploration_manager]: Navigation goal accepted
+[WARN] [1791942938.839423323] [exploration_manager]: Robot appears stuck: translation=0.00 m, rotation=5.5 deg, time=5.0 s
+[WARN] [1791942938.839661163] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791942938.842811365] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791942938.870488880] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791942938.870718367] [exploration_manager]: Failed frontier recorded: x=4.72, y=1.45
+[INFO] [1791942939.911639241] [exploration_manager]: Using 44 forward-preferred frontier candidate(s)
+[INFO] [1791942939.911965134] [exploration_manager]: Selected frontier x=4.22, y=1.25, distance=3.59 m, turn=23.3 deg, information=814, score=-0.000
+[INFO] [1791942939.915812865] [exploration_manager]: Navigation goal accepted
+[WARN] [1791942948.839360367] [exploration_manager]: Robot appears stuck: translation=0.00 m, rotation=5.4 deg, time=5.0 s
+[WARN] [1791942948.839609582] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791942948.841595050] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791942948.866214645] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791942948.866526725] [exploration_manager]: Failed frontier recorded: x=4.22, y=1.25
+[INFO] [1791942949.901269048] [exploration_manager]: Using 42 forward-preferred frontier candidate(s)
+[INFO] [1791942949.901703675] [exploration_manager]: Selected frontier x=8.02, y=-2.50, distance=5.88 m, turn=6.5 deg, information=707, score=-0.079
+[INFO] [1791942949.906691211] [exploration_manager]: Navigation goal accepted
+[WARN] [1791942955.328318016] [exploration_manager]: Robot appears stuck: translation=0.00 m, rotation=6.4 deg, time=4.5 s
+[WARN] [1791942955.328560654] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791942955.330661438] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791942955.340764008] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791942955.341133957] [exploration_manager]: Failed frontier recorded: x=8.02, y=-2.50
+[INFO] [1791942955.908090382] [exploration_manager]: Using 34 forward-preferred frontier candidate(s)
+[INFO] [1791942955.908445902] [exploration_manager]: Selected frontier x=7.32, y=-2.80, distance=6.12 m, turn=26.5 deg, information=817, score=-0.138
+[INFO] [1791942955.911798280] [exploration_manager]: Navigation goal accepted
+[WARN] [1791942963.839656419] [exploration_manager]: Robot appears stuck: translation=0.00 m, rotation=2.7 deg, time=4.0 s
+[WARN] [1791942963.839967517] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791942963.843291952] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791942963.871880029] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791942963.872223160] [exploration_manager]: Failed frontier recorded: x=7.32, y=-2.80
+[INFO] [1791942964.892242073] [exploration_manager]: No forward-preferred frontier available; allowing larger turns
+[INFO] [1791942964.892622537] [exploration_manager]: Selected frontier x=4.82, y=-0.90, distance=4.82 m, turn=150.3 deg, information=695, score=-0.413
+[INFO] [1791942964.896734850] [exploration_manager]: Navigation goal accepted
+[WARN] [1791942972.839467786] [exploration_manager]: Robot appears stuck: translation=0.00 m, rotation=2.7 deg, time=4.0 s
+[WARN] [1791942972.839852700] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791942972.842736174] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791942972.865170966] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791942972.865426456] [exploration_manager]: Failed frontier recorded: x=4.82, y=-0.90
+[INFO] [1791942973.892149120] [exploration_manager]: Using 15 forward-preferred frontier candidate(s)
+[INFO] [1791942973.892507267] [exploration_manager]: Selected frontier x=3.02, y=1.05, distance=4.72 m, turn=84.1 deg, information=860, score=-0.134
+[INFO] [1791942973.896078267] [exploration_manager]: Navigation goal accepted
+[WARN] [1791942982.839310195] [exploration_manager]: Robot appears stuck: translation=0.00 m, rotation=2.7 deg, time=5.0 s
+[WARN] [1791942982.839564317] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791942982.841520838] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791942982.864679374] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791942982.864941020] [exploration_manager]: Failed frontier recorded: x=3.02, y=1.05
+[INFO] [1791942983.899826346] [exploration_manager]: Using 39 forward-preferred frontier candidate(s)
+[INFO] [1791942983.900174779] [exploration_manager]: Selected frontier x=4.02, y=0.75, distance=4.06 m, turn=1.3 deg, information=552, score=0.035
+[INFO] [1791942983.903639510] [exploration_manager]: Navigation goal accepted
+[WARN] [1791942994.839269732] [exploration_manager]: Robot appears stuck: translation=0.00 m, rotation=3.8 deg, time=4.1 s
+[WARN] [1791942994.839540293] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791942994.842003018] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791942994.870974933] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791942994.871246879] [exploration_manager]: Failed frontier recorded: x=4.02, y=0.75
+[INFO] [1791942995.899163792] [exploration_manager]: Using 18 forward-preferred frontier candidate(s)
+[INFO] [1791942995.899550687] [exploration_manager]: Selected frontier x=4.42, y=-1.30, distance=5.37 m, turn=72.0 deg, information=699, score=-0.147
+[INFO] [1791942995.903186986] [exploration_manager]: Navigation goal accepted
+[WARN] [1791943004.839408726] [exploration_manager]: Robot appears stuck: translation=0.00 m, rotation=1.6 deg, time=5.0 s
+[WARN] [1791943004.839663111] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791943004.843185018] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791943004.862271322] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791943004.862559698] [exploration_manager]: Failed frontier recorded: x=4.42, y=-1.30
+[INFO] [1791943005.892357742] [exploration_manager]: No forward-preferred frontier available; allowing larger turns
+[INFO] [1791943005.892716588] [exploration_manager]: Selected frontier x=8.27, y=-3.45, distance=6.85 m, turn=125.3 deg, information=871, score=-0.401
+[INFO] [1791943005.895891569] [exploration_manager]: Navigation goal accepted
+[WARN] [1791943013.839769247] [exploration_manager]: Robot appears stuck: translation=0.00 m, rotation=1.6 deg, time=4.0 s
+[WARN] [1791943013.840364100] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791943013.844718638] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791943013.865554086] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791943013.866037494] [exploration_manager]: Failed frontier recorded: x=8.27, y=-3.45
+[INFO] [1791943014.888395814] [exploration_manager]: Using 23 forward-preferred frontier candidate(s)
+[INFO] [1791943014.888892545] [exploration_manager]: Selected frontier x=2.52, y=0.80, distance=5.28 m, turn=70.5 deg, information=686, score=-0.123
+[INFO] [1791943014.892398278] [exploration_manager]: Navigation goal accepted
+[WARN] [1791943026.153453798] [exploration_manager]: Robot appears stuck: translation=0.00 m, rotation=1.6 deg, time=7.3 s
+[WARN] [1791943026.153980569] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791943026.157978386] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791943026.164632261] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791943026.164879022] [exploration_manager]: Failed frontier recorded: x=2.52, y=0.80
+[INFO] [1791943026.885903857] [exploration_manager]: Using 35 forward-preferred frontier candidate(s)
+[INFO] [1791943026.886336230] [exploration_manager]: Selected frontier x=4.02, y=-1.60, distance=5.83 m, turn=6.1 deg, information=636, score=0.024
+[INFO] [1791943026.890410722] [exploration_manager]: Navigation goal accepted
+[WARN] [1791943034.839258706] [exploration_manager]: Robot appears stuck: translation=0.00 m, rotation=0.2 deg, time=4.0 s
+[WARN] [1791943034.839493745] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791943034.841506015] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791943034.870554504] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791943034.870801707] [exploration_manager]: Failed frontier recorded: x=4.02, y=-1.60
+[INFO] [1791943035.882890013] [exploration_manager]: Using 12 forward-preferred frontier candidate(s)
+[INFO] [1791943035.883768809] [exploration_manager]: Selected frontier x=7.67, y=-3.35, distance=6.68 m, turn=50.2 deg, information=684, score=-0.159
+[INFO] [1791943035.887605743] [exploration_manager]: Navigation goal accepted
+[WARN] [1791943043.839362030] [exploration_manager]: Robot appears stuck: translation=0.00 m, rotation=0.2 deg, time=4.0 s
+[WARN] [1791943043.839680407] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791943043.843088880] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791943043.866585752] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791943043.866806838] [exploration_manager]: Failed frontier recorded: x=7.67, y=-3.35
+[INFO] [1791943044.887009421] [exploration_manager]: No forward-preferred frontier available; allowing larger turns
+[INFO] [1791943044.887349710] [exploration_manager]: Selected frontier x=1.92, y=0.45, distance=5.97 m, turn=151.0 deg, information=623, score=-0.392
+[INFO] [1791943044.890560397] [exploration_manager]: Navigation goal accepted
+[WARN] [1791943052.839911736] [exploration_manager]: Robot appears stuck: translation=0.00 m, rotation=0.2 deg, time=4.0 s
+[WARN] [1791943052.840243266] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791943052.842116974] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791943052.871355852] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791943052.871606705] [exploration_manager]: Failed frontier recorded: x=1.92, y=0.45
+[INFO] [1791943053.878390962] [exploration_manager]: Using 26 forward-preferred frontier candidate(s)
+[INFO] [1791943053.878704939] [exploration_manager]: Selected frontier x=2.67, y=-0.30, distance=5.76 m, turn=67.8 deg, information=193, score=-0.186
+[INFO] [1791943053.881251160] [exploration_manager]: Navigation goal accepted
+[WARN] [1791943062.839562700] [exploration_manager]: Robot appears stuck: translation=0.00 m, rotation=0.2 deg, time=5.0 s
+[WARN] [1791943062.840237626] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791943062.845720263] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791943062.870364848] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791943062.870625454] [exploration_manager]: Failed frontier recorded: x=2.67, y=-0.30
+[INFO] [1791943063.878316910] [exploration_manager]: Using 31 forward-preferred frontier candidate(s)
+[INFO] [1791943063.878693526] [exploration_manager]: Selected frontier x=3.62, y=-2.00, distance=6.39 m, turn=8.0 deg, information=586, score=0.011
+[INFO] [1791943063.880620405] [exploration_manager]: Navigation goal accepted
+[WARN] [1791943072.839508027] [exploration_manager]: Robot appears stuck: translation=0.00 m, rotation=0.1 deg, time=4.0 s
+[WARN] [1791943072.839823846] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791943072.842723694] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791943072.875267645] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791943072.875526555] [exploration_manager]: Failed frontier recorded: x=3.62, y=-2.00
+[INFO] [1791943073.901791363] [exploration_manager]: Using 6 forward-preferred frontier candidate(s)
+[INFO] [1791943073.902315239] [exploration_manager]: Selected frontier x=6.92, y=-3.40, distance=6.72 m, turn=69.7 deg, information=806, score=-0.194
+[INFO] [1791943073.903760011] [exploration_manager]: Navigation goal accepted
+[WARN] [1791943083.840490043] [exploration_manager]: Robot appears stuck: translation=0.00 m, rotation=0.1 deg, time=5.0 s
+[WARN] [1791943083.840913475] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791943083.844282298] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791943083.846943077] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791943083.847326256] [exploration_manager]: Failed frontier recorded: x=6.92, y=-3.40
+[INFO] [1791943084.876027371] [exploration_manager]: No forward-preferred frontier available; allowing larger turns
+[INFO] [1791943084.876410617] [exploration_manager]: Selected frontier x=1.07, y=0.20, distance=6.84 m, turn=136.1 deg, information=666, score=-0.382
+[INFO] [1791943084.880207253] [exploration_manager]: Navigation goal accepted
+[WARN] [1791943093.839914852] [exploration_manager]: Robot appears stuck: translation=0.00 m, rotation=0.1 deg, time=4.0 s
+[WARN] [1791943093.840930237] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791943093.846011242] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791943093.868996821] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791943093.869234695] [exploration_manager]: Failed frontier recorded: x=1.07, y=0.20
+[INFO] [1791943096.886892109] [exploration_manager]: Using 23 forward-preferred frontier candidate(s)
+[INFO] [1791943096.887245040] [exploration_manager]: Selected frontier x=2.12, y=-0.45, distance=6.29 m, turn=52.4 deg, information=315, score=-0.130
+[INFO] [1791943096.888735282] [exploration_manager]: Navigation goal accepted
+[WARN] [1791943106.839468250] [exploration_manager]: Robot appears stuck: translation=0.00 m, rotation=0.0 deg, time=5.0 s
+[WARN] [1791943106.839799017] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791943106.842468474] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791943106.869901754] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791943106.870173771] [exploration_manager]: Failed frontier recorded: x=2.12, y=-0.45
+[INFO] [1791943107.875358063] [exploration_manager]: Using 27 forward-preferred frontier candidate(s)
+[INFO] [1791943107.875748636] [exploration_manager]: Selected frontier x=6.32, y=-4.20, distance=7.56 m, turn=6.2 deg, information=975, score=-0.057
+[INFO] [1791943107.878217374] [exploration_manager]: Navigation goal accepted
+[WARN] [1791943116.839821745] [exploration_manager]: Robot appears stuck: translation=0.10 m, rotation=0.0 deg, time=4.0 s
+[WARN] [1791943116.840380691] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791943116.844262044] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791943116.870490911] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791943116.870808153] [exploration_manager]: Failed frontier recorded: x=6.32, y=-4.20
+[INFO] [1791943117.873721873] [exploration_manager]: Using 26 forward-preferred frontier candidate(s)
+[INFO] [1791943117.874066661] [exploration_manager]: Selected frontier x=7.27, y=-4.00, distance=7.61 m, turn=12.9 deg, information=822, score=-0.070
+[INFO] [1791943117.877876394] [exploration_manager]: Navigation goal accepted
+[WARN] [1791943125.839457676] [exploration_manager]: Robot appears stuck: translation=0.00 m, rotation=0.0 deg, time=5.0 s
+[WARN] [1791943125.839783335] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791943125.841914529] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791943125.867878727] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791943125.868121543] [exploration_manager]: Failed frontier recorded: x=7.27, y=-4.00
+[INFO] [1791943126.872412106] [exploration_manager]: Using 3 forward-preferred frontier candidate(s)
+[INFO] [1791943126.872779936] [exploration_manager]: Selected frontier x=8.37, y=-3.95, distance=7.65 m, turn=72.3 deg, information=1085, score=-0.142
+[INFO] [1791943126.875316250] [exploration_manager]: Navigation goal accepted
+[WARN] [1791943132.186120194] [exploration_manager]: Robot appears stuck: translation=0.07 m, rotation=0.0 deg, time=4.3 s
+[WARN] [1791943132.186356468] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791943132.189370411] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791943132.198803743] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791943132.199087052] [exploration_manager]: Failed frontier recorded: x=8.37, y=-3.95
+[INFO] [1791943132.871701136] [exploration_manager]: Using 2 forward-preferred frontier candidate(s)
+[INFO] [1791943132.872092936] [exploration_manager]: Selected frontier x=8.42, y=-4.45, distance=8.18 m, turn=71.8 deg, information=1167, score=-0.100
+[INFO] [1791943132.875408770] [exploration_manager]: Navigation goal accepted
+[WARN] [1791943141.840171893] [exploration_manager]: Robot appears stuck: translation=0.00 m, rotation=0.0 deg, time=4.0 s
+[WARN] [1791943141.840706497] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791943141.846942467] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791943141.866035413] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791943141.866459021] [exploration_manager]: Failed frontier recorded: x=8.42, y=-4.45
+[INFO] [1791943142.867562548] [exploration_manager]: No forward-preferred frontier available; allowing larger turns
+[INFO] [1791943142.868054969] [exploration_manager]: Selected frontier x=1.82, y=-0.90, distance=6.99 m, turn=136.2 deg, information=412, score=-0.395
+[INFO] [1791943142.871474463] [exploration_manager]: Navigation goal accepted
+[WARN] [1791943151.839293976] [exploration_manager]: Robot appears stuck: translation=0.00 m, rotation=0.0 deg, time=4.0 s
+[WARN] [1791943151.839513974] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791943151.841575603] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791943151.871720984] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791943151.871954631] [exploration_manager]: Failed frontier recorded: x=1.82, y=-0.90
+[INFO] [1791943152.865047132] [exploration_manager]: Using 22 forward-preferred frontier candidate(s)
+[INFO] [1791943152.865390239] [exploration_manager]: Selected frontier x=2.27, y=-1.15, distance=6.82 m, turn=46.8 deg, information=364, score=-0.135
+[INFO] [1791943152.868473125] [exploration_manager]: Navigation goal accepted
+[WARN] [1791943161.839530905] [exploration_manager]: Robot appears stuck: translation=0.00 m, rotation=0.0 deg, time=4.0 s
+[WARN] [1791943161.839969680] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791943161.842593197] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791943161.868357450] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791943161.868882008] [exploration_manager]: Failed frontier recorded: x=2.27, y=-1.15
+[INFO] [1791943162.867969350] [exploration_manager]: Using 21 forward-preferred frontier candidate(s)
+[INFO] [1791943162.868334685] [exploration_manager]: Selected frontier x=6.77, y=-4.55, distance=8.18 m, turn=3.5 deg, information=970, score=-0.085
+[INFO] [1791943162.871130646] [exploration_manager]: Navigation goal accepted
+[WARN] [1791943174.839329113] [exploration_manager]: Robot appears stuck: translation=0.00 m, rotation=9.3 deg, time=5.0 s
+[WARN] [1791943174.839601115] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791943174.841623304] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791943174.862693152] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791943174.862951198] [exploration_manager]: Failed frontier recorded: x=6.77, y=-4.55
+[INFO] [1791943175.864412315] [exploration_manager]: No forward-preferred frontier available; allowing larger turns
+[INFO] [1791943175.864783851] [exploration_manager]: Selected frontier x=2.87, y=-1.35, distance=6.56 m, turn=134.9 deg, information=168, score=-0.375
+[INFO] [1791943175.867935861] [exploration_manager]: Navigation goal accepted
+[WARN] [1791943184.839198021] [exploration_manager]: Robot appears stuck: translation=0.00 m, rotation=9.3 deg, time=5.0 s
+[WARN] [1791943184.839421085] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791943184.843051627] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791943184.866776089] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791943184.867061801] [exploration_manager]: Failed frontier recorded: x=2.87, y=-1.35
+[INFO] [1791943185.861286214] [exploration_manager]: No forward-preferred frontier available; allowing larger turns
+[INFO] [1791943185.861709304] [exploration_manager]: Selected frontier x=1.42, y=-0.60, distance=7.11 m, turn=118.8 deg, information=413, score=-0.305
+[INFO] [1791943185.863083982] [exploration_manager]: Navigation goal accepted
+[WARN] [1791943193.839322941] [exploration_manager]: Robot appears stuck: translation=0.00 m, rotation=7.4 deg, time=4.0 s
+[WARN] [1791943193.839559120] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791943193.841716882] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791943193.866633838] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791943193.866906015] [exploration_manager]: Failed frontier recorded: x=1.42, y=-0.60
+[INFO] [1791943194.862996348] [exploration_manager]: Using 18 forward-preferred frontier candidate(s)
+[INFO] [1791943194.863632841] [exploration_manager]: Selected frontier x=0.57, y=-0.05, distance=7.53 m, turn=18.2 deg, information=489, score=-0.026
+[INFO] [1791943194.867167706] [exploration_manager]: Navigation goal accepted
+[WARN] [1791943203.839428713] [exploration_manager]: Robot appears stuck: translation=0.00 m, rotation=9.3 deg, time=5.0 s
+[WARN] [1791943203.839725952] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791943203.842632582] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791943203.864273051] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791943203.864574774] [exploration_manager]: Failed frontier recorded: x=0.57, y=-0.05
+[INFO] [1791943204.866469042] [exploration_manager]: Using 17 forward-preferred frontier candidate(s)
+[INFO] [1791943204.866978620] [exploration_manager]: Selected frontier x=3.27, y=-2.95, distance=7.63 m, turn=44.9 deg, information=697, score=-0.089
+[INFO] [1791943204.870088751] [exploration_manager]: Navigation goal accepted
+[WARN] [1791943213.839169630] [exploration_manager]: Robot appears stuck: translation=0.00 m, rotation=0.9 deg, time=5.0 s
+[WARN] [1791943213.839395523] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791943213.842308096] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791943213.869181865] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791943213.869454546] [exploration_manager]: Failed frontier recorded: x=3.27, y=-2.95
+[INFO] [1791943214.873262487] [exploration_manager]: No forward-preferred frontier available; allowing larger turns
+[INFO] [1791943214.873732288] [exploration_manager]: Selected frontier x=3.32, y=-3.50, distance=8.09 m, turn=136.4 deg, information=917, score=-0.378
+[INFO] [1791943214.877241761] [exploration_manager]: Navigation goal accepted
+[WARN] [1791943222.839372646] [exploration_manager]: Robot appears stuck: translation=0.00 m, rotation=0.2 deg, time=4.0 s
+[WARN] [1791943222.839674851] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791943222.842024650] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791943222.866447436] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791943222.866742301] [exploration_manager]: Failed frontier recorded: x=3.32, y=-3.50
+[INFO] [1791943223.861734456] [exploration_manager]: Using 3 forward-preferred frontier candidate(s)
+[INFO] [1791943223.862133287] [exploration_manager]: Selected frontier x=-0.48, y=0.75, distance=8.15 m, turn=89.2 deg, information=612, score=-0.248
+[INFO] [1791943223.865145140] [exploration_manager]: Navigation goal accepted
+[WARN] [1791943232.839224248] [exploration_manager]: Robot appears stuck: translation=0.00 m, rotation=0.3 deg, time=5.0 s
+[WARN] [1791943232.839540791] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791943232.841808744] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791943232.864452604] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791943232.864813174] [exploration_manager]: Failed frontier recorded: x=-0.48, y=0.75
+[INFO] [1791943233.859638368] [exploration_manager]: Using 14 forward-preferred frontier candidate(s)
+[INFO] [1791943233.859993662] [exploration_manager]: Selected frontier x=-0.03, y=0.30, distance=7.91 m, turn=0.1 deg, information=573, score=-0.015
+[INFO] [1791943233.861351743] [exploration_manager]: Navigation goal accepted
+[WARN] [1791943244.839376111] [exploration_manager]: Robot appears stuck: translation=0.00 m, rotation=0.0 deg, time=4.0 s
+[WARN] [1791943244.839623241] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791943244.842573431] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791943244.862941330] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791943244.863356289] [exploration_manager]: Failed frontier recorded: x=-0.03, y=0.30
+[INFO] [1791943245.857543322] [exploration_manager]: Using 9 forward-preferred frontier candidate(s)
+[INFO] [1791943245.857858067] [exploration_manager]: Selected frontier x=1.62, y=-1.40, distance=7.47 m, turn=75.7 deg, information=336, score=-0.194
+[INFO] [1791943245.859324095] [exploration_manager]: Navigation goal accepted
+[WARN] [1791943255.839455972] [exploration_manager]: Robot appears stuck: translation=0.00 m, rotation=0.0 deg, time=5.0 s
+[WARN] [1791943255.839834670] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791943255.843065725] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791943255.872589059] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791943255.872965513] [exploration_manager]: Failed frontier recorded: x=1.62, y=-1.40
+[INFO] [1791943256.856891676] [exploration_manager]: No forward-preferred frontier available; allowing larger turns
+[INFO] [1791943256.857287650] [exploration_manager]: Selected frontier x=0.92, y=-0.60, distance=7.52 m, turn=177.0 deg, information=237, score=-0.487
+[INFO] [1791943256.858371361] [exploration_manager]: Navigation goal accepted
+[WARN] [1791943273.839926937] [exploration_manager]: Robot appears stuck: translation=0.00 m, rotation=0.0 deg, time=4.0 s
+[WARN] [1791943273.840719651] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791943273.846172107] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791943273.867502926] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791943273.868270140] [exploration_manager]: Failed frontier recorded: x=0.92, y=-0.60
+[INFO] [1791943274.857650702] [exploration_manager]: No forward-preferred frontier available; allowing larger turns
+[INFO] [1791943274.858059393] [exploration_manager]: Selected frontier x=5.97, y=2.40, distance=1.68 m, turn=171.4 deg, information=530, score=-0.439
+[INFO] [1791943274.862202765] [exploration_manager]: Navigation goal accepted
+[WARN] [1791943284.839343289] [exploration_manager]: Robot appears stuck: translation=0.00 m, rotation=0.0 deg, time=5.0 s
+[WARN] [1791943284.839596553] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791943284.842082804] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791943284.872420068] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791943284.872785432] [exploration_manager]: Failed frontier recorded: x=5.97, y=2.40
+[INFO] [1791943285.860831024] [exploration_manager]: Using 9 forward-preferred frontier candidate(s)
+[INFO] [1791943285.861228335] [exploration_manager]: Selected frontier x=-0.83, y=1.15, distance=8.45 m, turn=56.3 deg, information=756, score=-0.173
+[INFO] [1791943285.864737681] [exploration_manager]: Navigation goal accepted
+[WARN] [1791943303.840337018] [exploration_manager]: Robot appears stuck: translation=0.00 m, rotation=0.0 deg, time=4.0 s
+[WARN] [1791943303.841391064] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791943303.846566650] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791943303.864063076] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791943303.864496406] [exploration_manager]: Failed frontier recorded: x=-0.83, y=1.15
+[INFO] [1791943304.854332898] [exploration_manager]: No forward-preferred frontier available; allowing larger turns
+[INFO] [1791943304.854716078] [exploration_manager]: Selected frontier x=1.67, y=-1.90, distance=7.30 m, turn=148.6 deg, information=192, score=-0.413
+[INFO] [1791943304.855827390] [exploration_manager]: Navigation goal accepted
+[WARN] [1791943316.839457884] [exploration_manager]: Robot appears stuck: translation=0.00 m, rotation=17.1 deg, time=5.0 s
+[WARN] [1791943316.839755607] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791943316.842375489] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791943316.867209081] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791943316.867554437] [exploration_manager]: Failed frontier recorded: x=1.67, y=-1.90
+[INFO] [1791943317.851144665] [exploration_manager]: Using 1 forward-preferred frontier candidate(s)
+[INFO] [1791943317.851549811] [exploration_manager]: Selected frontier x=-1.28, y=1.45, distance=8.60 m, turn=86.8 deg, information=826, score=-0.141
+[INFO] [1791943317.852590466] [exploration_manager]: Navigation goal accepted
+[WARN] [1791943326.839264362] [exploration_manager]: Robot appears stuck: translation=0.00 m, rotation=16.8 deg, time=5.0 s
+[WARN] [1791943326.839503431] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791943326.841673618] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791943326.863685784] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791943326.863947313] [exploration_manager]: Failed frontier recorded: x=-1.28, y=1.45
+[INFO] [1791943327.849481176] [exploration_manager]: Using 8 forward-preferred frontier candidate(s)
+[INFO] [1791943327.849791058] [exploration_manager]: Selected frontier x=2.52, y=-4.10, distance=8.39 m, turn=40.3 deg, information=821, score=-0.064
+[INFO] [1791943327.853613809] [exploration_manager]: Navigation goal accepted
+[WARN] [1791943335.839621207] [exploration_manager]: Robot appears stuck: translation=0.00 m, rotation=18.9 deg, time=4.0 s
+[WARN] [1791943335.840202097] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791943335.844979818] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791943335.863028836] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791943335.863269763] [exploration_manager]: Failed frontier recorded: x=2.52, y=-4.10
+[INFO] [1791943336.848044126] [exploration_manager]: Using 6 forward-preferred frontier candidate(s)
+[INFO] [1791943336.848414949] [exploration_manager]: Selected frontier x=2.17, y=-4.95, distance=9.30 m, turn=51.7 deg, information=1092, score=-0.218
+[INFO] [1791943336.849392445] [exploration_manager]: Navigation goal accepted
+[WARN] [1791943344.839311397] [exploration_manager]: Robot appears stuck: translation=0.00 m, rotation=17.0 deg, time=4.0 s
+[WARN] [1791943344.839587882] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791943344.841721340] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791943344.869240597] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791943344.869577837] [exploration_manager]: Failed frontier recorded: x=2.17, y=-4.95
+[INFO] [1791943345.846141967] [exploration_manager]: No forward-preferred frontier available; allowing larger turns
+[INFO] [1791943345.846481756] [exploration_manager]: Selected frontier x=-0.43, y=-1.15, distance=8.63 m, turn=174.3 deg, information=594, score=-0.477
+[INFO] [1791943345.847576651] [exploration_manager]: Navigation goal accepted
+[WARN] [1791943354.839221294] [exploration_manager]: Robot appears stuck: translation=0.00 m, rotation=1.4 deg, time=5.0 s
+[WARN] [1791943354.839442411] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791943354.841379761] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791943354.870395476] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791943354.870638158] [exploration_manager]: Failed frontier recorded: x=-0.43, y=-1.15
+[INFO] [1791943355.848323131] [exploration_manager]: Using 2 forward-preferred frontier candidate(s)
+[INFO] [1791943355.848832270] [exploration_manager]: Selected frontier x=-1.08, y=-0.10, distance=8.80 m, turn=84.5 deg, information=682, score=-0.135
+[INFO] [1791943355.850456285] [exploration_manager]: Navigation goal accepted
+[WARN] [1791943363.839341956] [exploration_manager]: Robot appears stuck: translation=0.00 m, rotation=1.4 deg, time=4.0 s
+[WARN] [1791943363.839572849] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791943363.841988099] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791943363.862602293] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791943363.862817523] [exploration_manager]: Failed frontier recorded: x=-1.08, y=-0.10
+[INFO] [1791943364.843710915] [exploration_manager]: Using 4 forward-preferred frontier candidate(s)
+[INFO] [1791943364.844028832] [exploration_manager]: Selected frontier x=-0.63, y=-1.80, distance=9.12 m, turn=2.4 deg, information=625, score=0.010
+[INFO] [1791943364.845156567] [exploration_manager]: Navigation goal accepted
+[WARN] [1791943372.839233032] [exploration_manager]: Robot appears stuck: translation=0.00 m, rotation=1.4 deg, time=4.0 s
+[WARN] [1791943372.839467808] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791943372.841283313] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791943372.868194593] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791943372.868521812] [exploration_manager]: Failed frontier recorded: x=-0.63, y=-1.80
+[INFO] [1791943373.843017277] [exploration_manager]: Using 2 forward-preferred frontier candidate(s)
+[INFO] [1791943373.843366353] [exploration_manager]: Selected frontier x=-0.93, y=-2.45, distance=9.72 m, turn=88.3 deg, information=710, score=-0.245
+[INFO] [1791943373.846447186] [exploration_manager]: Navigation goal accepted
+[WARN] [1791943379.025858830] [exploration_manager]: Robot appears stuck: translation=0.00 m, rotation=4.3 deg, time=4.2 s
+[WARN] [1791943379.026106349] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791943379.028350846] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791943379.057102124] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791943379.057354036] [exploration_manager]: Failed frontier recorded: x=-0.93, y=-2.45
+[INFO] [1791943379.841874027] [exploration_manager]: No forward-preferred frontier available; allowing larger turns
+[INFO] [1791943379.842180813] [exploration_manager]: Selected frontier x=-1.68, y=0.05, distance=9.32 m, turn=127.1 deg, information=573, score=-0.353
+[INFO] [1791943379.843211427] [exploration_manager]: Navigation goal accepted
+[WARN] [1791943388.839359292] [exploration_manager]: Robot appears stuck: translation=0.00 m, rotation=0.0 deg, time=4.0 s
+[WARN] [1791943388.839622806] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791943388.842161680] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791943388.866390637] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791943388.866889316] [exploration_manager]: Failed frontier recorded: x=-1.68, y=0.05
+[INFO] [1791943389.840996313] [exploration_manager]: No forward-preferred frontier available; allowing larger turns
+[INFO] [1791943389.841324053] [exploration_manager]: Selected frontier x=-1.13, y=-2.95, distance=10.16 m, turn=156.9 deg, information=879, score=-0.336
+[INFO] [1791943389.842167216] [exploration_manager]: Navigation goal accepted
+[WARN] [1791943399.839282067] [exploration_manager]: Robot appears stuck: translation=0.00 m, rotation=0.0 deg, time=5.0 s
+[WARN] [1791943399.839507112] [exploration_manager]: Cancelling stuck navigation goal
+[INFO] [1791943399.841762456] [exploration_manager]: Cancellation accepted by Nav2. Waiting for cancellation result.
+[WARN] [1791943399.864698805] [exploration_manager]: Navigation cancellation complete. Recording failed frontier.
+[WARN] [1791943399.864964108] [exploration_manager]: Failed frontier recorded: x=-1.13, y=-2.95
+[WARN] [1791943400.840052061] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943401.122285949] [exploration_manager]: Updated frontier data received
+[WARN] [1791943401.840175501] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943406.126325210] [exploration_manager]: Updated frontier data received
+[WARN] [1791943406.839938316] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943411.127028635] [exploration_manager]: Updated frontier data received
+[WARN] [1791943414.340357919] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943418.933239777] [exploration_manager]: Updated frontier data received
+[WARN] [1791943419.839965854] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943421.125312257] [exploration_manager]: Updated frontier data received
+[WARN] [1791943421.840050727] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943426.123666105] [exploration_manager]: Updated frontier data received
+[WARN] [1791943426.839735839] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943431.125179332] [exploration_manager]: Updated frontier data received
+[WARN] [1791943431.839841197] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943436.121857598] [exploration_manager]: Updated frontier data received
+[WARN] [1791943436.839835381] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943441.130052237] [exploration_manager]: Updated frontier data received
+[WARN] [1791943441.839989741] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943446.114629787] [exploration_manager]: Updated frontier data received
+[WARN] [1791943449.881594199] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943454.152516274] [exploration_manager]: Updated frontier data received
+[WARN] [1791943454.839843743] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943456.110311676] [exploration_manager]: Updated frontier data received
+[WARN] [1791943456.839860998] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943461.116658350] [exploration_manager]: Updated frontier data received
+[WARN] [1791943461.839907813] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943466.110477134] [exploration_manager]: Updated frontier data received
+[WARN] [1791943466.839757791] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943471.116558385] [exploration_manager]: Updated frontier data received
+[WARN] [1791943471.839868706] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943476.111372594] [exploration_manager]: Updated frontier data received
+[WARN] [1791943476.839766615] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943481.119330698] [exploration_manager]: Updated frontier data received
+[WARN] [1791943481.839968172] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943489.420233591] [exploration_manager]: Updated frontier data received
+[WARN] [1791943489.839868283] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943491.109745379] [exploration_manager]: Updated frontier data received
+[WARN] [1791943491.839897684] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943496.118499856] [exploration_manager]: Updated frontier data received
+[WARN] [1791943496.839828822] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943501.110419388] [exploration_manager]: Updated frontier data received
+[WARN] [1791943501.839792169] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943506.143744391] [exploration_manager]: Updated frontier data received
+[WARN] [1791943506.839883704] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943511.128215746] [exploration_manager]: Updated frontier data received
+[WARN] [1791943511.839993196] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943516.130493028] [exploration_manager]: Updated frontier data received
+[WARN] [1791943516.839831126] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943523.858329957] [exploration_manager]: Updated frontier data received
+[WARN] [1791943524.839876045] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943526.125361270] [exploration_manager]: Updated frontier data received
+[WARN] [1791943526.839826720] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943531.126595903] [exploration_manager]: Updated frontier data received
+[WARN] [1791943531.839891232] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943536.123350555] [exploration_manager]: Updated frontier data received
+[WARN] [1791943536.839902581] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943541.127986851] [exploration_manager]: Updated frontier data received
+[WARN] [1791943541.839941689] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943546.141765289] [exploration_manager]: Updated frontier data received
+[WARN] [1791943546.839968232] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943551.115870086] [exploration_manager]: Updated frontier data received
+[WARN] [1791943551.840933267] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943558.815781875] [exploration_manager]: Updated frontier data received
+[WARN] [1791943558.839837056] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943561.108981452] [exploration_manager]: Updated frontier data received
+[WARN] [1791943561.839756110] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943566.112121604] [exploration_manager]: Updated frontier data received
+[WARN] [1791943566.839852524] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943571.114040279] [exploration_manager]: Updated frontier data received
+[WARN] [1791943571.839828108] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943576.108512933] [exploration_manager]: Updated frontier data received
+[WARN] [1791943576.841324807] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943581.109134549] [exploration_manager]: Updated frontier data received
+[WARN] [1791943581.839852407] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943586.113193556] [exploration_manager]: Updated frontier data received
+[WARN] [1791943586.839827243] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943593.821125776] [exploration_manager]: Updated frontier data received
+[WARN] [1791943593.839895244] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943596.124436749] [exploration_manager]: Updated frontier data received
+[WARN] [1791943596.839817437] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943601.109223805] [exploration_manager]: Updated frontier data received
+[WARN] [1791943601.840176955] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943606.106642753] [exploration_manager]: Updated frontier data received
+[WARN] [1791943606.840051535] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943611.111713508] [exploration_manager]: Updated frontier data received
+[WARN] [1791943611.839891774] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943616.107145780] [exploration_manager]: Updated frontier data received
+[WARN] [1791943616.840302236] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943621.106618928] [exploration_manager]: Updated frontier data received
+[WARN] [1791943621.839913918] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943629.335736962] [exploration_manager]: Updated frontier data received
+[WARN] [1791943629.839843912] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943631.106113771] [exploration_manager]: Updated frontier data received
+[WARN] [1791943631.839874537] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943636.118774280] [exploration_manager]: Updated frontier data received
+[WARN] [1791943636.839871447] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943641.106763268] [exploration_manager]: Updated frontier data received
+[WARN] [1791943641.840197789] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943646.105105235] [exploration_manager]: Updated frontier data received
+[WARN] [1791943646.839826894] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943651.110393727] [exploration_manager]: Updated frontier data received
+[WARN] [1791943651.839852689] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943656.108539488] [exploration_manager]: Updated frontier data received
+[WARN] [1791943656.841490820] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943664.592441334] [exploration_manager]: Updated frontier data received
+[WARN] [1791943664.839986637] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943666.113605919] [exploration_manager]: Updated frontier data received
+[WARN] [1791943666.839958483] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943671.107547393] [exploration_manager]: Updated frontier data received
+[WARN] [1791943671.839884547] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943676.144358524] [exploration_manager]: Updated frontier data received
+[WARN] [1791943676.840219712] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943681.150369222] [exploration_manager]: Updated frontier data received
+[WARN] [1791943681.840141840] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943686.141208278] [exploration_manager]: Updated frontier data received
+[WARN] [1791943686.841238702] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943691.138637127] [exploration_manager]: Updated frontier data received
+[WARN] [1791943691.840109876] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943699.304681217] [exploration_manager]: Updated frontier data received
+[WARN] [1791943699.840040597] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943701.144621276] [exploration_manager]: Updated frontier data received
+[WARN] [1791943701.840052986] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943706.140893433] [exploration_manager]: Updated frontier data received
+[WARN] [1791943706.839998586] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943711.133945041] [exploration_manager]: Updated frontier data received
+[WARN] [1791943711.839934244] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943716.123777267] [exploration_manager]: Updated frontier data received
+[WARN] [1791943716.840084051] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943721.128055427] [exploration_manager]: Updated frontier data received
+[WARN] [1791943721.839927801] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943726.126972613] [exploration_manager]: Updated frontier data received
+[WARN] [1791943726.839956668] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943731.118647931] [exploration_manager]: Updated frontier data received
+[WARN] [1791943734.581657252] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943739.525846397] [exploration_manager]: Updated frontier data received
+[WARN] [1791943739.839845230] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943741.128616363] [exploration_manager]: Updated frontier data received
+[WARN] [1791943741.840956880] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943746.118186494] [exploration_manager]: Updated frontier data received
+[WARN] [1791943746.839827038] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943751.120587975] [exploration_manager]: Updated frontier data received
+[WARN] [1791943751.839839521] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943756.119555322] [exploration_manager]: Updated frontier data received
+[WARN] [1791943756.839831283] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943761.113252436] [exploration_manager]: Updated frontier data received
+[WARN] [1791943761.840799930] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943766.111250360] [exploration_manager]: Updated frontier data received
+[WARN] [1791943766.839807542] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943774.508813130] [exploration_manager]: Updated frontier data received
+[WARN] [1791943774.839926193] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943776.109666294] [exploration_manager]: Updated frontier data received
+[WARN] [1791943776.840580884] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943781.131347709] [exploration_manager]: Updated frontier data received
+[WARN] [1791943781.840203277] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943786.121829103] [exploration_manager]: Updated frontier data received
+[WARN] [1791943786.839996218] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943791.107278587] [exploration_manager]: Updated frontier data received
+[WARN] [1791943791.839812586] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943796.108174022] [exploration_manager]: Updated frontier data received
+[WARN] [1791943796.839914979] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943801.109360645] [exploration_manager]: Updated frontier data received
+[WARN] [1791943801.840027237] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943809.316552085] [exploration_manager]: Updated frontier data received
+[WARN] [1791943809.839908399] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943811.104709955] [exploration_manager]: Updated frontier data received
+[WARN] [1791943811.839763899] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943816.107989382] [exploration_manager]: Updated frontier data received
+[WARN] [1791943816.839759153] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943821.108269958] [exploration_manager]: Updated frontier data received
+[WARN] [1791943821.840423830] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943826.109726706] [exploration_manager]: Updated frontier data received
+[WARN] [1791943826.839773350] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943831.111354850] [exploration_manager]: Updated frontier data received
+[WARN] [1791943831.839871109] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943836.122199121] [exploration_manager]: Updated frontier data received
+[WARN] [1791943836.840049082] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943844.377271700] [exploration_manager]: Updated frontier data received
+[WARN] [1791943844.840210595] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943846.129052329] [exploration_manager]: Updated frontier data received
+[WARN] [1791943846.839885324] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943851.122481579] [exploration_manager]: Updated frontier data received
+[WARN] [1791943851.839950812] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943856.141799542] [exploration_manager]: Updated frontier data received
+[WARN] [1791943856.839911297] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943861.117628989] [exploration_manager]: Updated frontier data received
+[WARN] [1791943861.839833741] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943866.114453900] [exploration_manager]: Updated frontier data received
+[WARN] [1791943866.839832175] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943871.117446405] [exploration_manager]: Updated frontier data received
+[WARN] [1791943871.839861396] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943879.517195186] [exploration_manager]: Updated frontier data received
+[WARN] [1791943879.839828965] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943881.106803198] [exploration_manager]: Updated frontier data received
+[WARN] [1791943881.840070488] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943886.108680730] [exploration_manager]: Updated frontier data received
+[WARN] [1791943886.839889163] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943891.112636730] [exploration_manager]: Updated frontier data received
+[WARN] [1791943891.839865030] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943896.104780325] [exploration_manager]: Updated frontier data received
+[WARN] [1791943896.840008279] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943901.106328253] [exploration_manager]: Updated frontier data received
+[WARN] [1791943901.839747664] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943906.107564241] [exploration_manager]: Updated frontier data received
+[WARN] [1791943906.839723042] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943914.510613540] [exploration_manager]: Updated frontier data received
+[WARN] [1791943914.839719897] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943916.108425780] [exploration_manager]: Updated frontier data received
+[WARN] [1791943916.839811278] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943921.107708278] [exploration_manager]: Updated frontier data received
+[WARN] [1791943921.839785099] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943926.107409640] [exploration_manager]: Updated frontier data received
+[WARN] [1791943926.839891862] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943931.106812562] [exploration_manager]: Updated frontier data received
+[WARN] [1791943931.839756804] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943936.104545932] [exploration_manager]: Updated frontier data received
+[WARN] [1791943936.839717259] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943941.105159508] [exploration_manager]: Updated frontier data received
+[WARN] [1791943941.839696368] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943946.112371541] [exploration_manager]: Updated frontier data received
+[WARN] [1791943949.717689356] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943954.513327612] [exploration_manager]: Updated frontier data received
+[WARN] [1791943954.839772362] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943956.108644239] [exploration_manager]: Updated frontier data received
+[WARN] [1791943956.839781762] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943961.108313174] [exploration_manager]: Updated frontier data received
+[WARN] [1791943961.839863518] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943966.113585890] [exploration_manager]: Updated frontier data received
+[WARN] [1791943966.839902607] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943971.107533236] [exploration_manager]: Updated frontier data received
+[WARN] [1791943971.839923520] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943976.110650312] [exploration_manager]: Updated frontier data received
+[WARN] [1791943976.839830011] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943981.110791690] [exploration_manager]: Updated frontier data received
+[WARN] [1791943981.839901411] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943989.129195071] [exploration_manager]: Updated frontier data received
+[WARN] [1791943989.839875076] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943991.110431720] [exploration_manager]: Updated frontier data received
+[WARN] [1791943991.839823749] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791943996.111383464] [exploration_manager]: Updated frontier data received
+[WARN] [1791943996.839947694] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944001.107267889] [exploration_manager]: Updated frontier data received
+[WARN] [1791944001.839762877] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944006.144181969] [exploration_manager]: Updated frontier data received
+[WARN] [1791944006.840120578] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944011.167967739] [exploration_manager]: Updated frontier data received
+[WARN] [1791944011.840047702] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944016.144229602] [exploration_manager]: Updated frontier data received
+[WARN] [1791944016.840088210] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944024.102258036] [exploration_manager]: Updated frontier data received
+[WARN] [1791944024.840666844] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944026.148080698] [exploration_manager]: Updated frontier data received
+[WARN] [1791944026.840060202] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944031.141186939] [exploration_manager]: Updated frontier data received
+[WARN] [1791944031.841292906] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944036.147726439] [exploration_manager]: Updated frontier data received
+[WARN] [1791944036.839958487] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944041.142950319] [exploration_manager]: Updated frontier data received
+[WARN] [1791944041.840036526] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944046.132611909] [exploration_manager]: Updated frontier data received
+[WARN] [1791944046.839861703] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944051.130203264] [exploration_manager]: Updated frontier data received
+[WARN] [1791944051.839891065] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944059.034408208] [exploration_manager]: Updated frontier data received
+[WARN] [1791944059.839901112] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944061.127682109] [exploration_manager]: Updated frontier data received
+[WARN] [1791944061.839971976] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944066.129891931] [exploration_manager]: Updated frontier data received
+[WARN] [1791944066.839915518] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944071.137605736] [exploration_manager]: Updated frontier data received
+[WARN] [1791944071.839957057] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944076.140323464] [exploration_manager]: Updated frontier data received
+[WARN] [1791944076.840040032] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944081.128477186] [exploration_manager]: Updated frontier data received
+[WARN] [1791944081.839775882] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944086.128151446] [exploration_manager]: Updated frontier data received
+[WARN] [1791944086.839804579] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944094.142590684] [exploration_manager]: Updated frontier data received
+[WARN] [1791944094.839754729] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944096.119782993] [exploration_manager]: Updated frontier data received
+[WARN] [1791944096.839820932] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944101.117617838] [exploration_manager]: Updated frontier data received
+[WARN] [1791944101.839753674] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944106.122983355] [exploration_manager]: Updated frontier data received
+[WARN] [1791944106.839899855] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944111.118559588] [exploration_manager]: Updated frontier data received
+[WARN] [1791944111.839709002] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944116.124049298] [exploration_manager]: Updated frontier data received
+[WARN] [1791944116.839763049] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944121.109982526] [exploration_manager]: Updated frontier data received
+[WARN] [1791944121.840758932] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944129.102429863] [exploration_manager]: Updated frontier data received
+[WARN] [1791944129.839877039] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944131.109011621] [exploration_manager]: Updated frontier data received
+[WARN] [1791944131.841343033] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944136.113689587] [exploration_manager]: Updated frontier data received
+[WARN] [1791944136.839891727] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944141.111280265] [exploration_manager]: Updated frontier data received
+[WARN] [1791944141.839901332] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944146.108649227] [exploration_manager]: Updated frontier data received
+[WARN] [1791944146.839881683] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944151.106013952] [exploration_manager]: Updated frontier data received
+[WARN] [1791944151.839875556] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944156.109679075] [exploration_manager]: Updated frontier data received
+[WARN] [1791944156.839937489] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944164.122403370] [exploration_manager]: Updated frontier data received
+[WARN] [1791944164.839841821] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944166.107589364] [exploration_manager]: Updated frontier data received
+[WARN] [1791944166.839860730] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944171.114575375] [exploration_manager]: Updated frontier data received
+[WARN] [1791944171.839883605] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944176.108426957] [exploration_manager]: Updated frontier data received
+[WARN] [1791944176.839887054] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944181.112447536] [exploration_manager]: Updated frontier data received
+[WARN] [1791944181.839753030] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944186.108573322] [exploration_manager]: Updated frontier data received
+[WARN] [1791944186.839920384] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944191.109109131] [exploration_manager]: Updated frontier data received
+[WARN] [1791944191.839844223] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944199.122459576] [exploration_manager]: Updated frontier data received
+[WARN] [1791944199.839853137] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944201.115644522] [exploration_manager]: Updated frontier data received
+[WARN] [1791944201.839906577] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944206.118871567] [exploration_manager]: Updated frontier data received
+[WARN] [1791944206.839718565] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944211.112467921] [exploration_manager]: Updated frontier data received
+[WARN] [1791944211.839849996] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944216.141798812] [exploration_manager]: Updated frontier data received
+[WARN] [1791944216.839994845] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944221.110989968] [exploration_manager]: Updated frontier data received
+[WARN] [1791944221.839861136] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944226.108543205] [exploration_manager]: Updated frontier data received
+[WARN] [1791944226.839804635] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944234.141933591] [exploration_manager]: Updated frontier data received
+[WARN] [1791944234.840049468] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944236.108641540] [exploration_manager]: Updated frontier data received
+[WARN] [1791944236.839924017] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944241.111226240] [exploration_manager]: Updated frontier data received
+[WARN] [1791944241.839907533] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944246.123345913] [exploration_manager]: Updated frontier data received
+[WARN] [1791944246.839857466] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944251.108702831] [exploration_manager]: Updated frontier data received
+[WARN] [1791944251.840032164] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944256.130567692] [exploration_manager]: Updated frontier data received
+[WARN] [1791944256.839875504] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944261.122224909] [exploration_manager]: Updated frontier data received
+[WARN] [1791944261.839966630] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944266.121911554] [exploration_manager]: Updated frontier data received
+[WARN] [1791944269.172957526] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944274.145319578] [exploration_manager]: Updated frontier data received
+[WARN] [1791944274.840123782] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944276.118259295] [exploration_manager]: Updated frontier data received
+[WARN] [1791944276.840072943] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944281.109760886] [exploration_manager]: Updated frontier data received
+[WARN] [1791944281.839780653] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944286.114518049] [exploration_manager]: Updated frontier data received
+[WARN] [1791944286.840505607] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944291.118083069] [exploration_manager]: Updated frontier data received
+[WARN] [1791944291.840160485] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944296.108635199] [exploration_manager]: Updated frontier data received
+[WARN] [1791944296.841398252] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944301.107820571] [exploration_manager]: Updated frontier data received
+[WARN] [1791944304.690734644] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944309.164347714] [exploration_manager]: Updated frontier data received
+[WARN] [1791944309.839855406] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944311.112037219] [exploration_manager]: Updated frontier data received
+[WARN] [1791944311.839911349] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944316.108306709] [exploration_manager]: Updated frontier data received
+[WARN] [1791944316.839868066] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944321.125054477] [exploration_manager]: Updated frontier data received
+[WARN] [1791944321.839851577] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944326.110237759] [exploration_manager]: Updated frontier data received
+[WARN] [1791944326.839892218] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944331.111382496] [exploration_manager]: Updated frontier data received
+[WARN] [1791944331.839869414] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944336.109612572] [exploration_manager]: Updated frontier data received
+[WARN] [1791944336.839921323] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944344.172060081] [exploration_manager]: Updated frontier data received
+[WARN] [1791944344.839914725] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944346.111456345] [exploration_manager]: Updated frontier data received
+[WARN] [1791944346.839983374] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944351.111577396] [exploration_manager]: Updated frontier data received
+[WARN] [1791944351.839922179] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944356.113584252] [exploration_manager]: Updated frontier data received
+[WARN] [1791944356.839789379] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944361.109920541] [exploration_manager]: Updated frontier data received
+[WARN] [1791944361.839780693] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944366.130956182] [exploration_manager]: Updated frontier data received
+[WARN] [1791944366.839917738] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944371.108815650] [exploration_manager]: Updated frontier data received
+[WARN] [1791944371.839912280] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944379.329439663] [exploration_manager]: Updated frontier data received
+[WARN] [1791944379.840916433] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944381.122279236] [exploration_manager]: Updated frontier data received
+[WARN] [1791944381.839904597] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944386.106069967] [exploration_manager]: Updated frontier data received
+[WARN] [1791944386.839781591] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944391.102831036] [exploration_manager]: Updated frontier data received
+[WARN] [1791944391.839801504] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944396.116209089] [exploration_manager]: Updated frontier data received
+[WARN] [1791944396.839762924] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944401.131532818] [exploration_manager]: Updated frontier data received
+[WARN] [1791944401.839885421] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944406.138395242] [exploration_manager]: Updated frontier data received
+[WARN] [1791944406.839918443] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944414.543567368] [exploration_manager]: Updated frontier data received
+[WARN] [1791944414.840098177] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944416.129565010] [exploration_manager]: Updated frontier data received
+[WARN] [1791944416.840019118] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944421.128263739] [exploration_manager]: Updated frontier data received
+[WARN] [1791944421.840030195] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944426.129441696] [exploration_manager]: Updated frontier data received
+[WARN] [1791944426.839955813] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944431.128672314] [exploration_manager]: Updated frontier data received
+[WARN] [1791944431.840354345] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944436.123340801] [exploration_manager]: Updated frontier data received
+[WARN] [1791944436.840023545] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944441.121092522] [exploration_manager]: Updated frontier data received
+[WARN] [1791944441.839967730] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944449.569505919] [exploration_manager]: Updated frontier data received
+[WARN] [1791944449.840035513] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944451.121213702] [exploration_manager]: Updated frontier data received
+[WARN] [1791944451.839947959] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944456.135992288] [exploration_manager]: Updated frontier data received
+[WARN] [1791944456.839837395] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944461.120422863] [exploration_manager]: Updated frontier data received
+[WARN] [1791944461.840631149] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944466.120129195] [exploration_manager]: Updated frontier data received
+[WARN] [1791944466.839920830] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944471.119070714] [exploration_manager]: Updated frontier data received
+[WARN] [1791944471.839918154] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944476.106189797] [exploration_manager]: Updated frontier data received
+[WARN] [1791944476.839832602] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944484.545765548] [exploration_manager]: Updated frontier data received
+[WARN] [1791944484.840840594] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944486.115705100] [exploration_manager]: Updated frontier data received
+[WARN] [1791944486.839714596] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944491.125040116] [exploration_manager]: Updated frontier data received
+[WARN] [1791944491.840249481] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944496.111080177] [exploration_manager]: Updated frontier data received
+[WARN] [1791944496.839811858] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944501.106770208] [exploration_manager]: Updated frontier data received
+[WARN] [1791944501.839765703] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944506.108208549] [exploration_manager]: Updated frontier data received
+[WARN] [1791944506.839647878] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944511.108544354] [exploration_manager]: Updated frontier data received
+[WARN] [1791944511.839750851] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944516.108980681] [exploration_manager]: Updated frontier data received
+[WARN] [1791944519.693197828] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944524.532394319] [exploration_manager]: Updated frontier data received
+[WARN] [1791944524.839919932] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944526.110413446] [exploration_manager]: Updated frontier data received
+[WARN] [1791944526.840043166] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944531.111545496] [exploration_manager]: Updated frontier data received
+[WARN] [1791944531.840113002] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944536.110703282] [exploration_manager]: Updated frontier data received
+[WARN] [1791944536.840041224] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944541.107051219] [exploration_manager]: Updated frontier data received
+[WARN] [1791944541.840006857] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944546.104574810] [exploration_manager]: Updated frontier data received
+[WARN] [1791944546.839979068] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944551.115810394] [exploration_manager]: Updated frontier data received
+[WARN] [1791944551.839929743] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944559.405192815] [exploration_manager]: Updated frontier data received
+[WARN] [1791944559.839876769] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944561.110926047] [exploration_manager]: Updated frontier data received
+[WARN] [1791944561.840018194] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944566.109442797] [exploration_manager]: Updated frontier data received
+[WARN] [1791944566.840084060] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944571.111019612] [exploration_manager]: Updated frontier data received
+[WARN] [1791944571.839932220] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944576.110909860] [exploration_manager]: Updated frontier data received
+[WARN] [1791944576.839764070] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944581.116748107] [exploration_manager]: Updated frontier data received
+[WARN] [1791944581.839812407] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944586.111187055] [exploration_manager]: Updated frontier data received
+[WARN] [1791944586.839740759] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944594.369066874] [exploration_manager]: Updated frontier data received
+[WARN] [1791944594.839804814] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944596.109850205] [exploration_manager]: Updated frontier data received
+[WARN] [1791944596.839825423] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944601.106813093] [exploration_manager]: Updated frontier data received
+[WARN] [1791944601.839824826] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944606.112135051] [exploration_manager]: Updated frontier data received
+[WARN] [1791944606.839792780] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944611.120414989] [exploration_manager]: Updated frontier data received
+[WARN] [1791944611.839787155] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944616.109613850] [exploration_manager]: Updated frontier data received
+[WARN] [1791944616.839828959] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944621.111717458] [exploration_manager]: Updated frontier data received
+[WARN] [1791944621.839901265] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944629.113314272] [exploration_manager]: Updated frontier data received
+[WARN] [1791944629.839852210] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944631.107023800] [exploration_manager]: Updated frontier data received
+[WARN] [1791944631.840843234] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944636.108644079] [exploration_manager]: Updated frontier data received
+[WARN] [1791944636.839914734] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944641.131854991] [exploration_manager]: Updated frontier data received
+[WARN] [1791944641.840782259] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944646.105986276] [exploration_manager]: Updated frontier data received
+[WARN] [1791944646.839878607] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944651.109215639] [exploration_manager]: Updated frontier data received
+[WARN] [1791944651.839852155] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944656.109945639] [exploration_manager]: Updated frontier data received
+[WARN] [1791944656.839838652] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944664.236408288] [exploration_manager]: Updated frontier data received
+[WARN] [1791944664.839871768] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944666.110184862] [exploration_manager]: Updated frontier data received
+[WARN] [1791944666.839884792] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944671.116681607] [exploration_manager]: Updated frontier data received
+[WARN] [1791944671.839888756] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944676.110871246] [exploration_manager]: Updated frontier data received
+[WARN] [1791944676.839960443] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944681.112051809] [exploration_manager]: Updated frontier data received
+[WARN] [1791944681.839817187] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944686.109349976] [exploration_manager]: Updated frontier data received
+[WARN] [1791944686.839867855] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944691.109011820] [exploration_manager]: Updated frontier data received
+[WARN] [1791944691.840006594] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944699.209415937] [exploration_manager]: Updated frontier data received
+[WARN] [1791944699.839880754] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944701.125506322] [exploration_manager]: Updated frontier data received
+[WARN] [1791944701.839784745] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944706.116457038] [exploration_manager]: Updated frontier data received
+[WARN] [1791944706.839960872] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944711.114785408] [exploration_manager]: Updated frontier data received
+[WARN] [1791944711.839876472] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944716.142982395] [exploration_manager]: Updated frontier data received
+[WARN] [1791944716.840199067] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944721.150217598] [exploration_manager]: Updated frontier data received
+[WARN] [1791944721.840328955] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+[INFO] [1791944726.168057020] [exploration_manager]: Updated frontier data received
+[WARN] [1791944726.840226124] [exploration_manager]: No new frontier candidates: total=59, failed=59, reached=0
+Traceback (most recent call last):
+  File "/home/robing/turtlebot3_ws/install/exploration_manager/lib/exploration_manager/exploration_manager", line 33, in <module>
+    sys.exit(load_entry_point('exploration-manager==0.0.0', 'console_scripts', 'exploration_manager')())
+  File "/home/robing/turtlebot3_ws/install/exploration_manager/lib/python3.10/site-packages/exploration_manager/exploration_manager.py", line 1253, in main
+    rclpy.spin(
+  File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/__init__.py", line 229, in spin
+    executor.spin_once()
+  File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/executors.py", line 808, in spin_once
+    self._spin_once_impl(timeout_sec)
+  File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/executors.py", line 797, in _spin_once_impl
+    handler, entity, node = self.wait_for_ready_callbacks(timeout_sec=timeout_sec)
+  File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/executors.py", line 780, in wait_for_ready_callbacks
+    return next(self._cb_iter)
+  File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/executors.py", line 677, in _wait_for_ready_callbacks
+    wait_set.wait(timeout_nsec)
+KeyboardInterrupt
+[ros2run]: Interrupt
