@@ -1,12 +1,14 @@
 exploration_manager:
   ros__parameters:
     information_radius: 1.0
-    information_weight: 0.6
-    distance_weight: 0.4
-    failed_region_radius: 0.5
-    near_goal_radius: 0.30
-    near_goal_stall_distance: 0.10
-    near_goal_stall_timeout: 10.0
+
+    information_weight: 0.30
+    distance_weight: 0.40
+    heading_weight: 0.30
+
+    frontier_match_tolerance: 0.01
+    preferred_turn_angle_degrees: 90.0
     required_empty_updates: 3
+
     map_frame: map
     robot_frame: base_link
