@@ -19,6 +19,7 @@ class FrontierDetector(Node):
         self.min_unknown_neighbours = self.declare_parameter(
             'min_unknown_neighbours', 3
         ).value
+
         self.min_frontier_size = self.declare_parameter(
             'min_frontier_size', 3
         ).value
@@ -27,8 +28,14 @@ class FrontierDetector(Node):
         self.scoring_radius = self.declare_parameter(
             'scoring_radius', 0.25
         ).value
+
         self.min_goal_spacing = self.declare_parameter(
             'min_goal_spacing', 0.5
+        ).value
+
+        # Set the minimum clearance from occupied cells in metres
+        self.min_obstacle_clearance = self.declare_parameter(
+            'min_obstacle_clearance', 0.15
         ).value
 
         # subcribe to the map topic
@@ -63,13 +70,22 @@ class FrontierDetector(Node):
     def map_callback(self, msg):
 
         # Convert list to 2D array
-        map_array = np.array(msg.data).reshape((msg.info.height, msg.info.width))
+        map_array = np.array(msg.data).reshape(
+            (msg.info.height, msg.info.width)
+        )
 
         raw_frontiers = self.find_frontiers(map_array)
 
-        filtered_frontiers = self.filter_small_frontiers(raw_frontiers, self.min_frontier_size)
+        filtered_frontiers = self.filter_small_frontiers(
+            raw_frontiers,
+            self.min_frontier_size
+        )
 
-        representatives = self.select_representatives(filtered_frontiers, msg.info.resolution)
+        representatives = self.select_representatives(
+            filtered_frontiers,
+            map_array,
+            msg.info.resolution
+        )
 
         self.get_logger().info(
             f'Found {len(raw_frontiers)} frontier cells, '
@@ -102,7 +118,10 @@ class FrontierDetector(Node):
                 col_end = min(cols, col + 2)
 
                 # Get surrounding 3x3 cells, clipped at the map edges
-                neighbours = map_array[row_start:row_end, col_start:col_end]
+                neighbours = map_array[
+                    row_start:row_end,
+                    col_start:col_end
+                ]
 
                 # Count unknown neighbouring cells
                 unknown_count = np.sum(neighbours == -1)
@@ -120,19 +139,25 @@ class FrontierDetector(Node):
 
         # Go through the unvisited frontier cells
         while unvisited_cells:
+
             start = unvisited_cells.pop()
             component = [start]
             cells_to_check = [start]
 
             while cells_to_check:
+
                 # get the cell coordinates
                 row, col = cells_to_check.pop()
+
                 for dr in (-1, 0, 1):
                     for dc in (-1, 0, 1):
+
                         if dr == 0 and dc == 0:
                             continue
+
                         # Check the neighbouring cells
                         neighbour = (row + dr, col + dc)
+
                         if neighbour in unvisited_cells:
                             unvisited_cells.remove(neighbour)
                             component.append(neighbour)
@@ -150,8 +175,53 @@ class FrontierDetector(Node):
 
         return result
 
+    def has_obstacle_clearance(
+        self,
+        row,
+        col,
+        map_array,
+        resolution
+    ):
 
-    def select_representatives(self, frontiers, resolution):
+        # Convert the clearance distance from metres to grid cells
+        clearance_cells = math.ceil(
+            self.min_obstacle_clearance / resolution
+        )
+
+        rows, cols = map_array.shape
+
+        # Check surrounding cells within the clearance distance
+        for check_row in range(
+            max(0, row - clearance_cells),
+            min(rows, row + clearance_cells + 1)
+        ):
+            for check_col in range(
+                max(0, col - clearance_cells),
+                min(cols, col + clearance_cells + 1)
+            ):
+
+                row_distance = (check_row - row) * resolution
+                col_distance = (check_col - col) * resolution
+                distance = math.hypot(
+                    row_distance,
+                    col_distance
+                )
+
+                # Reject candidates too close to occupied cells
+                if (
+                    distance <= self.min_obstacle_clearance
+                    and map_array[check_row, check_col] > 50
+                ):
+                    return False
+
+        return True
+
+    def select_representatives(
+        self,
+        frontiers,
+        map_array,
+        resolution
+    ):
 
         # Stop if there are no frontier cells
         if not frontiers:
@@ -168,24 +238,52 @@ class FrontierDetector(Node):
             # Convert the distances from grid cells to metres
             row_distances = (cells[:, 0] - row) * resolution
             col_distances = (cells[:, 1] - col) * resolution
-            distances = np.hypot(row_distances, col_distances)
+            distances = np.hypot(
+                row_distances,
+                col_distances
+            )
 
             is_close = distances <= self.scoring_radius
             scores[index] = np.count_nonzero(is_close)
 
         # Try the highest scores first, keeping the original order for ties
-        sorted_indices = np.argsort(-scores, kind='stable')
+        sorted_indices = np.argsort(
+            -scores,
+            kind='stable'
+        )
+
         representatives = []
 
         # Check each candidate against the selected points
         for index in sorted_indices:
+
             row, col = frontiers[index]
+
+            # Skip candidates that are too close to occupied cells
+            if not self.has_obstacle_clearance(
+                row,
+                col,
+                map_array,
+                resolution
+            ):
+                continue
+
             too_close = False
 
             for selected_row, selected_col in representatives:
-                row_distance = (row - selected_row) * resolution
-                col_distance = (col - selected_col) * resolution
-                distance = math.hypot(row_distance, col_distance)
+
+                row_distance = (
+                    row - selected_row
+                ) * resolution
+
+                col_distance = (
+                    col - selected_col
+                ) * resolution
+
+                distance = math.hypot(
+                    row_distance,
+                    col_distance
+                )
 
                 if distance < self.min_goal_spacing:
                     too_close = True
@@ -193,14 +291,19 @@ class FrontierDetector(Node):
 
             # Keep the candidate if there is enough space
             if not too_close:
-                representatives.append(frontiers[index])
+                representatives.append(
+                    frontiers[index]
+                )
 
         return representatives
 
     # Publish the frontiers as a Marker message
     def publish_frontiers(self, frontiers, msg):
 
-        marker = self.create_point_marker(frontiers, msg)
+        marker = self.create_point_marker(
+            frontiers,
+            msg
+        )
 
         # Set the frontier namespace, size and colour
         marker.ns = 'frontiers'
@@ -212,9 +315,16 @@ class FrontierDetector(Node):
 
         self.frontier_publisher.publish(marker)
 
-    def publish_representatives(self, representatives, msg):
+    def publish_representatives(
+        self,
+        representatives,
+        msg
+    ):
 
-        marker = self.create_point_marker(representatives, msg)
+        marker = self.create_point_marker(
+            representatives,
+            msg
+        )
 
         # Set the representative namespace, size and colour
         marker.ns = 'frontier_representatives'
@@ -230,10 +340,12 @@ class FrontierDetector(Node):
         candidates.header = marker.header
 
         for point in marker.points:
+
             pose = Pose()
             pose.position.x = point.x
             pose.position.y = point.y
             pose.orientation.w = 1.0
+
             candidates.poses.append(pose)
 
         # Publish empty updates too, so the manager can detect completion
@@ -245,7 +357,9 @@ class FrontierDetector(Node):
 
         # Set the header information
         marker.header.frame_id = msg.header.frame_id
-        marker.header.stamp = self.get_clock().now().to_msg()
+        marker.header.stamp = (
+            self.get_clock().now().to_msg()
+        )
 
         # Set the marker id
         marker.id = 0
@@ -259,9 +373,16 @@ class FrontierDetector(Node):
 
         # Get the rotation of the map origin
         orientation = msg.info.origin.orientation
+
         yaw = math.atan2(
-            2.0 * (orientation.w * orientation.z + orientation.x * orientation.y),
-            1.0 - 2.0 * (orientation.y**2 + orientation.z**2)
+            2.0 * (
+                orientation.w * orientation.z
+                + orientation.x * orientation.y
+            ),
+            1.0 - 2.0 * (
+                orientation.y**2
+                + orientation.z**2
+            )
         )
 
         cos_yaw = math.cos(yaw)
@@ -273,8 +394,13 @@ class FrontierDetector(Node):
             point = Point()
 
             # Get the cell centre relative to the map origin
-            local_x = (col + 0.5) * msg.info.resolution
-            local_y = (row + 0.5) * msg.info.resolution
+            local_x = (
+                col + 0.5
+            ) * msg.info.resolution
+
+            local_y = (
+                row + 0.5
+            ) * msg.info.resolution
 
             # Convert the row and column indices to world coordinates
             point.x = (
@@ -299,6 +425,7 @@ class FrontierDetector(Node):
 
 
 def main(args=None):
+
     rclpy.init(args=args)
 
     node = FrontierDetector()

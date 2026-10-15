@@ -1,13 +1,30 @@
 exploration_manager:
   ros__parameters:
+
+    # Information gain radius around each frontier
     information_radius: 1.0
 
+    # Frontier scoring
     information_weight: 0.30
     distance_weight: 0.40
     heading_weight: 0.30
 
+    # Do not send Nav2 goals already extremely close
+    # to the robot
+    min_goal_distance: 0.30
+
+    # Do not select another frontier close to a location
+    # where Nav2 previously failed
+    failed_frontier_radius: 0.40
+
+    # Exact matching tolerance for successfully reached
+    # frontier positions
     frontier_match_tolerance: 0.01
+
+    # Prefer goals requiring <= 90 degree initial turn
     preferred_turn_angle_degrees: 90.0
+
+    # Empty frontier lists required before completion
     required_empty_updates: 3
 
     map_frame: map
