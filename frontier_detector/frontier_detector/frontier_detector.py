@@ -21,7 +21,7 @@ class FrontierDetector(Node):
         ).value
 
         self.min_frontier_size = self.declare_parameter(
-            'min_frontier_size', 3
+            'min_frontier_size', 10
         ).value
 
         # Set the representative distances in metres
@@ -175,13 +175,7 @@ class FrontierDetector(Node):
 
         return result
 
-    def has_obstacle_clearance(
-        self,
-        row,
-        col,
-        map_array,
-        resolution
-    ):
+    def has_obstacle_clearance(self, row, col, map_array, resolution):
 
         # Convert the clearance distance from metres to grid cells
         clearance_cells = math.ceil(
@@ -216,12 +210,7 @@ class FrontierDetector(Node):
 
         return True
 
-    def select_representatives(
-        self,
-        frontiers,
-        map_array,
-        resolution
-    ):
+    def select_representatives(self, frontiers, map_array, resolution):
 
         # Stop if there are no frontier cells
         if not frontiers:
@@ -238,19 +227,14 @@ class FrontierDetector(Node):
             # Convert the distances from grid cells to metres
             row_distances = (cells[:, 0] - row) * resolution
             col_distances = (cells[:, 1] - col) * resolution
-            distances = np.hypot(
-                row_distances,
-                col_distances
-            )
+
+            distances = np.hypot(row_distances, col_distances)
 
             is_close = distances <= self.scoring_radius
             scores[index] = np.count_nonzero(is_close)
 
         # Try the highest scores first, keeping the original order for ties
-        sorted_indices = np.argsort(
-            -scores,
-            kind='stable'
-        )
+        sorted_indices = np.argsort(-scores, kind='stable')
 
         representatives = []
 
@@ -260,30 +244,17 @@ class FrontierDetector(Node):
             row, col = frontiers[index]
 
             # Skip candidates that are too close to occupied cells
-            if not self.has_obstacle_clearance(
-                row,
-                col,
-                map_array,
-                resolution
-            ):
+            if not self.has_obstacle_clearance(row, col, map_array, resolution):
                 continue
 
             too_close = False
 
             for selected_row, selected_col in representatives:
 
-                row_distance = (
-                    row - selected_row
-                ) * resolution
+                row_distance = (row - selected_row) * resolution
+                col_distance = (col - selected_col) * resolution
 
-                col_distance = (
-                    col - selected_col
-                ) * resolution
-
-                distance = math.hypot(
-                    row_distance,
-                    col_distance
-                )
+                distance = math.hypot(row_distance, col_distance)
 
                 if distance < self.min_goal_spacing:
                     too_close = True
