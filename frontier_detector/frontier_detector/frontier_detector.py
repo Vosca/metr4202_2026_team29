@@ -35,7 +35,7 @@ class FrontierDetector(Node):
 
         # Set the minimum clearance from occupied cells in metres
         self.min_obstacle_clearance = self.declare_parameter(
-            'min_obstacle_clearance', 0.15
+            'min_obstacle_clearance', 0.5
         ).value
 
         # subcribe to the map topic
