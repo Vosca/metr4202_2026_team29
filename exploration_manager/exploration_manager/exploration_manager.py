@@ -4,14 +4,20 @@ import numpy as np
 
 import rclpy
 
+#----------------------------------------------------------------
+import hashlib
+import time
+#----------------------------------------------------------------
+
+
 from rclpy.action import ActionClient
 from rclpy.node import Node
 from rclpy.time import Time
 
 from action_msgs.msg import GoalStatus
-from geometry_msgs.msg import PoseArray
+from geometry_msgs.msg import PoseArray, PoseStamped
 from nav_msgs.msg import OccupancyGrid
-from nav2_msgs.action import NavigateToPose
+from nav2_msgs.action import ComputePathToPose, NavigateToPose
 from tf2_ros import Buffer, TransformListener
 
 
@@ -29,7 +35,7 @@ class ExplorationManager(Node):
 
         self.information_radius = self.declare_parameter(
             'information_radius',
-            1.0
+            2.0
         ).value
 
         # Frontier scoring weights.
@@ -39,17 +45,42 @@ class ExplorationManager(Node):
         # Heading = how much the robot must turn.
         self.information_weight = self.declare_parameter(
             'information_weight',
-            0.30
+            0.20
         ).value
 
         self.distance_weight = self.declare_parameter(
             'distance_weight',
-            0.40
+            0.30
         ).value
+
+        self.distance_decay = self.declare_parameter(
+            'distance_decay',
+            2.0
+        ).value
+
+        self.path_search_initial_radius = self.declare_parameter(
+            'path_search_initial_radius',
+            3.0
+        ).value
+
+        self.path_search_expansion_factor = self.declare_parameter(
+            'path_search_expansion_factor',
+            2.0
+        ).value
+
+        if self.path_search_initial_radius <= 0.0:
+            raise ValueError(
+                'path_search_initial_radius must be greater than zero'
+            )
+
+        if self.path_search_expansion_factor <= 1.0:
+            raise ValueError(
+                'path_search_expansion_factor must be greater than one'
+            )
 
         self.heading_weight = self.declare_parameter(
             'heading_weight',
-            0.30
+            0.50
         ).value
 
         # ------------------------------------------------------------
@@ -94,7 +125,7 @@ class ExplorationManager(Node):
         self.preferred_turn_angle = math.radians(
             self.declare_parameter(
                 'preferred_turn_angle_degrees',
-                90.0
+                45.0
             ).value
         )
 
@@ -135,6 +166,15 @@ class ExplorationManager(Node):
 
         self.navigation_goal_handle = None
 
+        self.path_candidates = []
+        self.path_lengths = []
+        self.path_planned = []
+        self.path_candidate_distances = []
+        self.path_request_indices = []
+        self.path_candidate_index = 0
+        self.path_request_generation = 0
+        self.path_search_radius = self.path_search_initial_radius
+
         # Used to decide when exploration has finished.
         self.empty_frontier_update_count = 0
 
@@ -146,6 +186,8 @@ class ExplorationManager(Node):
         # READY
         # GOAL_SELECTED
         # NAVIGATING
+        # PLANNING_PATHS
+        # WAITING_FOR_MAP
         # WAITING_FOR_UPDATE
         # EXPLORATION_COMPLETE
         self.state = (
@@ -170,6 +212,21 @@ class ExplorationManager(Node):
             10
         )
 
+        #------------------------------------------------------------
+        self.last_map_time = None
+        self.last_map_change_time = None
+        self.last_map_signature = None
+        self.post_goal_scan_stamp = None
+        self.required_frontier_stamp = None
+
+        self.scan_count = 0
+
+        self.diagnostic_timer = self.create_timer(
+            5.0,
+            self.diagnose_topics
+        )
+        #------------------------------------------------------------
+
         # ============================================================
         # TF
         # ============================================================
@@ -191,6 +248,12 @@ class ExplorationManager(Node):
             'navigate_to_pose'
         )
 
+        self.path_client = ActionClient(
+            self,
+            ComputePathToPose,
+            'compute_path_to_pose'
+        )
+
         # Run exploration decision logic once per second.
         self.exploration_timer = self.create_timer(
             1.0,
@@ -201,6 +264,21 @@ class ExplorationManager(Node):
             'Exploration manager started'
         )
 
+
+    def diagnose_topics(self):
+        now = time.monotonic()
+
+        if self.last_map_time is None:
+            self.get_logger().warning('No /map message received yet')
+        elif (now - self.last_map_time) > 5.0:
+            self.get_logger().warning(
+                f'/map is stale: {now - self.last_map_time:.1f} s since last message'
+            )
+        elif self.last_map_change_time is not None:
+            self.get_logger().info(
+                'Last /map content change was '
+                f'{now - self.last_map_change_time:.1f} s ago'
+            )
     # ================================================================
     # FRONTIER CALLBACK
     # ================================================================
@@ -209,6 +287,22 @@ class ExplorationManager(Node):
         self,
         msg
     ):
+
+        if (
+            self.state == 'WAITING_FOR_UPDATE'
+            and self.required_frontier_stamp is not None
+        ):
+            candidate_stamp = (
+                msg.header.stamp.sec * 1_000_000_000
+                + msg.header.stamp.nanosec
+            )
+
+            if candidate_stamp < self.required_frontier_stamp:
+                self.get_logger().debug(
+                    'Ignoring frontier candidates older than the '
+                    'post-scan map'
+                )
+                return
 
         self.frontier_candidates = list(
             msg.poses
@@ -269,21 +363,51 @@ class ExplorationManager(Node):
     # MAP CALLBACK
     # ================================================================
 
-    def map_cb(
-        self,
-        msg
-    ):
+    def map_cb(self, msg):
+        #------------------------------------------------------------
+        self.last_map_time = time.monotonic()
+
+        map_signature = hashlib.blake2b(
+            np.asarray(msg.data, dtype=np.int8).tobytes(),
+            digest_size=8
+        ).digest()
+
+        if map_signature != self.last_map_signature:
+            self.last_map_signature = map_signature
+            self.last_map_change_time = self.last_map_time
+            self.get_logger().info('/map contents changed')
+        #------------------------------------------------------------
 
         self.map_msg = msg
 
-        self.map_array = np.array(
-            msg.data
-        ).reshape(
+        self.map_array = np.array(msg.data).reshape(
             (
                 msg.info.height,
                 msg.info.width
             )
         )
+
+        if self.state == 'WAITING_FOR_MAP':
+            map_stamp = (
+                msg.header.stamp.sec * 1_000_000_000
+                + msg.header.stamp.nanosec
+            )
+
+            if (
+                self.post_goal_scan_stamp is not None
+                and map_stamp >= self.post_goal_scan_stamp
+            ):
+                self.required_frontier_stamp = map_stamp
+                self.empty_frontier_update_count = 0
+                self.state = 'WAITING_FOR_UPDATE'
+                self.get_logger().info(
+                    'Received /map stamped at or after the scan; '
+                    'waiting for matching frontier candidates'
+                )
+            else:
+                self.get_logger().debug(
+                    'Ignoring /map older than the post-goal scan'
+                )
 
         self.check_ready()
 
@@ -521,7 +645,11 @@ class ExplorationManager(Node):
     # FRONTIER SELECTION
     # ================================================================
 
-    def select_best_candidate(self):
+    def select_best_candidate(
+        self,
+        candidates=None,
+        path_lengths=None
+    ):
 
         robot_pose = (
             self.get_robot_pose()
@@ -554,10 +682,17 @@ class ExplorationManager(Node):
         # CHECK FRONTIERS
         # ------------------------------------------------------------
 
-        for candidate in self.frontier_candidates:
+        candidates = (
+            self.frontier_candidates
+            if candidates is None
+            else candidates
+        )
 
-            # Straight-line distance between robot and frontier.
-            distance = math.hypot(
+        unreachable_count = 0
+
+        for candidate_index, candidate in enumerate(candidates):
+
+            straight_line_distance = math.hypot(
                 candidate.position.x
                 - robot_x,
                 candidate.position.y
@@ -571,13 +706,22 @@ class ExplorationManager(Node):
             # Skip frontier goals that are already extremely close
             # to the robot.
             if (
-                distance
+                straight_line_distance
                 < self.min_goal_distance
             ):
 
                 too_close_count += 1
 
                 continue
+
+            if path_lengths is not None:
+                path_distance = path_lengths[candidate_index]
+
+                if path_distance is None:
+                    unreachable_count += 1
+                    continue
+            else:
+                path_distance = straight_line_distance
 
             # --------------------------------------------------------
             # FAILED FRONTIER CHECK
@@ -665,7 +809,7 @@ class ExplorationManager(Node):
             )
 
             distances.append(
-                distance
+                path_distance
             )
 
             information_values.append(
@@ -690,7 +834,8 @@ class ExplorationManager(Node):
                 f'{len(self.frontier_candidates)}, '
                 f'too_close={too_close_count}, '
                 f'failed={failed_count}, '
-                f'reached={reached_count}'
+                f'reached={reached_count}, '
+                f'unreachable={unreachable_count}'
             )
 
             return None
@@ -809,7 +954,7 @@ class ExplorationManager(Node):
             1.0
         )
 
-        distance_norm = normalise(
+        distance_reward = normalise(
             distances,
             0.0
         )
@@ -828,7 +973,8 @@ class ExplorationManager(Node):
 
         # Information contributes positively.
         #
-        # Distance and heading change are penalties.
+        # Distance is an exponentially decaying reward; heading
+        # change remains a penalty.
         scores = (
             self.information_weight
             * information_norm
@@ -836,7 +982,7 @@ class ExplorationManager(Node):
             -
 
             self.distance_weight
-            * distance_norm
+            * distance_reward
 
             -
 
@@ -871,6 +1017,270 @@ class ExplorationManager(Node):
         )
 
         return candidate
+
+    def start_path_planning(self):
+        if not self.path_client.wait_for_server(timeout_sec=0.0):
+            self.get_logger().warn(
+                'ComputePathToPose action server unavailable; '
+                'will retry'
+            )
+            return
+
+        robot_pose = self.get_robot_pose()
+        if robot_pose is None:
+            return
+
+        robot_x, robot_y, _ = robot_pose
+        self.path_candidates = list(self.frontier_candidates)
+        self.path_lengths = [None] * len(self.path_candidates)
+        self.path_planned = [False] * len(self.path_candidates)
+        self.path_candidate_distances = [
+            math.hypot(
+                candidate.position.x - robot_x,
+                candidate.position.y - robot_y
+            )
+            for candidate in self.path_candidates
+        ]
+        self.path_candidate_index = 0
+        self.path_search_radius = self.path_search_initial_radius
+        self.path_request_generation += 1
+        self.state = 'PLANNING_PATHS'
+
+        self.get_logger().info(
+            f'Planning paths for candidates within '
+            f'{self.path_search_radius:.2f} m'
+        )
+        self.plan_candidates_within_radius(
+            self.path_request_generation
+        )
+
+    def plan_candidates_within_radius(self, generation):
+        if generation != self.path_request_generation:
+            return
+
+        self.path_request_indices = [
+            index
+            for index, distance in enumerate(
+                self.path_candidate_distances
+            )
+            if (
+                distance <= self.path_search_radius
+                and not self.path_planned[index]
+            )
+        ]
+        self.path_candidate_index = 0
+
+        if not self.path_request_indices:
+            self.finish_path_planning(generation)
+            return
+
+        self.get_logger().info(
+            f'Planning {len(self.path_request_indices)} new path(s) '
+            f'within {self.path_search_radius:.2f} m'
+        )
+        self.request_next_path(generation)
+
+    def request_next_path(self, generation):
+        if generation != self.path_request_generation:
+            return
+
+        if self.path_candidate_index >= len(self.path_request_indices):
+            self.finish_path_planning(generation)
+            return
+
+        candidate_index = self.path_request_indices[
+            self.path_candidate_index
+        ]
+        candidate = self.path_candidates[candidate_index]
+
+        goal = ComputePathToPose.Goal()
+        goal.goal = PoseStamped()
+        goal.goal.header.frame_id = self.map_frame
+        goal.goal.header.stamp = self.get_clock().now().to_msg()
+        goal.goal.pose = candidate
+        goal.planner_id = ''
+        goal.use_start = False
+
+        future = self.path_client.send_goal_async(goal)
+        future.add_done_callback(
+            lambda result_future: self.path_goal_response(
+                result_future,
+                candidate_index,
+                generation
+            )
+        )
+
+    def path_goal_response(
+        self,
+        future,
+        candidate_index,
+        generation
+    ):
+        if generation != self.path_request_generation:
+            return
+
+        try:
+            goal_handle = future.result()
+        except Exception as error:
+            self.get_logger().error(
+                f'ComputePathToPose request failed: {error}'
+            )
+            self.path_candidate_complete(
+                candidate_index,
+                None,
+                generation
+            )
+            return
+
+        if not goal_handle.accepted:
+            self.get_logger().warn(
+                f'Path request rejected for candidate {candidate_index}'
+            )
+            self.path_candidate_complete(
+                candidate_index,
+                None,
+                generation
+            )
+            return
+
+        result_future = goal_handle.get_result_async()
+        result_future.add_done_callback(
+            lambda result: self.path_result_cb(
+                result,
+                candidate_index,
+                generation
+            )
+        )
+
+    def path_result_cb(
+        self,
+        future,
+        candidate_index,
+        generation
+    ):
+        if generation != self.path_request_generation:
+            return
+
+        try:
+            wrapped_result = future.result()
+        except Exception as error:
+            self.get_logger().error(
+                f'Could not obtain path for candidate '
+                f'{candidate_index}: {error}'
+            )
+            self.path_candidate_complete(
+                candidate_index,
+                None,
+                generation
+            )
+            return
+
+        if (
+            wrapped_result.status != GoalStatus.STATUS_SUCCEEDED
+            or not wrapped_result.result.path.poses
+        ):
+            self.get_logger().warn(
+                f'No valid path found for candidate {candidate_index}'
+            )
+            self.path_candidate_complete(
+                candidate_index,
+                None,
+                generation
+            )
+            return
+
+        poses = wrapped_result.result.path.poses
+        path_length = sum(
+            math.hypot(
+                next_pose.pose.position.x - pose.pose.position.x,
+                next_pose.pose.position.y - pose.pose.position.y
+            )
+            for pose, next_pose in zip(poses, poses[1:])
+        )
+        self.path_candidate_complete(
+            candidate_index,
+            path_length,
+            generation
+        )
+
+    def path_candidate_complete(
+        self,
+        candidate_index,
+        path_length,
+        generation
+    ):
+        if generation != self.path_request_generation:
+            return
+
+        self.path_lengths[candidate_index] = path_length
+        self.path_planned[candidate_index] = True
+        # if path_length is None:
+        #     self.get_logger().info(
+        #         f'Candidate {candidate_index}: path unavailable'
+        #     )
+        # else:
+        #     self.get_logger().info(
+        #         f'Candidate {candidate_index}: planned path '
+        #         f'{path_length:.2f} m'
+        #     )
+
+        self.path_candidate_index += 1
+        self.request_next_path(generation)
+
+    def finish_path_planning(self, generation):
+        if generation != self.path_request_generation:
+            return
+
+        planned_indices = [
+            index
+            for index, planned in enumerate(self.path_planned)
+            if planned
+        ]
+        candidate = self.select_best_candidate(
+            candidates=[
+                self.path_candidates[index]
+                for index in planned_indices
+            ],
+            path_lengths=[
+                self.path_lengths[index]
+                for index in planned_indices
+            ]
+        )
+
+        if candidate is None:
+            farthest_candidate = max(
+                self.path_candidate_distances,
+                default=0.0
+            )
+            if self.path_search_radius < farthest_candidate:
+                old_radius = self.path_search_radius
+                self.path_search_radius = min(
+                    self.path_search_radius
+                    * self.path_search_expansion_factor,
+                    farthest_candidate
+                )
+                self.get_logger().info(
+                    f'No usable candidate within {old_radius:.2f} m; '
+                    f'expanding search radius to '
+                    f'{self.path_search_radius:.2f} m'
+                )
+                self.plan_candidates_within_radius(generation)
+                return
+
+            self.state = 'WAITING_FOR_UPDATE'
+            self.get_logger().warn(
+                'No reachable frontier candidates at any distance; '
+                'waiting for updated frontiers'
+            )
+            return
+
+        self.current_goal = candidate
+        self.state = 'GOAL_SELECTED'
+
+        if not self.send_navigation_goal():
+            self.current_goal = None
+            self.navigation_goal_handle = None
+            self.state = 'READY'
 
     # ================================================================
     # SEND GOAL TO NAV2
@@ -1118,16 +1528,14 @@ class ExplorationManager(Node):
                     )
 
             self.current_goal = None
-
             self.navigation_goal_handle = None
+
+            self.last_progress_pose = None
+            self.last_progress_time = None
 
             self.empty_frontier_update_count = 0
 
-            # Wait for a fresh frontier list before choosing
-            # another goal.
-            self.state = (
-                'WAITING_FOR_UPDATE'
-            )
+            self.state = 'WAITING_FOR_UPDATE'
 
             return
 
@@ -1237,34 +1645,7 @@ class ExplorationManager(Node):
         ):
             return
 
-        candidate = (
-            self.select_best_candidate()
-        )
-
-        if candidate is None:
-
-            # Wait for a fresh frontier update.
-            self.state = (
-                'WAITING_FOR_UPDATE'
-            )
-
-            return
-
-        self.current_goal = (
-            candidate
-        )
-
-        self.state = (
-            'GOAL_SELECTED'
-        )
-
-        if not self.send_navigation_goal():
-
-            self.current_goal = None
-
-            self.navigation_goal_handle = None
-
-            self.state = 'READY'
+        self.start_path_planning()
 
 
 def main(args=None):
