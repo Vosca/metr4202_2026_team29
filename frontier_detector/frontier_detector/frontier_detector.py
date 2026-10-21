@@ -148,44 +148,6 @@ class FrontierDetector(Node):
             for row, col in frontier_indices
         ]
 
-        # ============================================================
-        # PREVIOUS NON-VECTORISED IMPLEMENTATION
-        # Retained as a commented fallback for comparison and safety.
-        # ============================================================
-        # frontiers = []
-        #
-        # # Get the dimensions of the map
-        # rows, cols = map_array.shape
-        #
-        # # Iterate through the map, including the border cells
-        # for row in range(rows):
-        #     for col in range(cols):
-        #
-        #         # If the cell is not free, skip it
-        #         if map_array[row, col] != 0:
-        #             continue
-        #
-        #         # Keep the neighbourhood within the map bounds
-        #         row_start = max(0, row - 1)
-        #         row_end = min(rows, row + 2)
-        #         col_start = max(0, col - 1)
-        #         col_end = min(cols, col + 2)
-        #
-        #         # Get surrounding 3x3 cells, clipped at map edges
-        #         neighbours = map_array[
-        #             row_start:row_end,
-        #             col_start:col_end
-        #         ]
-        #
-        #         # Count unknown neighbouring cells
-        #         unknown_count = np.sum(neighbours == -1)
-        #
-        #         # Only keep strong frontier cells
-        #         if unknown_count >= self.min_unknown_neighbours:
-        #             frontiers.append((row, col))
-        #
-        # return frontiers
-
     def filter_small_frontiers(self, frontiers, min_size):
 
         unvisited_cells = set(frontiers)
