@@ -21,7 +21,7 @@ class FrontierDetector(Node):
         ).value
 
         self.min_frontier_size = self.declare_parameter(
-            'min_frontier_size', 10
+            'min_frontier_size', 30
         ).value
 
         # Set the representative distances in metres
@@ -35,7 +35,7 @@ class FrontierDetector(Node):
 
         # Set the minimum clearance from occupied cells in metres
         self.min_obstacle_clearance = self.declare_parameter(
-            'min_obstacle_clearance', 0.15
+            'min_obstacle_clearance', 0.6
         ).value
 
         # subcribe to the map topic
@@ -98,39 +98,93 @@ class FrontierDetector(Node):
 
     def find_frontiers(self, map_array):
 
-        frontiers = []
-
         # Get the dimensions of the map
         rows, cols = map_array.shape
 
-        # Iterate through the map, including the border cells
-        for row in range(rows):
-            for col in range(cols):
+        # Mark every unknown cell once for vectorised neighbour counting
+        unknown_cells = map_array == -1
 
-                # If the cell is not free, skip it
-                if map_array[row, col] != 0:
+        # Add a false border so shifted arrays keep the map dimensions
+        padded_unknown = np.pad(
+            unknown_cells,
+            1,
+            mode='constant',
+            constant_values=False
+        )
+
+        # Count unknown cells in each cell's 8-connected neighbourhood
+        unknown_neighbour_counts = np.zeros(
+            map_array.shape,
+            dtype=np.uint8
+        )
+
+        for row_offset in range(3):
+            for col_offset in range(3):
+
+                # Do not count the cell itself
+                if row_offset == 1 and col_offset == 1:
                     continue
 
-                # Keep the neighbourhood within the map bounds
-                row_start = max(0, row - 1)
-                row_end = min(rows, row + 2)
-                col_start = max(0, col - 1)
-                col_end = min(cols, col + 2)
-
-                # Get surrounding 3x3 cells, clipped at the map edges
-                neighbours = map_array[
-                    row_start:row_end,
-                    col_start:col_end
+                unknown_neighbour_counts += padded_unknown[
+                    row_offset:row_offset + rows,
+                    col_offset:col_offset + cols
                 ]
 
-                # Count unknown neighbouring cells
-                unknown_count = np.sum(neighbours == -1)
+        # A frontier is free and has enough unknown neighbours
+        frontier_mask = (
+            (map_array == 0)
+            &
+            (
+                unknown_neighbour_counts
+                >= self.min_unknown_neighbours
+            )
+        )
 
-                # Only keep strong frontier cells
-                if unknown_count >= self.min_unknown_neighbours:
-                    frontiers.append((row, col))
+        # np.argwhere preserves the original row-major result order
+        frontier_indices = np.argwhere(frontier_mask)
 
-        return frontiers
+        return [
+            (int(row), int(col))
+            for row, col in frontier_indices
+        ]
+
+        # ============================================================
+        # PREVIOUS NON-VECTORISED IMPLEMENTATION
+        # Retained as a commented fallback for comparison and safety.
+        # ============================================================
+        # frontiers = []
+        #
+        # # Get the dimensions of the map
+        # rows, cols = map_array.shape
+        #
+        # # Iterate through the map, including the border cells
+        # for row in range(rows):
+        #     for col in range(cols):
+        #
+        #         # If the cell is not free, skip it
+        #         if map_array[row, col] != 0:
+        #             continue
+        #
+        #         # Keep the neighbourhood within the map bounds
+        #         row_start = max(0, row - 1)
+        #         row_end = min(rows, row + 2)
+        #         col_start = max(0, col - 1)
+        #         col_end = min(cols, col + 2)
+        #
+        #         # Get surrounding 3x3 cells, clipped at map edges
+        #         neighbours = map_array[
+        #             row_start:row_end,
+        #             col_start:col_end
+        #         ]
+        #
+        #         # Count unknown neighbouring cells
+        #         unknown_count = np.sum(neighbours == -1)
+        #
+        #         # Only keep strong frontier cells
+        #         if unknown_count >= self.min_unknown_neighbours:
+        #             frontiers.append((row, col))
+        #
+        # return frontiers
 
     def filter_small_frontiers(self, frontiers, min_size):
 
