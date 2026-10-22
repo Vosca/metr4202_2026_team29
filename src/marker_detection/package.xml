@@ -14,7 +14,7 @@
   <depend>python3-numpy</depend>
   <depend>cv_bridge</depend>
   <depend>tf2_ros</depend>
-  <depend>tf_transformations</depend>
+  <depend>visualization_msgs</depend>
 
   <test_depend>ament_copyright</test_depend>
   <test_depend>ament_flake8</test_depend>
