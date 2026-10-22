@@ -36,7 +36,8 @@ class ArucoDetectorNode(Node):
         self.aruco_params = cv2.aruco.DetectorParameters_create()
 
         # Camera parameters - might need more later, will find out
-        self.img_msg = None
+        self.curr_image = None
+        self.info_msg = None
         self.camera_frame_id = None
         self.cam_matrix = None
         self.distorsion = None
@@ -53,18 +54,23 @@ class ArucoDetectorNode(Node):
             Image, '/camera/image_raw', self.image_cb, 10
         )
 
+        self.timer = self.create_timer(1.0, self.image_processing)
+
         # Publishing the transforms for the markers
         self.tf_broadcaster = TransformBroadcaster(self)
 
 
     def camera_info_cb(self, info_msg):
-        self.img_msg = info_msg
-        self.camera_header = self.img_msg.header
-        self.cam_matrix = np.reshape(np.array(self.img_msg.k), (3, 3))
-        self.distorsion = np.array(self.img_msg.d)
+        self.info_msg = info_msg
+        self.camera_header = self.info_msg.header
+        self.cam_matrix = np.reshape(np.array(self.info_msg.k), (3, 3))
+        self.distorsion = np.array(self.info_msg.d)
 
 
     def image_cb(self, image_msg):
+        self.curr_image = image_msg
+
+    def image_processing(self):
         #Convert the image to the CV2 image
         cv2_image = self.bridge.imgmsg_to_cv2(image_msg, desired_encoding='passthrough')
 
