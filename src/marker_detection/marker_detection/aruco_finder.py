@@ -6,13 +6,15 @@ Will subscribe to the camera image that is generated and publish the pose of vis
 import numpy as np
 import rclpy
 from rclpy.node import Node
+from rclpy.duration import Duration
 
 import cv2
 from cv_bridge import CvBridge
 
 from sensor_msgs.msg import CameraInfo, Image
 from geometry_msgs.msg import Point
-from visualization_msgs.msg import Marker
+from visualization_msgs.msg import Marker, MarkerArray
+import tf_transformations
 
 def main(args=None):
     rclpy.init(args=args)
@@ -26,16 +28,17 @@ class ArucoDetectorNode(Node):
     def __init__(self):
         super().__init__("aruco_detector_node")
 
-        # Set up the ArUco Detector uisng OpenCV
+        # Marker Parameters
         self.marker_size = 0.1 # in metres
-        self.aruco_dict_id = cv2.aruco.DICT_6X6_250
-        self.aruco_dict = cv2.aruco.getPredefinedDictionary(self.aruco_dict_id)
-        self.aruco_params = cv2.aruco.DetectorParameters()
+
+
+        # Set up the ArUco Detector uisng OpenCV
+        aruco_dict = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_6X6_250)
+        detector_params = cv2.aruco.DetectorParameters()
+        self.detector = cv2.aruco.ArucoDetector(aruco_dict, detector_params)
 
         # Camera parameters - might need more later, will find out
         self.curr_image = None
-        self.info_msg = None
-        self.camera_header = None
         self.camera_frame_id = None
         self.cam_matrix = None
         self.distorsion = None
@@ -43,7 +46,7 @@ class ArucoDetectorNode(Node):
         self.bridge = CvBridge()
 
         # Previously identified ArUco markers, updated every second
-        self.markers = None
+        self.markers = MarkerArray()
 
         # Subcriptions to the CameraInfo and Image topics
         self.camera_info_sub = self.create_subscription(
@@ -57,17 +60,15 @@ class ArucoDetectorNode(Node):
         self.timer = self.create_timer(1.0, self.image_processing)
 
         self.marker_pub = self.create_publisher(
-            Marker, '/aruco_markers', 10
+            MarkerArray, '/aruco_markers', 10
         )
 
 
     def camera_info_cb(self, info_msg):
-        self.info_msg = info_msg
-        self.camera_header = self.info_msg.header
-        self.cam_matrix = np.reshape(np.array(self.info_msg.k), (3, 3))
-        self.distorsion = np.array(self.info_msg.d)
-        self.markers = self.initialise_marker()
-        self.node.destroy_subscription(self.camera_info_sub)
+        self.camera_frame_id = info_msg.header.frame_id
+        self.cam_matrix = np.reshape(np.array(info_msg.k), (3, 3))
+        self.distorsion = np.array(info_msg.d)
+        self.destroy_subscription(self.camera_info_sub)
         self.camera_info_sub = None
 
 
@@ -83,54 +84,64 @@ class ArucoDetectorNode(Node):
         cv2_image = self.bridge.imgmsg_to_cv2(self.curr_image, desired_encoding='passthrough')
 
         #Detect any Aruco markers in the image
-        corners, ids, rejected = cv2.aruco.detectMarkers(cv2_image, self.aruco_dict, parameters=self.aruco_params)
-
+        corners, ids, rejected = self.detector.detectMarkers(cv2_image)
+        marker_points = np.array([
+            [-self.marker_size / 2 , self.marker_size / 2, 0],
+            [self.marker_size / 2 , self.marker_size / 2, 0],
+            [self.marker_size / 2 , -self.marker_size / 2, 0],
+            [-self.marker_size / 2 , -self.marker_size / 2, 0]
+        ], dtype=np.float32)
         #Create a list of aruco marker poses relative to camera
         if ids is not None:
-            rvecs, tvecs, _ = cv2.aruco.estimatePoseSingleMarkers(corners,self.marker_size,self.cam_matrix, self.distorsion)
-            # Each marker has a pose relative to the camera, which is added to the tf2 tree
-            for i, id in enumerate(ids):
-                self.get_logger().info("Detected marker with ID: {}".format(id[0]))
+            for i, c in enumerate(corners):
+                corner_points = c.reshape((4, 2))
 
-                marker_point = Point()
-                marker_point.x = tvecs[i][0][0]
-                marker_point.y = tvecs[i][0][1]
-                marker_point.z = tvecs[i][0][2]
-                self.markers.points.append(marker_point)
+                success, rvec, tvec = cv2.solvePnP(
+                    marker_points,
+                    corner_points,
+                    self.cam_matrix,
+                    self.distorsion,
+                    flags=cv2.SOLVEPNP_IPPE_SQUARE
+                )
 
-                """# Orientation of the transform from rvecs
-                rotation_matrix = np.eye(4)
-                rotation_matrix[0:3, 0:3] = cv2.Rodrigues(np.array(rvecs[i][0]))[0]
-                quaternion = tf_transformations.quaternion_from_matrix(rotation_matrix)
-                marker.pose.rotation.x = quaternion[0]
-                marker.pose.rotation.y = quaternion[1]
-                marker.pose.rotation.z = quaternion[2]
-                marker.pose.rotation.w = quaternion
-                """
+                if success:
+                    #self.get_logger().info("Detected marker with ID: {}".format(ids[0]))
+                    marker = self.initialise_marker(int(ids[i]), tvec, rvec)
+                    self.markers.markers.append(marker)
 
         self.marker_pub.publish(self.markers)
 
-    def initialise_marker(self):
+    def initialise_marker(self, marker_id, tvec, rvec):
         m = Marker()
-        m.header = self.camera_header
-        m.ns = "ArUco Markers"
-        m.id = id
-        m.type = 7 #Sphere List
-        m.action = 0 #Add
-        m.pose.position.x = 0
-        m.pose.position.y = 0
-        m.pose.position.z = 0
-        m.pose.orientation.x = 0
-        m.pose.orientation.y = 0
-        m.pose.orientation.z = 0
-        m.pose.orientation.w = 1
+        m.header.frame_id = self.camera_frame_id
+        m.ns = "ArUco Marker"
+        m.id = marker_id
+        m.type = Marker.SPHERE
+        m.action = Marker.ADD
+        m.pose.position.x = float(tvec[0])
+        m.pose.position.y = float(tvec[1])
+        m.pose.position.z = float(tvec[2])
+
+        rotation_matrix = np.eye(4)
+        rotation_matrix[0:3, 0:3], _ = cv2.Rodrigues(np.array(rvec, dtype=np.float32))
+        quaternion = tf_transformations.quaternion_from_matrix(rotation_matrix)
+        m.pose.orientation.x = quaternion[0]
+        m.pose.orientation.y = quaternion[1]
+        m.pose.orientation.z = quaternion[2]
+        m.pose.orientation.w = quaternion[3]
+
+        # Scale is 10cm x 10cm x 10cm
         m.scale.x = 0.1
         m.scale.y = 0.1
         m.scale.z = 0.1
+        # RED
         m.color.r = 0.0
         m.color.g = 1.0
         m.color.b = 0.0
         m.color.a = 1.0
-        m.lifetime = 0
-        m.frame_locked = True
+
+        m.lifetime = Duration().to_msg()
+        m.frame_locked = False
+
+        return m
                
