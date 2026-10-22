@@ -8,7 +8,7 @@ import rclpy
 from rclpy.node import Node
 
 import cv2
-import ros2_numpy as rnp
+from cv_bridge import CvBridge
 
 import tf_transformations
 
@@ -33,13 +33,15 @@ class ArucoDetectorNode(Node):
         self.marker_size = 0.1 # in metres
         self.aruco_dict_id = cv2.aruco.DICT_6X6_250
         self.aruco_dict = cv2.aruco.getPredefinedDictionary(self.aruco_dict_id)
-        self.aruco_params = cv2.aruco.DetectorParameters()
+        self.aruco_params = cv2.aruco.DetectorParameters_create()
 
         # Camera parameters - might need more later, will find out
         self.img_msg = None
         self.camera_frame_id = None
         self.cam_matrix = None
         self.distorsion = None
+
+        self.bridge = CvBridge()
 
        
         # Subcriptions to the CameraInfo and Image topics
@@ -64,16 +66,17 @@ class ArucoDetectorNode(Node):
 
     def image_cb(self, image_msg):
         #Convert the image to the CV2 image
-        cv2_image = rnp.numpify(image_msg)
+        cv2_image = self.bridge.imgmsg_to_cv2(image_msg, desired_encoding='passthrough')
 
         #Detect any Aruco markers in the image
         corners, ids, rejected = cv2.aruco.detectMarkers(cv2_image, self.aruco_dict, parameters=self.aruco_params)
 
         #Create a list of aruco marker poses relative to camera
         if ids is not None:
-            rvecs, tvecs = cv2.aruco.estimatePoseSingleMarkers(corners,self.marker_size,self.cam_matrix, self.distorsion)
+            rvecs, tvecs, _ = cv2.aruco.estimatePoseSingleMarkers(corners,self.marker_size,self.cam_matrix, self.distorsion)
             # Each marker has a pose relative to the camera, which is added to the tf2 tree
             for i, id in enumerate(ids):
+                self.get_logger().info("Detected marker with ID: {}".format(id[0]))
                 marker_transform = TransformStamped()
                 # Parent frame is the camera
                 marker_transform.header = self.camera_header

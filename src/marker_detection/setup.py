@@ -24,8 +24,8 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            'aruco_finder = marker_detection.aruco_finder:main'
-            'pose_generation = marker_detection.pose_generation:main'
+            'aruco_finder = marker_detection.aruco_finder:main',
+            'pose_generation = marker_detection.pose_generation:main',
         ],
     },
 )
