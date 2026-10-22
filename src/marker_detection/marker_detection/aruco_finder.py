@@ -13,7 +13,7 @@ from cv_bridge import CvBridge
 import tf_transformations
 
 from sensor_msgs.msg import CameraInfo, Image
-from geometry_msgs.msg import PoseArray, Pose, TransformStamped
+from geometry_msgs.msg import TransformStamped
 
 from tf2_ros import TransformBroadcaster
 
