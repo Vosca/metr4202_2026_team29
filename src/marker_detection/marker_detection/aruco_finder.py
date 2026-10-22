@@ -7,14 +7,18 @@ import numpy as np
 import rclpy
 from rclpy.node import Node
 from rclpy.duration import Duration
+from rclpy.time import Time
 
 import cv2
 from cv_bridge import CvBridge
 
 from sensor_msgs.msg import CameraInfo, Image
-from geometry_msgs.msg import Point
+from geometry_msgs.msg import Pose, PoseStamped, PoseArray
 from visualization_msgs.msg import Marker, MarkerArray
 import tf_transformations
+import tf2_ros
+from tf2_geometry_msgs import do_transform_pose
+import math
 
 def main(args=None):
     rclpy.init(args=args)
@@ -46,7 +50,8 @@ class ArucoDetectorNode(Node):
         self.bridge = CvBridge()
 
         # Previously identified ArUco markers, updated every second
-        self.markers = MarkerArray()
+        self.marker_poses = PoseArray()
+        self.marker_ids = []
 
         # Subcriptions to the CameraInfo and Image topics
         self.camera_info_sub = self.create_subscription(
@@ -57,11 +62,14 @@ class ArucoDetectorNode(Node):
             Image, '/camera/image_raw', self.image_cb, 10
         )
 
-        self.timer = self.create_timer(1.0, self.image_processing)
-
+        self.create_timer(1.0, self.display_markers)
+        self.create_timer(0.5, self.image_processing)
         self.marker_pub = self.create_publisher(
             MarkerArray, '/aruco_markers', 10
         )
+
+        self.tf_buffer = tf2_ros.Buffer()
+        self.tf_listener = tf2_ros.TransformListener(self.tf_buffer, self)
 
 
     def camera_info_cb(self, info_msg):
@@ -72,14 +80,10 @@ class ArucoDetectorNode(Node):
         self.camera_info_sub = None
 
 
-    def image_cb(self, image_msg):
+    def image_cb(self, image_msg): #Should scrub every image and update local memory
         self.curr_image = image_msg
-
+        
     def image_processing(self):
-        if self.curr_image == None:
-            self.get_logger().info("No image detected yet...")
-            return
-
         #Convert the image to the CV2 image
         cv2_image = self.bridge.imgmsg_to_cv2(self.curr_image, desired_encoding='passthrough')
 
@@ -93,6 +97,14 @@ class ArucoDetectorNode(Node):
         ], dtype=np.float32)
         #Create a list of aruco marker poses relative to camera
         if ids is not None:
+            transform = self.tf_buffer.lookup_transform(
+                'map',
+                self.camera_frame_id,
+                Time(),
+                rclpy.duration.Duration(seconds=1)
+            )
+
+            
             for i, c in enumerate(corners):
                 corner_points = c.reshape((4, 2))
 
@@ -106,30 +118,50 @@ class ArucoDetectorNode(Node):
 
                 if success:
                     #self.get_logger().info("Detected marker with ID: {}".format(ids[0]))
-                    marker = self.initialise_marker(int(ids[i]), tvec, rvec)
-                    self.markers.markers.append(marker)
+                    aruco_pose = self.create_pose(tvec, rvec)
+                    pose_out = do_transform_pose(aruco_pose, transform)
+                    self.check_existing_poses(pose_out, ids[i])
 
-        self.marker_pub.publish(self.markers)
-
-    def initialise_marker(self, marker_id, tvec, rvec):
-        m = Marker()
-        m.header.frame_id = self.camera_frame_id
-        m.ns = "ArUco Marker"
-        m.id = marker_id
-        m.type = Marker.SPHERE
-        m.action = Marker.ADD
-        m.pose.position.x = float(tvec[0])
-        m.pose.position.y = float(tvec[1])
-        m.pose.position.z = float(tvec[2])
+    def create_pose(self, tvec, rvec):
+        p = Pose()
+        p.position.x = float(tvec[0])
+        p.position.y = float(tvec[1])
+        p.position.z = float(tvec[2])
 
         rotation_matrix = np.eye(4)
         rotation_matrix[0:3, 0:3], _ = cv2.Rodrigues(np.array(rvec, dtype=np.float32))
         quaternion = tf_transformations.quaternion_from_matrix(rotation_matrix)
-        m.pose.orientation.x = quaternion[0]
-        m.pose.orientation.y = quaternion[1]
-        m.pose.orientation.z = quaternion[2]
-        m.pose.orientation.w = quaternion[3]
+        p.orientation.x = quaternion[0]
+        p.orientation.y = quaternion[1]
+        p.orientation.z = quaternion[2]
+        p.orientation.w = quaternion[3]
+        return p
 
+    def check_existing_poses(self, candidate, candidate_id):
+        if candidate_id in self.marker_ids:
+            return
+        
+        for existing_pose in self.marker_poses.poses:
+            #If the candidate is too close, return
+            dx = candidate.position.x - existing_pose.position.x
+            dy = candidate.position.y - existing_pose.position.y
+            dz = candidate.position.z - existing_pose.position.z
+            dist_3d = math.sqrt(dx**2 + dy**2 + dz**2)
+            if dist_3d < 0.05:
+                return
+        
+        self.marker_poses.poses.append(candidate)
+        self.marker_ids.append(candidate_id)
+        self.get_logger().info("Adding one")
+
+    def create_marker_from_pose(self, marker_id, pose):
+        m = Marker()
+        m.header.frame_id = 'map'
+        m.ns = "ArUco Marker"
+        m.id = marker_id
+        m.type = Marker.SPHERE
+        m.action = Marker.ADD
+        m.pose = pose
         # Scale is 10cm x 10cm x 10cm
         m.scale.x = 0.1
         m.scale.y = 0.1
@@ -144,4 +176,12 @@ class ArucoDetectorNode(Node):
         m.frame_locked = False
 
         return m
-               
+
+    def display_markers(self):
+        aruco_markers = MarkerArray();
+        for i, pose in enumerate(self.marker_poses.poses):
+            marker = self.create_marker_from_pose(i, pose)
+            aruco_markers.markers.append(marker)
+
+        self.marker_pub.publish(aruco_markers)
+        self.get_logger().info("Number: {}".format(len(aruco_markers.markers)))
