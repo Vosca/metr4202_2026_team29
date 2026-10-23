@@ -16,7 +16,7 @@ gnome-terminal --title="Man I Love Chips" -- bash -lc '
     status=$?
     echo "exited with status $status."
     read -r -p "Press Enter to close this terminal..."
-' bash "$script_dir &
+' bash "$script_dir" &
 
 gnome-terminal --title="Exploration manager" -- bash -lc '
     cd "$1" || exit
