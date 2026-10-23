@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# colcon build --packages-select exploration_manager frontier_detector
+colcon build --packages-select exploration_manager frontier_detector marker_detection
 
 set -e
 
@@ -10,6 +10,13 @@ if ! command -v gnome-terminal >/dev/null 2>&1; then
     echo "gnome-terminal is required to launch each node in a separate terminal." >&2
     exit 1
 fi
+
+gnome-terminal --title="Man I Love Chips" -- bash -lc '
+    ros2 launch turtlebot3_navigation2 navigation2.launch.py use_sim_time:=False params_file:=params_live.yaml slam:=True
+    status=$?
+    echo "exited with status $status."
+    read -r -p "Press Enter to close this terminal..."
+' bash "$script_dir &
 
 gnome-terminal --title="Exploration manager" -- bash -lc '
     cd "$1" || exit
