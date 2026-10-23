@@ -29,4 +29,13 @@ gnome-terminal --title="Frontier detector" -- bash -lc '
     read -r -p "Press Enter to close this terminal..."
 ' bash "$script_dir" &
 
+gnome-terminal --title="Marker detection" -- bash -lc '
+cd "$1" || exit
+source install/setup.bash || exit
+ros2 run marker_detection marker_detection
+status=$?
+echo "Marker_detection exited with status $status."
+read -r -p "Press Enter to close this terminal..."
+' bash "$script_dir" &
+
 wait
