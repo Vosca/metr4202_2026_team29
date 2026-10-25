@@ -15,6 +15,7 @@ from cv_bridge import CvBridge
 from sensor_msgs.msg import CameraInfo, Image
 from geometry_msgs.msg import Pose, PoseArray
 from visualization_msgs.msg import Marker, MarkerArray
+
 import tf_transformations
 import tf2_ros
 from tf2_geometry_msgs import do_transform_pose
@@ -34,23 +35,22 @@ class ArucoDetectorNode(Node):
 
         self.declare_parameter("focal_length_scalar", 2.26)
 
-        # Marker Parameters
+        # ArUco Marker Parameters
         self.marker_size = 0.1 # in metres
-
-        # Set up the ArUco Detector uisng OpenCV
         aruco_dict = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_6X6_250)
         detector_params = cv2.aruco.DetectorParameters()
         self.detector = cv2.aruco.ArucoDetector(aruco_dict, detector_params)
 
-        # Camera parameters - might need more later, will find out
+        # Camera Parameters
         self.curr_image = None
         self.camera_frame_id = None
         self.cam_matrix = None
         self.distorsion = None
 
+        # Convertor between ROS Image messages and cv2 images
         self.bridge = CvBridge()
 
-        # Previously identified ArUco markers, updated every second
+        # Local memory of previously identified ArUco markers and their poses relative to /map
         self.marker_poses = PoseArray()
         self.marker_ids = []
 
@@ -63,20 +63,30 @@ class ArucoDetectorNode(Node):
             Image, '/camera/image_raw', self.image_cb, 10
         )
 
-        self.create_timer(1.0, self.display_markers)
+        # Image feed is processed every 0.5 seconds for faster performance
         self.create_timer(0.5, self.image_processing)
+
+        # Visualisation publishes the found ArUco's as ROS markers every second. 
+        self.create_timer(1.0, self.display_markers)
         self.marker_pub = self.create_publisher(
             MarkerArray, '/aruco_markers', 10
         )
 
+        # Keeps track of the transforms tree
         self.tf_buffer = tf2_ros.Buffer()
         self.tf_listener = tf2_ros.TransformListener(self.tf_buffer, self)
 
-
+    """
+    Callback function when the Turtlebot camera sends its metadata. 
+    Reads the frame id, camera matrix and distortion. Assumes the metadata will not change during operation,
+    and so ends the subscription after the first message
+    """
     def camera_info_cb(self, info_msg):
         self.camera_frame_id = info_msg.header.frame_id
 
         self.cam_matrix = np.reshape(np.array(info_msg.k), (3, 3))
+
+        # Applies custom scaling factor to account for inaccurate focal lengths
         scalar = self.get_parameter("focal_length_scalar").value
         self.cam_matrix[0][0] = scalar*self.cam_matrix[0][0]
         self.cam_matrix[1][1] = scalar*self.cam_matrix[1][1]
@@ -85,10 +95,16 @@ class ArucoDetectorNode(Node):
         self.destroy_subscription(self.camera_info_sub)
         self.camera_info_sub = None
 
-
-    def image_cb(self, image_msg): #Should scrub every image and update local memory
+    """
+    Callback function that logs the received image in memory
+    """
+    def image_cb(self, image_msg):
         self.curr_image = image_msg
-        
+
+    """
+    Function runs every 0.5seconds to detect all ArUco markers present in the current image and calculate
+    their locations relative to the global map frame. Since 
+    """
     def image_processing(self):
         #Convert the image to the CV2 image
         if self.curr_image == None:
@@ -104,8 +120,10 @@ class ArucoDetectorNode(Node):
             [self.marker_size / 2 , -self.marker_size / 2, 0],
             [-self.marker_size / 2 , -self.marker_size / 2, 0]
         ], dtype=np.float32)
-        #Create a list of aruco marker poses relative to camera
+        
+       
         if ids is not None:
+            # Calculates the most recent transform from the camera frame to the global map frame
             transform = self.tf_buffer.lookup_transform(
                 'map',
                 self.camera_frame_id,
@@ -113,7 +131,9 @@ class ArucoDetectorNode(Node):
                 rclpy.duration.Duration(seconds=1)
             )
 
-            
+            # Each marker that was detected has its pose relative to the camera estimated.
+            # If this happens successfully then it is transformed into the global frame.
+            # Checks are then performed to ensure no duplicate markers are detected.
             for i, c in enumerate(corners):
                 corner_points = c.reshape((4, 2))
 
@@ -126,11 +146,13 @@ class ArucoDetectorNode(Node):
                 )
 
                 if success:
-                    #self.get_logger().info("Detected marker with ID: {}".format(ids[0]))
                     aruco_pose = self.create_pose(tvec, rvec)
                     pose_out = do_transform_pose(aruco_pose, transform)
                     self.check_existing_poses(pose_out, ids[i])
 
+    """
+    Converts the rotation and translation vectors realtive to the camera into a ROS pose message
+    """
     def create_pose(self, tvec, rvec):
         p = Pose()
         p.position.x = float(tvec[0])
@@ -146,6 +168,11 @@ class ArucoDetectorNode(Node):
         p.orientation.w = quaternion[3]
         return p
 
+    """
+    Function that prevents already identified markers from being repeatedly detected.
+    If the marker id has already been found or if the location is within 5cm of another marker,
+    it is disregarded.
+    """
     def check_existing_poses(self, candidate, candidate_id):
         if candidate_id in self.marker_ids:
             return
@@ -163,6 +190,10 @@ class ArucoDetectorNode(Node):
         self.marker_ids.append(candidate_id)
         self.get_logger().info("Adding one")
 
+    """
+    Converts a Pose (used for transforms and memory) into a Marker (used for visualisation).
+    The Marker is positioned realtive to the global map frame and has no set lifetime.
+    """
     def create_marker_from_pose(self, marker_id, pose):
         m = Marker()
         m.header.frame_id = 'map'
@@ -186,11 +217,21 @@ class ArucoDetectorNode(Node):
 
         return m
 
+    """
+    Publishes a set of Markers for visualisation purposes. Also logs the positions of detected markers.
+    """
     def display_markers(self):
         aruco_markers = MarkerArray();
+        self.get_logger().info("Number: {}".format(len(aruco_markers.markers)))
         for i, pose in enumerate(self.marker_poses.poses):
             marker = self.create_marker_from_pose(i, pose)
             aruco_markers.markers.append(marker)
+            self.get_logger().info("Marker ID {} at [{}, {}, {}]".format(
+                marker.id,
+                pose.position.x,
+                pose.position.y,
+                pose.position.z
+            ))
 
         self.marker_pub.publish(aruco_markers)
-        self.get_logger().info("Number: {}".format(len(aruco_markers.markers)))
+        
