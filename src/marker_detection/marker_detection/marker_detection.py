@@ -32,6 +32,8 @@ class ArucoDetectorNode(Node):
     def __init__(self):
         super().__init__("aruco_detector_node")
 
+        self.declare_parameter("focal_length_scalar", 2.26)
+
         # Marker Parameters
         self.marker_size = 0.1 # in metres
 
@@ -73,9 +75,12 @@ class ArucoDetectorNode(Node):
 
     def camera_info_cb(self, info_msg):
         self.camera_frame_id = info_msg.header.frame_id
+
         self.cam_matrix = np.reshape(np.array(info_msg.k), (3, 3))
-        self.cam_matrix[0][0] = 2.26*self.cam_matrix[0][0]
-        self.cam_matrix[1][1] = 2.26*self.cam_matrix[1][1]
+        scalar = self.get_parameter("focal_length_scalar").value
+        self.cam_matrix[0][0] = scalar*self.cam_matrix[0][0]
+        self.cam_matrix[1][1] = scalar*self.cam_matrix[1][1]
+
         self.distorsion = np.array(info_msg.d)
         self.destroy_subscription(self.camera_info_sub)
         self.camera_info_sub = None
