@@ -21,7 +21,7 @@ class FrontierDetector(Node):
         ).value
 
         self.min_frontier_size = self.declare_parameter(
-            'min_frontier_size', 10
+            'min_frontier_size', 3
         ).value
 
         # Set the representative distances in metres
@@ -30,12 +30,12 @@ class FrontierDetector(Node):
         ).value
 
         self.min_goal_spacing = self.declare_parameter(
-            'min_goal_spacing', 0.5
+            'min_goal_spacing', 0.3
         ).value
 
         # Set the minimum clearance from occupied cells in metres
         self.min_obstacle_clearance = self.declare_parameter(
-            'min_obstacle_clearance', 0.5
+            'min_obstacle_clearance', 0.3
         ).value
 
         # subcribe to the map topic
