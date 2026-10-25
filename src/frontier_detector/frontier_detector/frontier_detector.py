@@ -21,7 +21,7 @@ class FrontierDetector(Node):
         ).value
 
         self.min_frontier_size = self.declare_parameter(
-            'min_frontier_size', 3
+            'min_frontier_size', 4
         ).value
 
         # Set the representative distances in metres
