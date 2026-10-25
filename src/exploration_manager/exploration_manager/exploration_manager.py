@@ -4,11 +4,8 @@ import numpy as np
 
 import rclpy
 
-#----------------------------------------------------------------
 import hashlib
 import time
-#----------------------------------------------------------------
-
 
 from rclpy.action import ActionClient
 from rclpy.node import Node
@@ -25,9 +22,7 @@ class ExplorationManager(Node):
 
     def __init__(self):
 
-        super().__init__(
-            'exploration_manager'
-        )
+        super().__init__('exploration_manager')
 
         # ============================================================
         # EXPLORATION SETTINGS
@@ -43,6 +38,8 @@ class ExplorationManager(Node):
         # Information = how useful the frontier is.
         # Distance = how far the robot must travel.
         # Heading = how much the robot must turn.
+        # Initial search radius = how far to look for frontiers when planning paths.
+        # Search increase factor = how much to increase the search radius if no frontiers are found within radius.
         self.information_weight = self.declare_parameter(
             'information_weight',
             0.20
@@ -53,34 +50,19 @@ class ExplorationManager(Node):
             0.30
         ).value
 
-        self.distance_decay = self.declare_parameter(
-            'distance_decay',
-            2.0
-        ).value
-
-        self.path_search_initial_radius = self.declare_parameter(
-            'path_search_initial_radius',
-            3.0
-        ).value
-
-        self.path_search_expansion_factor = self.declare_parameter(
-            'path_search_expansion_factor',
-            2.0
-        ).value
-
-        if self.path_search_initial_radius <= 0.0:
-            raise ValueError(
-                'path_search_initial_radius must be greater than zero'
-            )
-
-        if self.path_search_expansion_factor <= 1.0:
-            raise ValueError(
-                'path_search_expansion_factor must be greater than one'
-            )
-
         self.heading_weight = self.declare_parameter(
             'heading_weight',
             0.50
+        ).value
+
+        self.initial_search_radius = self.declare_parameter(
+            'initial_search_radius',
+            3.0
+        ).value
+
+        self.search_increase_factor = self.declare_parameter(
+            'search_increase_factor',
+            2.0
         ).value
 
         # ------------------------------------------------------------
@@ -173,7 +155,7 @@ class ExplorationManager(Node):
         self.path_request_indices = []
         self.path_candidate_index = 0
         self.path_request_generation = 0
-        self.path_search_radius = self.path_search_initial_radius
+        self.path_search_radius = self.initial_search_radius
 
         # Used to decide when exploration has finished.
         self.empty_frontier_update_count = 0
@@ -190,9 +172,7 @@ class ExplorationManager(Node):
         # WAITING_FOR_MAP
         # WAITING_FOR_UPDATE
         # EXPLORATION_COMPLETE
-        self.state = (
-            'WAITING_FOR_DATA'
-        )
+        self.state = ('WAITING_FOR_DATA')
 
         # ============================================================
         # ROS SUBSCRIPTIONS
@@ -212,20 +192,15 @@ class ExplorationManager(Node):
             10
         )
 
-        #------------------------------------------------------------
         self.last_map_time = None
         self.last_map_change_time = None
         self.last_map_signature = None
-        self.post_goal_scan_stamp = None
         self.required_frontier_stamp = None
-
-        self.scan_count = 0
 
         self.diagnostic_timer = self.create_timer(
             5.0,
-            self.diagnose_topics
+            self.check_map_time
         )
-        #------------------------------------------------------------
 
         # ============================================================
         # TF
@@ -260,33 +235,28 @@ class ExplorationManager(Node):
             self.exploration_cb
         )
 
-        self.get_logger().info(
-            'Exploration manager started'
-        )
+        self.get_logger().info('Exploration manager started')
 
 
-    def diagnose_topics(self):
+    # ================================================================
+    # Map update logger
+    # ================================================================
+    def check_map_time(self):
         now = time.monotonic()
 
         if self.last_map_time is None:
             self.get_logger().warning('No /map message received yet')
-        elif (now - self.last_map_time) > 5.0:
-            self.get_logger().warning(
-                f'/map is stale: {now - self.last_map_time:.1f} s since last message'
-            )
         elif self.last_map_change_time is not None:
             self.get_logger().info(
                 'Last /map content change was '
                 f'{now - self.last_map_change_time:.1f} s ago'
             )
+    
     # ================================================================
     # FRONTIER CALLBACK
     # ================================================================
 
-    def frontier_cb(
-        self,
-        msg
-    ):
+    def frontier_cb(self, msg):
 
         if (
             self.state == 'WAITING_FOR_UPDATE'
@@ -304,20 +274,12 @@ class ExplorationManager(Node):
                 )
                 return
 
-        self.frontier_candidates = list(
-            msg.poses
-        )
+        self.frontier_candidates = list(msg.poses)
 
-        if (
-            self.state
-            == 'EXPLORATION_COMPLETE'
-        ):
+        if (self.state == 'EXPLORATION_COMPLETE'):
             return
 
-        if (
-            self.state
-            == 'WAITING_FOR_UPDATE'
-        ):
+        if (self.state == 'WAITING_FOR_UPDATE'):
 
             if self.frontier_candidates:
 
@@ -325,9 +287,7 @@ class ExplorationManager(Node):
 
                 self.state = 'READY'
 
-                self.get_logger().info(
-                    'Updated frontier data received'
-                )
+                self.get_logger().info('Updated frontier data received')
 
             else:
 
@@ -344,13 +304,9 @@ class ExplorationManager(Node):
                     >= self.required_empty_updates
                 ):
 
-                    self.state = (
-                        'EXPLORATION_COMPLETE'
-                    )
+                    self.state = ('EXPLORATION_COMPLETE')
 
-                    self.get_logger().info(
-                        'Exploration complete'
-                    )
+                    self.get_logger().info('Exploration complete')
 
             return
 
@@ -364,7 +320,6 @@ class ExplorationManager(Node):
     # ================================================================
 
     def map_cb(self, msg):
-        #------------------------------------------------------------
         self.last_map_time = time.monotonic()
 
         map_signature = hashlib.blake2b(
@@ -376,7 +331,6 @@ class ExplorationManager(Node):
             self.last_map_signature = map_signature
             self.last_map_change_time = self.last_map_time
             self.get_logger().info('/map contents changed')
-        #------------------------------------------------------------
 
         self.map_msg = msg
 
@@ -418,8 +372,7 @@ class ExplorationManager(Node):
     def check_ready(self):
 
         if (
-            self.state
-            == 'WAITING_FOR_DATA'
+            self.state == 'WAITING_FOR_DATA'
             and
             self.map_array is not None
             and
@@ -428,9 +381,7 @@ class ExplorationManager(Node):
 
             self.state = 'READY'
 
-            self.get_logger().info(
-                'Exploration manager ready'
-            )
+            self.get_logger().info('Exploration manager ready')
 
     # ================================================================
     # ROBOT POSITION
@@ -651,9 +602,7 @@ class ExplorationManager(Node):
         path_lengths=None
     ):
 
-        robot_pose = (
-            self.get_robot_pose()
-        )
+        robot_pose = (self.get_robot_pose())
 
         if robot_pose is None:
             return None
@@ -973,8 +922,7 @@ class ExplorationManager(Node):
 
         # Information contributes positively.
         #
-        # Distance is an exponentially decaying reward; heading
-        # change remains a penalty.
+        # Distance and heading change are penalties.
         scores = (
             self.information_weight
             * information_norm
@@ -1018,11 +966,13 @@ class ExplorationManager(Node):
 
         return candidate
 
+    # ================================================================
+    # PATH PLANNING
+    # ================================================================
     def start_path_planning(self):
         if not self.path_client.wait_for_server(timeout_sec=0.0):
             self.get_logger().warn(
-                'ComputePathToPose action server unavailable; '
-                'will retry'
+                'ComputePathToPose action server unavailable'
             )
             return
 
@@ -1042,7 +992,7 @@ class ExplorationManager(Node):
             for candidate in self.path_candidates
         ]
         self.path_candidate_index = 0
-        self.path_search_radius = self.path_search_initial_radius
+        self.path_search_radius = self.initial_search_radius
         self.path_request_generation += 1
         self.state = 'PLANNING_PATHS'
 
@@ -1214,16 +1164,6 @@ class ExplorationManager(Node):
 
         self.path_lengths[candidate_index] = path_length
         self.path_planned[candidate_index] = True
-        # if path_length is None:
-        #     self.get_logger().info(
-        #         f'Candidate {candidate_index}: path unavailable'
-        #     )
-        # else:
-        #     self.get_logger().info(
-        #         f'Candidate {candidate_index}: planned path '
-        #         f'{path_length:.2f} m'
-        #     )
-
         self.path_candidate_index += 1
         self.request_next_path(generation)
 
@@ -1256,7 +1196,7 @@ class ExplorationManager(Node):
                 old_radius = self.path_search_radius
                 self.path_search_radius = min(
                     self.path_search_radius
-                    * self.path_search_expansion_factor,
+                    * self.search_increase_factor,
                     farthest_candidate
                 )
                 self.get_logger().info(
