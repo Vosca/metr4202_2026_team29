@@ -59,7 +59,7 @@ gnome-terminal --title="Frontier detector" -- bash -lc '
 gnome-terminal --title="Marker detection" -- bash -lc '
 cd "$1" || exit
 source install/setup.bash || exit
-ros2 run marker_detection marker_detection
+ros2 run marker_detection marker_detection --ros-args -p focal_length_scalar:=1.0
 status=$?
 echo "Marker_detection exited with status $status."
 read -r -p "Press Enter to close this terminal..."

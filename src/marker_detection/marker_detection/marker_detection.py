@@ -13,7 +13,7 @@ import cv2
 from cv_bridge import CvBridge
 
 from sensor_msgs.msg import CameraInfo, Image
-from geometry_msgs.msg import Pose, PoseStamped, PoseArray
+from geometry_msgs.msg import Pose, PoseArray
 from visualization_msgs.msg import Marker, MarkerArray
 import tf_transformations
 import tf2_ros
