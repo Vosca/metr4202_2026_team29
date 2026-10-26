@@ -23,7 +23,7 @@ class FrontierDetector(Node):
 
         # Minimum number of cells in a frontier cluster to be kept
         self.min_frontier_size = self.declare_parameter(
-            'min_frontier_size', 4
+            'min_frontier_size', 3
         ).value
 
         # Radius in metres to count nearby frontier cells for scoring
@@ -33,7 +33,7 @@ class FrontierDetector(Node):
 
         # Minimum distance in metres between selected representatives
         self.min_goal_spacing = self.declare_parameter(
-            'min_goal_spacing', 0.3
+            'min_goal_spacing', 0.75
         ).value
 
         # Minimum distance in metres from occupied cells for a candidate
