@@ -5,7 +5,6 @@ from rclpy.node import Node
 from nav_msgs.msg import OccupancyGrid
 import numpy as np
 
-# message imports
 from visualization_msgs.msg import Marker
 from geometry_msgs.msg import Point, Pose, PoseArray
 
@@ -13,27 +12,31 @@ from geometry_msgs.msg import Point, Pose, PoseArray
 class FrontierDetector(Node):
 
     def __init__(self):
+        """Initialise the frontier detection parameters, ROS 2 subscribers and publishers."""
+
         super().__init__('frontier_detector')
 
-        # Set the frontier detection and filtering thresholds
+        # Minimum number of unknown neighbours for cell to be a frontier
         self.min_unknown_neighbours = self.declare_parameter(
             'min_unknown_neighbours', 3
         ).value
 
+        # Minimum number of cells in a frontier cluster to be kept
         self.min_frontier_size = self.declare_parameter(
             'min_frontier_size', 4
         ).value
 
-        # Set the representative distances in metres
+        # Radius in metres to count nearby frontier cells for scoring
         self.scoring_radius = self.declare_parameter(
             'scoring_radius', 0.25
         ).value
 
+        # Minimum distance in metres between selected representatives
         self.min_goal_spacing = self.declare_parameter(
             'min_goal_spacing', 0.3
         ).value
 
-        # Set the minimum clearance from occupied cells in metres
+        # Minimum distance in metres from occupied cells for a candidate
         self.min_obstacle_clearance = self.declare_parameter(
             'min_obstacle_clearance', 0.3
         ).value
@@ -68,35 +71,40 @@ class FrontierDetector(Node):
         )
 
     def map_callback(self, msg):
+        """Process incoming map updates to detect, filter and publish frontiers."""
 
         # Convert list to 2D array
-        map_array = np.array(msg.data).reshape(
-            (msg.info.height, msg.info.width)
-        )
+        map_array = np.array(msg.data).reshape((msg.info.height, msg.info.width))
 
+        # Find the frontier cells in the map
         raw_frontiers = self.find_frontiers(map_array)
 
+        # Keep frontiers in large enough clusters
         filtered_frontiers = self.filter_small_frontiers(
             raw_frontiers,
             self.min_frontier_size
         )
 
+        # Select few representative frontier cells
         representatives = self.select_representatives(
             filtered_frontiers,
             map_array,
             msg.info.resolution
         )
 
+        # Log the number of frontiers found, filtered and selected
         self.get_logger().info(
             f'Found {len(raw_frontiers)} frontier cells, '
             f'kept {len(filtered_frontiers)} after filtering, '
             f'selected {len(representatives)} representatives'
         )
 
+        # Publish the frontiers and representatives as markers
         self.publish_frontiers(filtered_frontiers, msg)
         self.publish_representatives(representatives, msg)
 
     def find_frontiers(self, map_array):
+        """Find free cells with enough unknown neighbours to be considered frontiers."""
 
         frontiers = []
 
@@ -133,6 +141,7 @@ class FrontierDetector(Node):
         return frontiers
 
     def filter_small_frontiers(self, frontiers, min_size):
+        """Group connected frontier cells and remove groups smaller than the minimum size."""
 
         unvisited_cells = set(frontiers)
         kept = set()
@@ -149,6 +158,7 @@ class FrontierDetector(Node):
                 # get the cell coordinates
                 row, col = cells_to_check.pop()
 
+                # Check the 8 neighbouring cells
                 for dr in (-1, 0, 1):
                     for dc in (-1, 0, 1):
 
@@ -158,6 +168,7 @@ class FrontierDetector(Node):
                         # Check the neighbouring cells
                         neighbour = (row + dr, col + dc)
 
+                        # Add connected frontier cells to the group and mark them as visited
                         if neighbour in unvisited_cells:
                             unvisited_cells.remove(neighbour)
                             component.append(neighbour)
@@ -176,11 +187,10 @@ class FrontierDetector(Node):
         return result
 
     def has_obstacle_clearance(self, row, col, map_array, resolution):
+        """Check if a candidate cell has sufficient clearance from occupied cells."""
 
         # Convert the clearance distance from metres to grid cells
-        clearance_cells = math.ceil(
-            self.min_obstacle_clearance / resolution
-        )
+        clearance_cells = math.ceil(self.min_obstacle_clearance / resolution)
 
         rows, cols = map_array.shape
 
@@ -196,14 +206,10 @@ class FrontierDetector(Node):
 
                 row_distance = (check_row - row) * resolution
                 col_distance = (check_col - col) * resolution
-                distance = math.hypot(
-                    row_distance,
-                    col_distance
-                )
+                distance = math.hypot(row_distance, col_distance)
 
                 # Reject candidates too close to occupied cells
-                if (
-                    distance <= self.min_obstacle_clearance
+                if (distance <= self.min_obstacle_clearance
                     and map_array[check_row, check_col] > 50
                 ):
                     return False
@@ -211,6 +217,7 @@ class FrontierDetector(Node):
         return True
 
     def select_representatives(self, frontiers, map_array, resolution):
+        """Score frontier cells and select spaced representatives with obstacle clearance."""
 
         # Stop if there are no frontier cells
         if not frontiers:
@@ -249,6 +256,7 @@ class FrontierDetector(Node):
 
             too_close = False
 
+            # Check the distance to each selected representative
             for selected_row, selected_col in representatives:
 
                 row_distance = (row - selected_row) * resolution
@@ -268,13 +276,10 @@ class FrontierDetector(Node):
 
         return representatives
 
-    # Publish the frontiers as a Marker message
     def publish_frontiers(self, frontiers, msg):
+        """Publish the filtered frontier cells as an RViz marker."""
 
-        marker = self.create_point_marker(
-            frontiers,
-            msg
-        )
+        marker = self.create_point_marker(frontiers, msg)
 
         # Set the frontier namespace, size and colour
         marker.ns = 'frontiers'
@@ -286,16 +291,10 @@ class FrontierDetector(Node):
 
         self.frontier_publisher.publish(marker)
 
-    def publish_representatives(
-        self,
-        representatives,
-        msg
-    ):
+    def publish_representatives(self, representatives, msg):
+        """Publish representative markers and candidate poses for the exploration manager."""
 
-        marker = self.create_point_marker(
-            representatives,
-            msg
-        )
+        marker = self.create_point_marker(representatives, msg)
 
         # Set the representative namespace, size and colour
         marker.ns = 'frontier_representatives'
@@ -307,9 +306,11 @@ class FrontierDetector(Node):
 
         self.representative_publisher.publish(marker)
 
+        # Create a PoseArray to send the representatives to the exploration manager
         candidates = PoseArray()
         candidates.header = marker.header
 
+        # Create a Pose for each representative and add it to the PoseArray
         for point in marker.points:
 
             pose = Pose()
@@ -323,16 +324,14 @@ class FrontierDetector(Node):
         self.candidate_publisher.publish(candidates)
 
     def create_point_marker(self, cells, msg):
+        """Convert map cell coordinates to world coordinates and create an RViz marker."""
 
         marker = Marker()
 
         # Set the header information
         marker.header.frame_id = msg.header.frame_id
-        marker.header.stamp = (
-            self.get_clock().now().to_msg()
-        )
+        marker.header.stamp = (self.get_clock().now().to_msg())
 
-        # Set the marker id
         marker.id = 0
 
         # Set the type and action for the marker
@@ -346,14 +345,8 @@ class FrontierDetector(Node):
         orientation = msg.info.origin.orientation
 
         yaw = math.atan2(
-            2.0 * (
-                orientation.w * orientation.z
-                + orientation.x * orientation.y
-            ),
-            1.0 - 2.0 * (
-                orientation.y**2
-                + orientation.z**2
-            )
+            2.0 * (orientation.w * orientation.z + orientation.x * orientation.y),
+            1.0 - 2.0 * (orientation.y**2 + orientation.z**2)
         )
 
         cos_yaw = math.cos(yaw)
@@ -365,28 +358,18 @@ class FrontierDetector(Node):
             point = Point()
 
             # Get the cell centre relative to the map origin
-            local_x = (
-                col + 0.5
-            ) * msg.info.resolution
+            local_x = (col + 0.5) * msg.info.resolution
 
-            local_y = (
-                row + 0.5
-            ) * msg.info.resolution
+            local_y = (row + 0.5) * msg.info.resolution
 
             # Convert the row and column indices to world coordinates
-            point.x = (
-                msg.info.origin.position.x
-                + local_x * cos_yaw
-                - local_y * sin_yaw
-            )
+            point.x = (msg.info.origin.position.x
+                + local_x * cos_yaw - local_y * sin_yaw)
 
-            point.y = (
-                msg.info.origin.position.y
-                + local_x * sin_yaw
-                + local_y * cos_yaw
-            )
+            point.y = (msg.info.origin.position.y
+                + local_x * sin_yaw + local_y * cos_yaw)
 
-            # Set a small z value to make the points visible above the map
+            # Small z value to make the points visible above the map
             point.z = 0.05
 
             # Add the point to the marker
@@ -396,6 +379,7 @@ class FrontierDetector(Node):
 
 
 def main(args=None):
+    """Initialise ROS 2, run the frontier detector node and shut down when finished."""
 
     rclpy.init(args=args)
 
