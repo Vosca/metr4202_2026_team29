@@ -346,8 +346,7 @@ class FrontierDetector(Node):
 
         yaw = math.atan2(
             2.0 * (orientation.w * orientation.z + orientation.x * orientation.y),
-            1.0 - 2.0 * (orientation.y**2 + orientation.z**2)
-        )
+            1.0 - 2.0 * (orientation.y**2 + orientation.z**2))
 
         cos_yaw = math.cos(yaw)
         sin_yaw = math.sin(yaw)
@@ -393,3 +392,7 @@ def main(args=None):
 
 if __name__ == '__main__':
     main()
+
+# Generative AI Declaration:
+# ChatGPT, OpenAI Codex, and GitHub Copilot were used to assist with
+# code development, debugging, and documentation.
